@@ -24,7 +24,7 @@ public class JavaSumPerformanceTest {
 
     static {
         Random r = new Random();
-        for(int i = 1; i <= 1000000; i++) {
+        for(int i = 1; i <= 10000000; i++) {
             integers.add(r.ints(1, (1000 + 1)).findFirst().getAsInt());
         }
     }
@@ -42,7 +42,7 @@ public class JavaSumPerformanceTest {
         System.out.println(finish1 - start1);
 
         long start2 = System.currentTimeMillis();
-        java8Aggregator.sum(integers);
+        java8ParallelAggregator.sum(integers);
         long finish2 = System.currentTimeMillis();
         System.out.println(finish2 - start2);
 
