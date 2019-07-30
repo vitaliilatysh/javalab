@@ -21,8 +21,8 @@ public class Java7Aggregator implements Aggregator {
         });
 
         Map<String, Long> temp = new LinkedHashMap<>();
-        for (Map.Entry<String, Long> aa : list) {
-            temp.put(aa.getKey(), aa.getValue());
+        for (Map.Entry<String, Long> entry : list) {
+            temp.put(entry.getKey(), entry.getValue());
         }
         return temp;
     }
@@ -66,14 +66,12 @@ public class Java7Aggregator implements Aggregator {
 
     @Override
     public List<String> getDuplicates(List<String> words, long limit) {
-        List<String> uniqueWords = new ArrayList<>();
+        Set<String> allWords = new HashSet<>();
         List<String> duplicates = new ArrayList<>();
         for (String word : words) {
             if (word != null) {
                 String uniqueWord = word.toUpperCase();
-                if(!uniqueWords.contains(uniqueWord)) {
-                    uniqueWords.add(uniqueWord);
-                } else{
+                if(!allWords.add(uniqueWord)) {
                     duplicates.add(word.toUpperCase());
                 }
             }
