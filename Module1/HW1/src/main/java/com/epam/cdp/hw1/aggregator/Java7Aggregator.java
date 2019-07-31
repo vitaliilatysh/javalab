@@ -4,28 +4,10 @@ import javafx.util.Pair;
 
 import java.util.*;
 
+import static com.epam.cdp.hw1.aggregator.utils.Java7AggregatorUtils.comparingByValue;
+import static com.epam.cdp.hw1.aggregator.utils.Java7AggregatorUtils.stringComparator;
+
 public class Java7Aggregator implements Aggregator {
-
-    private static Map<String, Long> sortByValue(Map<String, Long> unsortedMap) {
-        List<Map.Entry<String, Long>> list = new LinkedList<>(unsortedMap.entrySet());
-
-        list.sort(new Comparator<Map.Entry<String, Long>>() {
-            public int compare(Map.Entry<String, Long> o1, Map.Entry<String, Long> o2) {
-                int result;
-                result = (o1.getValue()).compareTo(o2.getValue());
-                if (result == 0) {
-                    result = o1.getKey().charAt(0) - o2.getKey().charAt(0);
-                }
-                return result;
-            }
-        });
-
-        Map<String, Long> temp = new LinkedHashMap<>();
-        for (Map.Entry<String, Long> entry : list) {
-            temp.put(entry.getKey(), entry.getValue());
-        }
-        return temp;
-    }
 
     @Override
     public int sum(List<Integer> numbers) {
@@ -47,7 +29,7 @@ public class Java7Aggregator implements Aggregator {
             }
         }
 
-        sortByValue(wordCount);
+        comparingByValue(wordCount);
 
         List<Pair<String, Long>> result = new ArrayList<>();
         for (Map.Entry<String, Long> entry : wordCount.entrySet()) {
@@ -74,23 +56,15 @@ public class Java7Aggregator implements Aggregator {
             }
         }
 
-        duplicates.sort(new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                int result;
-                result = o1.length() - o2.length();
-                if (result == 0) {
-                    result = o1.charAt(0) - o2.charAt(0);
-                }
-                return result;
-            }
-        });
+        duplicates.sort(stringComparator);
 
         List<String> showDuplicatesByLimit = new ArrayList<>();
         for (String wordFromResult : duplicates) {
             if (limit != 0) {
                 showDuplicatesByLimit.add(wordFromResult);
                 limit--;
+            } else {
+                break;
             }
         }
         return showDuplicatesByLimit;

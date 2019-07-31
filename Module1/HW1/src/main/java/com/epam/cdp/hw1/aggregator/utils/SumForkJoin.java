@@ -3,17 +3,17 @@ package com.epam.cdp.hw1.aggregator.utils;
 import java.util.List;
 import java.util.concurrent.RecursiveTask;
 
-public class Java7ParallelAggregatorForkJoin extends RecursiveTask<Integer> {
+public class SumForkJoin extends RecursiveTask<Integer> {
 
     private final List<Integer> numbers;
     private final int start;
     private final int end;
 
-    public Java7ParallelAggregatorForkJoin(List<Integer> numbers) {
+    public SumForkJoin(List<Integer> numbers) {
         this(numbers, 0, numbers.size());
     }
 
-    private Java7ParallelAggregatorForkJoin(List<Integer> numbers, int start, int end) {
+    private SumForkJoin(List<Integer> numbers, int start, int end) {
         this.numbers = numbers;
         this.start = start;
         this.end = end;
@@ -27,10 +27,10 @@ public class Java7ParallelAggregatorForkJoin extends RecursiveTask<Integer> {
             return add();
         }
 
-        Java7ParallelAggregatorForkJoin firstTask = new Java7ParallelAggregatorForkJoin(numbers, start, start + length / 2);
+        SumForkJoin firstTask = new SumForkJoin(numbers, start, start + length / 2);
         firstTask.fork();
 
-        Java7ParallelAggregatorForkJoin secondTask = new Java7ParallelAggregatorForkJoin(numbers, start + length / 2, end);
+        SumForkJoin secondTask = new SumForkJoin(numbers, start + length / 2, end);
 
         int secondTaskResult = secondTask.compute();
         int firstTaskResult = firstTask.join();
