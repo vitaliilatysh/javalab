@@ -42,11 +42,8 @@ public class Java7Aggregator implements Aggregator {
     public List<Pair<String, Long>> getMostFrequentWords(List<String> words, long limit) {
         Map<String, Long> wordCount = new HashMap<>();
         for (String word : words) {
-            if (word != null && wordCount.containsKey(word)) {
-                long count = wordCount.get(word);
-                wordCount.put(word, ++count);
-            } else {
-                wordCount.put(word, 1L);
+            if (word != null) {
+                wordCount.put(word, wordCount.get(word) == null ? 1L : wordCount.get(word) + 1);
             }
         }
 
@@ -71,7 +68,7 @@ public class Java7Aggregator implements Aggregator {
         for (String word : words) {
             if (word != null) {
                 String uniqueWord = word.toUpperCase();
-                if(!allWords.add(uniqueWord)) {
+                if (!allWords.add(uniqueWord)) {
                     duplicates.add(word.toUpperCase());
                 }
             }
@@ -82,7 +79,7 @@ public class Java7Aggregator implements Aggregator {
             public int compare(String o1, String o2) {
                 int result;
                 result = o1.length() - o2.length();
-                if(result == 0){
+                if (result == 0) {
                     result = o1.charAt(0) - o2.charAt(0);
                 }
                 return result;

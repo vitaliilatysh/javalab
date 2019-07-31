@@ -28,6 +28,10 @@ public abstract class JavaAggregatorDuplicatesTest {
         this.aggregator = aggregator;
     }
 
+    /**
+     *
+     * @return test data
+     */
     @Parameterized.Parameters
     public static List<Object[]> data() {
         List<Object[]> data = new ArrayList<>();

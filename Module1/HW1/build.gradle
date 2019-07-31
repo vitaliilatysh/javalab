@@ -44,7 +44,7 @@ clover {
 }
 
 checkstyle {
-    checkstyleTest.enabled = false
+    checkstyleTest.enabled = true
 }
 
 task wrapper(type: Wrapper) {
@@ -55,8 +55,8 @@ check.dependsOn cloverGenerateReport
 
 
 findbugs {
-    ignoreFailures=true
-    findbugsTest.enabled=false
+    ignoreFailures=false
+    findbugsTest.enabled=true
 }
 
 tasks.withType(FindBugs) {
@@ -67,8 +67,8 @@ tasks.withType(FindBugs) {
 }
 
 pmd {
-    ignoreFailures = true
-    pmdTest.enabled=false
+    ignoreFailures = false
+    pmdTest.enabled=true
     ruleSets = [
             'java-basic',
             'java-braces',

@@ -29,6 +29,10 @@ public abstract class JavaAggregatorFrequencyTest {
         this.aggregator = aggregator;
     }
 
+    /**
+     *
+     * @return test data
+     */
     @Parameterized.Parameters
     public static List<Object[]> data() {
         List<Object[]> data = new ArrayList<>();

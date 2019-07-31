@@ -3,31 +3,26 @@ package com.epam.cdp.hw1.aggregator.performance;
 import com.epam.cdp.hw1.aggregator.Java7Aggregator;
 import com.epam.cdp.hw1.aggregator.Java8Aggregator;
 import com.epam.cdp.hw1.aggregator.Java8ParallelAggregator;
-import com.epam.cdp.hw1.aggregator.sum.impl.Java7AggregatorSumTest;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.emptyList;
-import static org.junit.Assert.*;
-
 public class JavaSumPerformanceTest {
+
+    private static final List<Integer> integers = new ArrayList<>();
+
+    static {
+        Random random = new Random();
+        for (int i = 1; i <= 10000000; i++) {
+            integers.add(random.ints(1, (1000 + 1)).findFirst().getAsInt());
+        }
+    }
 
     private Java7Aggregator java7Aggregator = new Java7Aggregator();
     private Java8Aggregator java8Aggregator = new Java8Aggregator();
     private Java8ParallelAggregator java8ParallelAggregator = new Java8ParallelAggregator();
-
-    private final static List<Integer> integers= new ArrayList<>();
-
-    static {
-        Random r = new Random();
-        for(int i = 1; i <= 10000000; i++) {
-            integers.add(r.ints(1, (1000 + 1)).findFirst().getAsInt());
-        }
-    }
 
     @Test
     public void sum() {

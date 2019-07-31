@@ -20,6 +20,11 @@ import static java.util.stream.Collectors.groupingBy;
  */
 public class Java8AggregatorUtils {
 
+    /**
+     *
+     * @param numberStream stream of numbers
+     * @return sum
+     */
     public static int getSum(Stream<Integer> numberStream){
         return numberStream
                 .filter(Objects::nonNull)
@@ -27,6 +32,12 @@ public class Java8AggregatorUtils {
                 .sum();
     }
 
+    /**
+     *
+     * @param limit max number of elements to display
+     * @param wordCount stream of strings
+     * @return Pair object that contains word itself and its frequency
+     */
     public static List<Pair<String, Long>> getPairs(long limit, Stream<String> wordCount) {
         Map<String, Long> res = wordCount.filter(Objects::nonNull)
                 .collect(groupingBy(Function.identity(), counting()));
@@ -37,6 +48,12 @@ public class Java8AggregatorUtils {
                 .collect(Collectors.toList());
     }
 
+    /**
+     *
+     * @param stringStream stream of strings
+     * @param limit max number of elements to display
+     * @return duplicated strings
+     */
     public static List<String> getDuplicatedStrings(Stream<String> stringStream, long limit) {
         Map<String, Long> duplicates = stringStream
                 .map(String::toUpperCase)
