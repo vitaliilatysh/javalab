@@ -1,8 +1,6 @@
 package com.epam.cdp.hw1.aggregator.performance;
 
-import com.epam.cdp.hw1.aggregator.Java7Aggregator;
-import com.epam.cdp.hw1.aggregator.Java8Aggregator;
-import com.epam.cdp.hw1.aggregator.Java8ParallelAggregator;
+import com.epam.cdp.hw1.aggregator.*;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -21,6 +19,7 @@ public class JavaSumPerformanceTest {
     }
 
     private Java7Aggregator java7Aggregator = new Java7Aggregator();
+    private Java7ParallelAggregator java7ParallelAggregator = new Java7ParallelAggregator();
     private Java8Aggregator java8Aggregator = new Java8Aggregator();
     private Java8ParallelAggregator java8ParallelAggregator = new Java8ParallelAggregator();
 
@@ -40,6 +39,11 @@ public class JavaSumPerformanceTest {
         java8ParallelAggregator.sum(integers);
         long finish2 = System.currentTimeMillis();
         System.out.println(finish2 - start2);
+
+        long start3 = System.currentTimeMillis();
+        java7ParallelAggregator.sum(integers);
+        long finish3 = System.currentTimeMillis();
+        System.out.println(finish3 - start3);
 
     }
 
