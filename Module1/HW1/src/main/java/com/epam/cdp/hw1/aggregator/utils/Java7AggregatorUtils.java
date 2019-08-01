@@ -21,8 +21,11 @@ public class Java7AggregatorUtils {
     };
 
     /**
+     * This method is used for sorting the words by their frequency,
+     * if frequency the same then sorted alphabetically
+     *
      * @param unsortedMap unsorted most frequent words
-     * @return sorted words by frequency, if frequency the same then sorted alphabetically
+     * @return sorted words
      */
     public static Map<String, Long> comparingByValue(Map<String, Long> unsortedMap) {
         List<Map.Entry<String, Long>> list = new LinkedList<>(unsortedMap.entrySet());

@@ -9,12 +9,20 @@ import java.util.Random;
 
 public class JavaSumPerformanceTest {
 
-    private static final List<Integer> integers = new ArrayList<>();
+    private static final List<Integer> INTEGERS_20_000 = new ArrayList<>();
+    private static final List<Integer> INTEGERS_100 = new ArrayList<>();
 
     static {
         Random random = new Random();
         for (int i = 1; i <= 10000000; i++) {
-            integers.add(random.ints(1, (1000 + 1)).findFirst().getAsInt());
+            INTEGERS_20_000.add(random.ints(1, (1000 + 1)).findFirst().getAsInt());
+        }
+    }
+
+    static {
+        Random random = new Random();
+        for (int i = 1; i <= 100; i++) {
+            INTEGERS_100.add(random.ints(1, (1000 + 1)).findFirst().getAsInt());
         }
     }
 
@@ -23,28 +31,48 @@ public class JavaSumPerformanceTest {
     private Java8Aggregator java8Aggregator = new Java8Aggregator();
     private Java8ParallelAggregator java8ParallelAggregator = new Java8ParallelAggregator();
 
+    private static void runSumWith(Aggregator aggregator, List<Integer> data){
+        aggregator.sum(data);
+    }
+
     @Test
-    public void sum() {
-        long start = System.currentTimeMillis();
-        java7Aggregator.sum(integers);
-        long finish = System.currentTimeMillis();
-        System.out.println(finish - start);
+    public void sumJava7AggregatorWithSmallAmountOfNumbers() {
+        runSumWith(java7Aggregator, INTEGERS_100);
+    }
 
-        long start1 = System.currentTimeMillis();
-        java8Aggregator.sum(integers);
-        long finish1 = System.currentTimeMillis();
-        System.out.println(finish1 - start1);
+    @Test
+    public void sumJava7AggregatorWithBigAmountOfNumbers() {
+        runSumWith(java7Aggregator, INTEGERS_20_000);
+    }
 
-        long start2 = System.currentTimeMillis();
-        java8ParallelAggregator.sum(integers);
-        long finish2 = System.currentTimeMillis();
-        System.out.println(finish2 - start2);
+    @Test
+    public void sumJava8AggregatorWithSmallAmountOfNumbers() {
+        runSumWith(java8Aggregator, INTEGERS_100);
+    }
 
-        long start3 = System.currentTimeMillis();
-        java7ParallelAggregator.sum(integers);
-        long finish3 = System.currentTimeMillis();
-        System.out.println(finish3 - start3);
+    @Test
+    public void sumJava8AggregatorWithBigAmountOfNumbers() {
+        runSumWith(java8Aggregator, INTEGERS_20_000);
+    }
 
+    @Test
+    public void sumJava7ParallelAggregatorWithSmallAmountOfNumbers() {
+        runSumWith(java7ParallelAggregator, INTEGERS_100);
+    }
+
+    @Test
+    public void sumJava7ParallelAggregatorWithBigAmountOfNumbers() {
+        runSumWith(java7ParallelAggregator, INTEGERS_20_000);
+    }
+
+    @Test
+    public void sumJava8ParallelAggregatorWithSmallAmountOfNumbers() {
+        runSumWith(java8ParallelAggregator, INTEGERS_100);
+    }
+
+    @Test
+    public void sumJava8ParallelAggregatorWithBigAmountOfNumbers() {
+        runSumWith(java8ParallelAggregator, INTEGERS_20_000);
     }
 
     @Test

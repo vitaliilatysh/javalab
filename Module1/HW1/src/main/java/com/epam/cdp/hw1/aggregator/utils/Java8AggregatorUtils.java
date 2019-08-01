@@ -21,6 +21,7 @@ import static java.util.stream.Collectors.groupingBy;
 public class Java8AggregatorUtils {
 
     /**
+     * Getting sum of integer numbers
      *
      * @param numberStream stream of numbers
      * @return sum
@@ -33,6 +34,7 @@ public class Java8AggregatorUtils {
     }
 
     /**
+     * Getting the most frequently used words
      *
      * @param limit max number of elements to display
      * @param wordCount stream of strings
@@ -49,10 +51,12 @@ public class Java8AggregatorUtils {
     }
 
     /**
+     * Getting sorted duplicated strings by length, if the length is equaled, then
+     * sorted alphabetically.
      *
      * @param stringStream stream of strings
      * @param limit max number of elements to display
-     * @return duplicated strings
+     * @return sorted duplicated strings
      */
     public static List<String> getDuplicatedStrings(Stream<String> stringStream, long limit) {
         Map<String, Long> duplicates = stringStream
