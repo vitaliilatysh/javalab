@@ -26,6 +26,27 @@ public class JavaSumPerformanceTest {
         }
     }
 
+    private static List<String> generateRandomWords(int numberOfWords)
+    {
+        List<String> randomStrings = new ArrayList<>(numberOfWords);
+        Random random = new Random();
+        for(int i = 0; i < numberOfWords; i++)
+        {
+            char[] word = new char[random.nextInt(8)+3];
+            for(int j = 0; j < word.length; j++)
+            {
+                word[j] = (char)('a' + random.nextInt(26));
+            }
+            randomStrings.add(new String(word));
+        }
+        return randomStrings;
+    }
+
+    static{
+        generateRandomWords(100);
+        generateRandomWords(20_000);
+    }
+
     private Java7Aggregator java7Aggregator = new Java7Aggregator();
     private Java7ParallelAggregator java7ParallelAggregator = new Java7ParallelAggregator();
     private Java8Aggregator java8Aggregator = new Java8Aggregator();
