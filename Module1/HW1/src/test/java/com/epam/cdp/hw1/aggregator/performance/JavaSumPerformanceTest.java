@@ -114,7 +114,7 @@ public class JavaSumPerformanceTest {
     }
 
     @Test
-    public void Java8ParallelAggregator_MostFrequent_100Words() {
+    public void java8ParallelAggregator_MostFrequent_100Words() {
         runFrequentWordsWith(java8ParallelAggregator, WORDS_100);
     }
 
@@ -134,7 +134,7 @@ public class JavaSumPerformanceTest {
     }
 
     @Test
-    public void Java8ParallelAggregator_MostFrequent_20K_Words() {
+    public void java8ParallelAggregator_MostFrequent_20K_Words() {
         runFrequentWordsWith(java8ParallelAggregator, WORDS_20K);
     }
 
@@ -154,7 +154,7 @@ public class JavaSumPerformanceTest {
     }
 
     @Test
-    public void Java8ParallelAggregator_Duplicates_100Words() {
+    public void java8ParallelAggregator_Duplicates_100Words() {
         runDuplicatesWith(java8ParallelAggregator, WORDS_100);
     }
 
@@ -174,7 +174,7 @@ public class JavaSumPerformanceTest {
     }
 
     @Test
-    public void Java8ParallelAggregator_Duplicates_20K_Words() {
+    public void java8ParallelAggregator_Duplicates_20K_Words() {
         runDuplicatesWith(java8ParallelAggregator, WORDS_20K);
     }
 }
