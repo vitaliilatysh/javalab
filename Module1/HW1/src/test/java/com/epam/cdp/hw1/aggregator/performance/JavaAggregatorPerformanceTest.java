@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class JavaSumPerformanceTest {
+public class JavaAggregatorPerformanceTest {
 
     private static List<Integer> INTEGERS_20K = new ArrayList<>();
     private static List<Integer> INTEGERS_100 = new ArrayList<>();
