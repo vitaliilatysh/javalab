@@ -32,8 +32,8 @@ The average performance results present in milliseconds.
 
 |                        |Duplicates |        | Frequency|          |  Sum      |        |Overall |        |
 |------------------------|-----------|--------|----------|----------|-----------|--------|--------|--------|
-|Elements count          |  20K      |   100  |  20K     |   100    |    20K    |   100  | 20K    |   100    
-|Java7Aggregator         |  28       |   5    |  15      |   10     |    29     |    1   | 72     |   16
-|Java7ParallelAggregator |  23       |   18   |  21      |   15     |    47     |    5   | 91     |   38
-|Java8Aggregator         |  44       |   19   |  31      |   17     |    37     |    7   | 102    |   43
-|Java8ParallelAggregator |  42       |   24   |  34      |   21     |    59     |    13  | 135    |   58
+|Elements count          |  20K      |   100  |  20K     |   100    |    20K    |   100  | 20K    |   100  | 
+|Java7Aggregator         |  13       |   1    |  31      |   11     |    5      |   1    | 49     |   7
+|Java7ParallelAggregator |  9        |   9    |  26      |   3      |    8      |   2    | 43     |   15
+|Java8Aggregator         |  12       |   124  |  118     |   1      |    14     |   2    | 144    |   127
+|Java8ParallelAggregator |  176      |   4    |  14      |   104    |    5      |   14   | 195    |   122
