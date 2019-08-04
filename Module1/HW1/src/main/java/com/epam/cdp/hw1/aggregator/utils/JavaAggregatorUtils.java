@@ -63,9 +63,9 @@ public class JavaAggregatorUtils {
      * @param words any amount of words
      * @return map of words
      */
-    public static Map<String, Long> createMapOfTheRepeatableWords(List<String> words) {
-        Map<String, Long> wordCount = new HashMap<>();
-        for (String word : words) {
+    public static Map<String, Long> createMapOfTheRepeatableWords(final List<String> words) {
+        final Map<String, Long> wordCount = new HashMap<>();
+        for (final String word : words) {
             if (word != null) {
                 String wordKey = word.toUpperCase();
                 wordCount.put(wordKey, wordCount.get(wordKey) == null ? 1L : wordCount.get(wordKey) + 1);
@@ -77,19 +77,18 @@ public class JavaAggregatorUtils {
     /**
      * Getting the list of duplicated words
      *
-     * @param limit how many words are getting to result
+     * @param limit      how many words are getting to result
      * @param duplicates list of duplicated words
      * @return limited list of duplicated words
      */
     public static List<String> getDuplicatesByLimit(long limit, List<String> duplicates) {
         List<String> result = new ArrayList<>();
         for (String wordFromResult : duplicates) {
-            if (limit != 0) {
-                result.add(wordFromResult);
-                limit--;
-            } else {
+            if (limit == 0) {
                 break;
             }
+            result.add(wordFromResult);
+            limit--;
         }
         return result;
     }
@@ -113,19 +112,18 @@ public class JavaAggregatorUtils {
     /**
      * Getting the list of words with their frequency
      *
-     * @param limit how many words are getting to result
+     * @param limit     how many words are getting to result
      * @param wordCount map of words and their frequency
      * @return list of pair objects
      */
-    public static List<Pair<String, Long>> getFrequentWordsByLimit(long limit, Map<String, Long> wordCount) {
-        List<Pair<String, Long>> result = new ArrayList<>();
+    public static List<Pair<String, Long>> getFrequentWordsByLimit(long limit, final Map<String, Long> wordCount) {
+        final List<Pair<String, Long>> result = new ArrayList<>();
         for (Map.Entry<String, Long> entry : wordCount.entrySet()) {
-            if (limit != 0) {
-                result.add(new Pair<>(entry.getKey().toLowerCase(), entry.getValue()));
-                limit--;
-            } else {
+            if (limit == 0) {
                 break;
             }
+            result.add(new Pair<>(entry.getKey().toLowerCase(), entry.getValue()));
+            limit--;
         }
         return result;
     }
@@ -136,7 +134,7 @@ public class JavaAggregatorUtils {
      * @param numberStream stream of numbers
      * @return sum
      */
-    public static int getSum(Stream<Integer> numberStream) {
+    public static int getSum(final Stream<Integer> numberStream) {
         return numberStream
                 .filter(Objects::nonNull)
                 .mapToInt(Integer::intValue)
@@ -150,11 +148,11 @@ public class JavaAggregatorUtils {
      * @param wordCount stream of strings
      * @return Pair object that contains word itself and its frequency
      */
-    public static List<Pair<String, Long>> getPairs(long limit, Stream<String> wordCount) {
-        Map<String, Long> res = wordCount.filter(Objects::nonNull)
+    public static List<Pair<String, Long>> getPairs(final long limit, final Stream<String> wordCount) {
+        final Map<String, Long> result = wordCount.filter(Objects::nonNull)
                 .collect(groupingBy(Function.identity(), counting()));
 
-        return res.entrySet().stream()
+        return result.entrySet().stream()
                 .map(entry -> new Pair<>(entry.getKey(), entry.getValue()))
                 .limit(limit)
                 .collect(Collectors.toList());
@@ -168,10 +166,10 @@ public class JavaAggregatorUtils {
      * @param limit        max number of elements to display
      * @return sorted duplicated strings
      */
-    public static List<String> getDuplicatedStrings(Stream<String> stringStream, long limit) {
-        Map<String, Long> duplicates = stringStream
+    public static List<String> getDuplicatedStrings(final Stream<String> stringStream, final long limit) {
+        final Map<String, Long> duplicates = stringStream
                 .map(String::toUpperCase)
-                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+                .collect(groupingBy(Function.identity(), counting()));
 
         return duplicates.entrySet().stream()
                 .filter(entry -> entry.getValue() > 1)

@@ -49,7 +49,7 @@ public class Java7ParallelAggregator implements Aggregator {
         protected Integer compute() {
 
             int length = end - start;
-            if (length <= 10) {
+            if (length <= 2000) {
                 return add();
             }
 
@@ -104,7 +104,7 @@ public class Java7ParallelAggregator implements Aggregator {
         protected List<Pair<String, Long>> compute() {
 
             int length = end - start;
-            if (length <= 10) {
+            if (length <= 2000) {
                 return getMostFrequentWords();
             }
 
@@ -166,7 +166,7 @@ public class Java7ParallelAggregator implements Aggregator {
         protected List<String> compute() {
 
             int length = end - start;
-            if (length <= 10) {
+            if (length <= 2000) {
                 return getDuplicates();
             }
 
