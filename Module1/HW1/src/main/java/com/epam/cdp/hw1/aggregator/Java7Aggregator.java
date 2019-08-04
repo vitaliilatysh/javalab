@@ -2,10 +2,10 @@ package com.epam.cdp.hw1.aggregator;
 
 import javafx.util.Pair;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
-import static com.epam.cdp.hw1.aggregator.utils.Java7AggregatorUtils.comparingByValue;
-import static com.epam.cdp.hw1.aggregator.utils.Java7AggregatorUtils.stringComparator;
+import static com.epam.cdp.hw1.aggregator.utils.JavaAggregatorUtils.*;
 
 public class Java7Aggregator implements Aggregator {
 
@@ -22,51 +22,21 @@ public class Java7Aggregator implements Aggregator {
 
     @Override
     public List<Pair<String, Long>> getMostFrequentWords(List<String> words, long limit) {
-        Map<String, Long> wordCount = new HashMap<>();
-        for (String word : words) {
-            if (word != null) {
-                wordCount.put(word, wordCount.get(word) == null ? 1L : wordCount.get(word) + 1);
-            }
-        }
+        Map<String, Long> wordCount = createMapOfTheRepeatableWords(words);
 
         comparingByValue(wordCount);
 
-        List<Pair<String, Long>> result = new ArrayList<>();
-        for (Map.Entry<String, Long> entry : wordCount.entrySet()) {
-            if (limit != 0) {
-                result.add(new Pair<>(entry.getKey(), entry.getValue()));
-                limit--;
-            } else {
-                break;
-            }
-        }
-        return result;
+        return getFrequentWordsByLimit(limit, wordCount);
     }
 
     @Override
     public List<String> getDuplicates(List<String> words, long limit) {
-        Set<String> allWords = new HashSet<>();
-        List<String> duplicates = new ArrayList<>();
-        for (String word : words) {
-            if (word != null) {
-                String uniqueWord = word.toUpperCase();
-                if (!allWords.add(uniqueWord)) {
-                    duplicates.add(word.toUpperCase());
-                }
-            }
-        }
+        Map<String, Long> wordCount = createMapOfTheRepeatableWords(words);
+
+        List<String> duplicates = mapDuplicates(wordCount);
 
         duplicates.sort(stringComparator);
 
-        List<String> showDuplicatesByLimit = new ArrayList<>();
-        for (String wordFromResult : duplicates) {
-            if (limit != 0) {
-                showDuplicatesByLimit.add(wordFromResult);
-                limit--;
-            } else {
-                break;
-            }
-        }
-        return showDuplicatesByLimit;
+        return getDuplicatesByLimit(limit, duplicates);
     }
 }

@@ -5,9 +5,7 @@ import javafx.util.Pair;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static com.epam.cdp.hw1.aggregator.utils.Java8AggregatorUtils.getDuplicatedStrings;
-import static com.epam.cdp.hw1.aggregator.utils.Java8AggregatorUtils.getPairs;
-import static com.epam.cdp.hw1.aggregator.utils.Java8AggregatorUtils.getSum;
+import static com.epam.cdp.hw1.aggregator.utils.JavaAggregatorUtils.*;
 
 public class Java8Aggregator implements Aggregator {
 
