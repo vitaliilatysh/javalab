@@ -30,10 +30,9 @@ How to run tests
 The average performance results present in milliseconds.
 --------------------------------------------------------------------------------------------------------
 
-|                        |           |        |          |          |           |        |        |        |
+|                        |Duplicates |        | Frequency|          |  Sum      |        |Overall |        |
 |------------------------|-----------|--------|----------|----------|-----------|--------|--------|--------|
-|                        | Duplicates|        |Frequency |          | Sum       |        | Overall|
-|Elements count          |  20K      |   100  |  20K     |   100    |    20K    |   100  | 20K    |   100      
+|Elements count          |  20K      |   100  |  20K     |   100    |    20K    |   100  | 20K    |   100    
 |Java7Aggregator         |  28       |   5    |  15      |   10     |    29     |    1   | 72     |   16
 |Java7ParallelAggregator |  23       |   18   |  21      |   15     |    47     |    5   | 91     |   38
 |Java8Aggregator         |  44       |   19   |  31      |   17     |    37     |    7   | 102    |   43
