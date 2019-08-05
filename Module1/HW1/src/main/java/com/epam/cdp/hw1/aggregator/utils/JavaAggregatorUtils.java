@@ -2,14 +2,15 @@ package com.epam.cdp.hw1.aggregator.utils;
 
 import javafx.util.Pair;
 
-import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Stream;
-
-import static java.util.Comparator.naturalOrder;
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
 
 /**
  * @author Vitalii Latysh
@@ -139,43 +140,5 @@ public class JavaAggregatorUtils {
                 .filter(Objects::nonNull)
                 .mapToInt(Integer::intValue)
                 .sum();
-    }
-
-    /**
-     * Getting the most frequently used words
-     *
-     * @param limit     max number of elements to display
-     * @param wordCount stream of strings
-     * @return Pair object that contains word itself and its frequency
-     */
-    public static List<Pair<String, Long>> getPairs(final long limit, final Stream<String> wordCount) {
-        final Map<String, Long> result = wordCount.filter(Objects::nonNull)
-                .collect(groupingBy(Function.identity(), counting()));
-
-        return result.entrySet().stream()
-                .map(entry -> new Pair<>(entry.getKey(), entry.getValue()))
-                .limit(limit)
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * Getting sorted duplicated strings by length, if the length is equaled, then
-     * sorted alphabetically.
-     *
-     * @param stringStream stream of strings
-     * @param limit        max number of elements to display
-     * @return sorted duplicated strings
-     */
-    public static List<String> getDuplicatedStrings(final Stream<String> stringStream, final long limit) {
-        final Map<String, Long> duplicates = stringStream
-                .map(String::toUpperCase)
-                .collect(groupingBy(Function.identity(), counting()));
-
-        return duplicates.entrySet().stream()
-                .filter(entry -> entry.getValue() > 1)
-                .map(Map.Entry::getKey)
-                .sorted(Comparator.comparing(String::length).thenComparing(naturalOrder()))
-                .limit(limit)
-                .collect(Collectors.toList());
     }
 }
