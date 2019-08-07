@@ -6,15 +6,19 @@ public class CacheEntry {
 
     private String value;
 
-    CacheEntry(String value){
+    CacheEntry(String value) {
         this.value = value;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CacheEntry that = (CacheEntry) o;
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        CacheEntry that = (CacheEntry) object;
         return Objects.equals(value, that.value);
     }
 
