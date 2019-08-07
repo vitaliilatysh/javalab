@@ -1,4 +1,4 @@
-package com.epam.cdp.hw2;
+package com.epam.cdp.hw2.cacheservice;
 
 import java.util.Objects;
 
@@ -12,12 +12,15 @@ public class CacheEntry {
 
     @Override
     public boolean equals(Object object) {
+
         if (this == object) {
             return true;
         }
+
         if (object == null || getClass() != object.getClass()) {
             return false;
         }
+
         CacheEntry that = (CacheEntry) object;
         return Objects.equals(value, that.value);
     }
