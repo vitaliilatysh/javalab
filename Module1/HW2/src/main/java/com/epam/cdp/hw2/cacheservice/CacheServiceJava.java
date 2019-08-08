@@ -1,23 +1,17 @@
 package com.epam.cdp.hw2.cacheservice;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class CacheService {
-
-    private static final int MAX_CACHE_SIZE = 2;
+public class CacheServiceJava extends StatsClass implements ICacheService{
 
     private Map<CacheEntry, Integer> values;
 
-    CacheService(){
-        values = new HashMap<>();
+    CacheServiceJava(){
+        values = new ConcurrentHashMap<>();
     }
 
-    /**
-     * Get cache entry
-     * @param cacheEntry represent the object to get from cache
-     * @return return cache entry, if no such entry, null is returned
-     */
+    @Override
     public CacheEntry get(CacheEntry cacheEntry) {
         if (values.get(cacheEntry) != null) {
             values.put(cacheEntry, values.get(cacheEntry) + 1);
@@ -26,11 +20,7 @@ public class CacheService {
         return null;
     }
 
-    /**
-     * Put cache entry into cache
-     * @param cacheEntry represent the object to put to the cache
-     * @return return true, if entry has been put, otherwise false
-     */
+    @Override
     public boolean put(CacheEntry cacheEntry) {
 
         if(cacheEntry == null){
