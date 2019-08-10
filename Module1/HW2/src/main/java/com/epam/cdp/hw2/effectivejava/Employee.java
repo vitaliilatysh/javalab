@@ -1,6 +1,7 @@
 package com.epam.cdp.hw2.effectivejava;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Employee {
 
@@ -41,6 +42,13 @@ public class Employee {
          * @return employee object
          */
         public Builder setFirstName(String firstName) {
+            if(firstName == null){
+                throw new IllegalArgumentException("Name cannot be null");
+            }
+
+            if(firstName.length() < 3){
+                throw new IllegalArgumentException("Name cannot be shorter than 3 symbols");
+            }
             Employee.this.firstName = firstName;
 
             return this;
