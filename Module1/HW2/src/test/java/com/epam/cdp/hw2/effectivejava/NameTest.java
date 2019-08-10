@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 @RunWith(JUnit4.class)
 public class NameTest {
 
-    //Item 43: Prefer method references to lambdas
+    //Section 7. Item 43: Prefer method references to lambdas
     @Test
     public void shouldCountElementsInList(){
 

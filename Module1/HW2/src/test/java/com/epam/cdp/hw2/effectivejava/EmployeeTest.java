@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 
 @RunWith(JUnit4.class)
 public class EmployeeTest {
-    // Item 2: Consider a builder when faced with many constructor
+    // Section 2. Item 2: Consider a builder when faced with many constructor
     //parameters
 
     @Test

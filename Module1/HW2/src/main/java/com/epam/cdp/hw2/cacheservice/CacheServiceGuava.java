@@ -1,15 +1,21 @@
 package com.epam.cdp.hw2.cacheservice;
 
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
+import com.epam.cdp.hw2.utils.Statistics;
+import com.google.common.cache.*;
+import org.apache.log4j.Logger;
 
 import java.util.concurrent.TimeUnit;
 
-public class CacheServiceGuava extends StatsClass implements ICacheService {
-    
+public class CacheServiceGuava extends Statistics implements ICacheService {
+
+    private static final Logger logger = Logger.getLogger(CacheServiceGuava.class);
     private CacheLoader<CacheEntry, String> loader;
     private LoadingCache<CacheEntry, String> cache;
+    private Statistics statistics;
+
+    public Statistics getStatistics() {
+        return statistics;
+    }
 
     CacheServiceGuava() {
         loader = new CacheLoader<CacheEntry, String>() {
@@ -20,10 +26,19 @@ public class CacheServiceGuava extends StatsClass implements ICacheService {
         };
 
         cache = CacheBuilder.newBuilder()
-                .expireAfterAccess(EXPIRE_AFTER_ACCESS, TimeUnit.MILLISECONDS)
+                .removalListener(listener)
+                .expireAfterAccess(EXPIRE_AFTER_ACCESS, TimeUnit.SECONDS)
                 .build(loader);
 
+        statistics = new Statistics();
     }
+
+    private RemovalListener<CacheEntry, String> listener = entry -> {
+        if (entry.wasEvicted()) {
+            logger.info("Removed: " + entry.getKey());
+            incrementEviction();
+        }
+    };
 
     @Override
     public CacheEntry get(CacheEntry cacheEntry) {
@@ -41,12 +56,14 @@ public class CacheServiceGuava extends StatsClass implements ICacheService {
         }
 
         if (cache.size() < MAX_CACHE_SIZE) {
+            long startPutTime = System.currentTimeMillis();
             cache.getUnchecked(cacheEntry);
-            return true;
-        }
+            long finishPutTime = System.currentTimeMillis();
 
-        if (cache.size() == MAX_CACHE_SIZE) {
-            return false;
+            long timeToPut = finishPutTime - startPutTime;
+            getAllTimesToPut().add(timeToPut);
+            logger.info("Added " + cacheEntry + " in " + timeToPut + " ms.");
+            return true;
         }
 
         return false;
