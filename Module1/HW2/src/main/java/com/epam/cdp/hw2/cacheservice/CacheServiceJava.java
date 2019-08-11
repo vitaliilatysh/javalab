@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class CacheServiceJava extends Statistics implements ICacheService {
 
     private static final Logger logger = Logger.getLogger(CacheServiceJava.class);
+
     private ScheduledExecutorService scheduledExecutorService;
     private Map<CacheEntry, Integer> values;
     private Statistics statistics;
