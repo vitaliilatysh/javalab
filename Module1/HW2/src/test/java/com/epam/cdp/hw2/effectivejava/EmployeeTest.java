@@ -43,6 +43,7 @@ public class EmployeeTest {
     }
 
     //Section 8. Item 49: Check parameters for validity
+    //Section 10. Item 69: Use exceptions only for exceptional conditions
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
 
@@ -61,6 +62,7 @@ public class EmployeeTest {
     }
 
     //Section 7. Item 43: Prefer method references to lambdas
+    //Section 5. Item 26: Don’t use raw types
     @Test
     public void shouldCollectAll(){
         List<Employee> employeeList = new ArrayList<>();

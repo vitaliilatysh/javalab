@@ -13,6 +13,7 @@ public class CacheServiceGuava extends Statistics implements ICacheService {
     private LoadingCache<CacheEntry, String> cache;
     private Statistics statistics;
 
+    @Override
     public Statistics getStatistics() {
         return statistics;
     }
@@ -36,7 +37,7 @@ public class CacheServiceGuava extends Statistics implements ICacheService {
     private RemovalListener<CacheEntry, String> listener = entry -> {
         if (entry.wasEvicted()) {
             logger.info("Removed: " + entry.getKey());
-            incrementEviction();
+            statistics.addEvictionToStats();
         }
     };
 
@@ -60,9 +61,9 @@ public class CacheServiceGuava extends Statistics implements ICacheService {
             cache.getUnchecked(cacheEntry);
             long finishPutTime = System.currentTimeMillis();
 
-            long timeToPut = finishPutTime - startPutTime;
-            getAllTimesToPut().add(timeToPut);
-            logger.info("Added " + cacheEntry + " in " + timeToPut + " ms.");
+            long putTime = finishPutTime - startPutTime;
+            statistics.getAllPutTimes().add(putTime);
+            logger.info("Added " + cacheEntry + " in " + putTime + " ms.");
             return true;
         }
 

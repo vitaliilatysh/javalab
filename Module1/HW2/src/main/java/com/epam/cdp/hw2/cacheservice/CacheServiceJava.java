@@ -26,12 +26,11 @@ public class CacheServiceJava extends Statistics implements ICacheService {
                     .min(Map.Entry.comparingByValue())
                     .get();
             values.remove(entryToRemove.getKey());
-            incrementEviction();
+            statistics.addEvictionToStats();
             logger.info("Removed: " + entryToRemove.getKey());
         };
 
-        scheduledExecutorService.schedule(removeTask, EXPIRE_AFTER_ACCESS, TimeUnit.SECONDS);
-        scheduledExecutorService.shutdown();
+        scheduledExecutorService.scheduleAtFixedRate(removeTask, EXPIRE_AFTER_ACCESS, EXPIRE_AFTER_ACCESS, TimeUnit.SECONDS);
     }
 
     @Override
@@ -41,11 +40,13 @@ public class CacheServiceJava extends Statistics implements ICacheService {
 
     @Override
     public CacheEntry get(CacheEntry cacheEntry) {
-        if (values.get(cacheEntry) != null) {
-            values.put(cacheEntry, values.get(cacheEntry) + 1);
-            return cacheEntry;
+        if (values.get(cacheEntry) == null) {
+            return null;
         }
-        return null;
+
+        values.put(cacheEntry, values.get(cacheEntry) + 1);
+        logger.info("Get: " + cacheEntry);
+        return cacheEntry;
     }
 
     @Override
@@ -58,18 +59,17 @@ public class CacheServiceJava extends Statistics implements ICacheService {
         if (values.size() < MAX_CACHE_SIZE) {
 
             if (values.get(cacheEntry) != null) {
-                values.put(cacheEntry, values.get(cacheEntry) + 1);
+                logger.info("Already in cache: " + cacheEntry);
             } else {
                 long startPutTime = System.currentTimeMillis();
                 values.put(cacheEntry, 1);
                 long finishPutTime = System.currentTimeMillis();
 
                 long timeToPut = finishPutTime - startPutTime;
-                getAllTimesToPut().add(timeToPut);
-                logger.info("Added " + cacheEntry + " in " + timeToPut + " ms.");
+                statistics.getAllPutTimes().add(timeToPut);
+                logger.info("Added: " + cacheEntry + " in " + timeToPut + " ms.");
+                return true;
             }
-
-            return true;
         }
 
         return false;

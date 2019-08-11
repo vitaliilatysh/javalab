@@ -11,18 +11,18 @@ public class Statistics {
 
      private static final Logger logger = Logger.getLogger(Statistics.class);
 
-     private static int countEvictions = 0;
-     private static final List<Long> allTimesToPut = new ArrayList<>();
+     private int countEvictions = 0;
+     private final List<Long> allTimesToPut = new ArrayList<>();
 
-     public static List<Long> getAllTimesToPut() {
+     public List<Long> getAllPutTimes() {
           return allTimesToPut;
      }
 
-     public int getCountEvictions() {
+     private int getCountEvictions() {
           return countEvictions;
      }
 
-     public void incrementEviction() {
+     public void addEvictionToStats() {
           countEvictions++;
      }
 
@@ -31,7 +31,7 @@ public class Statistics {
       * @param cacheService cache service
       */
      public static void showStatistics(ICacheService cacheService) {
-          OptionalDouble averagePutTime = Statistics.getAllTimesToPut().stream()
+          OptionalDouble averagePutTime = cacheService.getStatistics().getAllPutTimes().stream()
                   .mapToDouble(Long::doubleValue)
                   .average();
           if (averagePutTime.isPresent()) {

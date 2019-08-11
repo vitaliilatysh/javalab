@@ -1,8 +1,6 @@
 package com.epam.cdp.hw2.cacheservice;
 
 import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -19,21 +17,22 @@ public class CacheServiceJavaTest {
     private static CacheEntry cacheEntry2 = new CacheEntry("java2");
     private static CacheEntry cacheEntry3 = new CacheEntry("java3");
 
-    private static CacheServiceJava cacheServiceJava;
+    private static CacheServiceJava cacheServiceJava = new CacheServiceJava();
 
     @AfterClass
     public static void showTotalEvictions() {
         showStatistics(cacheServiceJava);
     }
 
-    @Before
-    public void init() {
-        cacheServiceJava = new CacheServiceJava();
+    @Test
+    public void shouldReturnTrueAfterFirstAddingEntryToCache() {
+        assertTrue(cacheServiceJava.put(cacheEntry3));
     }
 
     @Test
-    public void shouldReturnTrueAfterAddingEntryToCache() {
-        assertTrue(cacheServiceJava.put(cacheEntry1));
+    public void shouldReturnFalseAfterAddingTheSameEntryAgainToCache() {
+        cacheServiceJava.put(cacheEntry1);
+        assertFalse(cacheServiceJava.put(cacheEntry1));
     }
 
     @Test
@@ -71,7 +70,7 @@ public class CacheServiceJavaTest {
         cacheServiceJava.put(cacheEntry2);
         cacheServiceJava.put(cacheEntry3);
 
-        TimeUnit.SECONDS.sleep(8);
+        TimeUnit.SECONDS.sleep(6);
 
         cacheServiceJava.put(cacheEntry1);
 
