@@ -7,7 +7,6 @@ import org.junit.runners.JUnit4;
 
 import java.util.concurrent.TimeUnit;
 
-import static com.epam.cdp.hw2.utils.Statistics.showStatistics;
 import static org.junit.Assert.*;
 
 @RunWith(JUnit4.class)
@@ -21,62 +20,68 @@ public class CacheServiceJavaTest {
 
     @AfterClass
     public static void showTotalEvictions() {
-        showStatistics(cacheServiceJava);
+        cacheServiceJava.showStatistics();
     }
 
     @Test
     public void shouldReturnTrueAfterFirstAddingEntryToCache() {
-        assertTrue(cacheServiceJava.put(cacheEntry3));
+        assertTrue(cacheServiceJava.put("3", cacheEntry1));
     }
 
     @Test
     public void shouldReturnFalseAfterAddingTheSameEntryAgainToCache() {
-        cacheServiceJava.put(cacheEntry1);
-        assertFalse(cacheServiceJava.put(cacheEntry1));
+        cacheServiceJava.put("1", cacheEntry1);
+        assertFalse(cacheServiceJava.put("1", cacheEntry1));
     }
 
     @Test
     public void shouldReturnFalseAfterAddingNullEntry() {
-        assertFalse(cacheServiceJava.put(null));
+        assertFalse(cacheServiceJava.put("1", null));
+    }
+
+    @Test
+    public void shouldReturnFalseAfterAddingNullKeyAndEntry() {
+        assertFalse(cacheServiceJava.put(null, null));
     }
 
     @Test
     public void shouldReturnEntryWhenGettingFromCache() {
-        cacheServiceJava.put(cacheEntry1);
+        cacheServiceJava.put("1", cacheEntry1);
 
-        assertEquals(cacheEntry1, cacheServiceJava.get(cacheEntry1));
+        assertEquals(cacheEntry1, cacheServiceJava.get("1"));
     }
 
     @Test
     public void shouldNotRemoveFromCacheIfTTLisLessThenExpirationLimit() throws InterruptedException {
-        cacheServiceJava.put(cacheEntry1);
+        cacheServiceJava.put("1", cacheEntry1);
 
         TimeUnit.SECONDS.sleep(4);
 
-        assertEquals(cacheEntry1, cacheServiceJava.get(cacheEntry1));
+        assertEquals(cacheEntry1, cacheServiceJava.get("1"));
     }
 
     @Test
     public void shouldRemoveFromCacheIfTTLisMoreThenExpirationLimit() throws InterruptedException {
-        cacheServiceJava.put(cacheEntry1);
+        cacheServiceJava.put("1", cacheEntry1);
 
         TimeUnit.SECONDS.sleep(6);
 
-        assertNull(cacheServiceJava.get(cacheEntry1));
+        assertNull(cacheServiceJava.get("1"));
     }
 
     @Test
     public void shouldRemoveFromCacheLeastFrequentAccessedAmongSeveralItems() throws InterruptedException {
-        cacheServiceJava.put(cacheEntry2);
-        cacheServiceJava.put(cacheEntry3);
+        cacheServiceJava.put("2", cacheEntry2);
+        cacheServiceJava.put("3", cacheEntry3);
+        cacheServiceJava.put("3", cacheEntry3);
 
         TimeUnit.SECONDS.sleep(6);
 
-        cacheServiceJava.put(cacheEntry1);
+        cacheServiceJava.put("1", cacheEntry1);
 
-        assertEquals(cacheEntry1, cacheServiceJava.get(cacheEntry1));
-        assertEquals(cacheEntry2, cacheServiceJava.get(cacheEntry2));
-        assertNull(cacheServiceJava.get(cacheEntry3));
+        assertEquals(cacheEntry1, cacheServiceJava.get("1"));
+        assertEquals(cacheEntry3, cacheServiceJava.get("3"));
+        assertNull(cacheServiceJava.get("2"));
 
     }
 

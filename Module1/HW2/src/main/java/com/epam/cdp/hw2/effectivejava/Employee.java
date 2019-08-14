@@ -1,9 +1,8 @@
 package com.epam.cdp.hw2.effectivejava;
 
 import java.util.Date;
-import java.util.Objects;
 
-public class Employee {
+class Employee {
 
     private String firstName;
     private String lastName;
@@ -12,23 +11,23 @@ public class Employee {
 
     private Employee() {}
 
-    public String getFirstName() {
+    String getFirstName() {
         return firstName;
     }
 
-    public String getLastName() {
+    String getLastName() {
         return lastName;
     }
 
-    public Date getBirthDay() {
+    Date getBirthDay() {
         return birthDay;
     }
 
-    public String getHomeTown() {
+    String getHomeTown() {
         return homeTown;
     }
 
-    public static Builder newBuilder() {
+    static Builder newBuilder() {
         return new Employee().new Builder();
     }
 
@@ -41,7 +40,7 @@ public class Employee {
          * @param firstName firstName
          * @return employee object
          */
-        public Builder setFirstName(String firstName) {
+        Builder setFirstName(String firstName) {
             if(firstName == null){
                 throw new IllegalArgumentException("Name cannot be null");
             }
@@ -59,7 +58,7 @@ public class Employee {
          * @param lastName lastName
          * @return employee object
          */
-        public Builder setLastName(String lastName) {
+        Builder setLastName(String lastName) {
             Employee.this.lastName = lastName;
 
             return this;
@@ -70,7 +69,7 @@ public class Employee {
          * @param birthDay birthDay
          * @return employee object
          */
-        public Builder setBirtDay(Date birthDay) {
+        Builder setBirtDay(Date birthDay) {
             Employee.this.birthDay = birthDay;
 
             return this;
@@ -81,13 +80,13 @@ public class Employee {
          * @param homeTown homeTown
          * @return employee object
          */
-        public Builder setHomeTown(String homeTown) {
+        Builder setHomeTown(String homeTown) {
             Employee.this.homeTown = homeTown;
 
             return this;
         }
 
-        public Employee build() {
+        Employee build() {
             return Employee.this;
         }
 

@@ -5,9 +5,18 @@ import java.util.Objects;
 public class CacheEntry {
 
     private String value;
+    private int counter;
 
     CacheEntry(String value) {
         this.value = value;
+    }
+
+    void incrementCounter() {
+        this.counter++;
+    }
+
+    int getCounter() {
+        return counter;
     }
 
     @Override
@@ -36,4 +45,5 @@ public class CacheEntry {
                 "value='" + value + '\'' +
                 '}';
     }
+
 }

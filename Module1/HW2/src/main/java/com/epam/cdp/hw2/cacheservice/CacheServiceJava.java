@@ -3,18 +3,19 @@ package com.epam.cdp.hw2.cacheservice;
 import com.epam.cdp.hw2.utils.Statistics;
 import org.apache.log4j.Logger;
 
+import java.util.Comparator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class CacheServiceJava extends Statistics implements ICacheService {
+public class CacheServiceJava extends Statistics implements ICacheService<CacheEntry> {
 
     private static final Logger logger = Logger.getLogger(CacheServiceJava.class);
 
     private ScheduledExecutorService scheduledExecutorService;
-    private Map<CacheEntry, Integer> values;
+    private Map<String, CacheEntry> values;
     private Statistics statistics;
 
     CacheServiceJava() {
@@ -23,47 +24,44 @@ public class CacheServiceJava extends Statistics implements ICacheService {
         scheduledExecutorService = Executors.newScheduledThreadPool(1);
 
         Runnable removeTask = () -> {
-            Map.Entry<CacheEntry, Integer> entryToRemove = values.entrySet().stream()
-                    .min(Map.Entry.comparingByValue())
+            Map.Entry<String, CacheEntry> entryToRemove = values.entrySet().stream()
+                    .min(Comparator.comparing(entry -> entry.getValue().getCounter()))
                     .get();
             values.remove(entryToRemove.getKey());
             statistics.addEvictionToStats();
-            logger.info("Removed: " + entryToRemove.getKey());
+            logger.info("Removed: " + entryToRemove.getValue());
         };
 
         scheduledExecutorService.scheduleAtFixedRate(removeTask, EXPIRE_AFTER_ACCESS, EXPIRE_AFTER_ACCESS, TimeUnit.SECONDS);
     }
 
     @Override
-    public Statistics getStatistics() {
-        return statistics;
-    }
+    public CacheEntry get(String entryKey) {
+        CacheEntry cacheEntry = values.get(entryKey);
 
-    @Override
-    public CacheEntry get(CacheEntry cacheEntry) {
-        if (values.get(cacheEntry) == null) {
+        if (cacheEntry == null) {
             return null;
         }
 
-        values.put(cacheEntry, values.get(cacheEntry) + 1);
-        logger.info("Get: " + cacheEntry);
+        cacheEntry.incrementCounter();
         return cacheEntry;
     }
 
     @Override
-    public boolean put(CacheEntry cacheEntry) {
+    public boolean put(String entryKey, CacheEntry cacheEntry) {
 
-        if (cacheEntry == null) {
+        if (cacheEntry == null || entryKey == null) {
             return false;
         }
 
         if (values.size() < MAX_CACHE_SIZE) {
+            cacheEntry.incrementCounter();
 
-            if (values.get(cacheEntry) != null) {
+            if (values.get(entryKey) != null) {
                 logger.info("Already in cache: " + cacheEntry);
             } else {
                 long startPutTime = System.currentTimeMillis();
-                values.put(cacheEntry, 1);
+                values.put(entryKey, cacheEntry);
                 long finishPutTime = System.currentTimeMillis();
 
                 long timeToPut = finishPutTime - startPutTime;

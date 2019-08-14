@@ -5,7 +5,6 @@ import org.junit.Test;
 
 import java.util.concurrent.TimeUnit;
 
-import static com.epam.cdp.hw2.utils.Statistics.showStatistics;
 import static org.junit.Assert.*;
 
 public class CacheServiceGuavaTest {
@@ -16,60 +15,71 @@ public class CacheServiceGuavaTest {
 
     private static CacheServiceGuava cacheServiceGuava = new CacheServiceGuava();
 
+    static {
+        cacheServiceGuava.getStorage().put("1", cacheEntry1);
+        cacheServiceGuava.getStorage().put("2", cacheEntry2);
+        cacheServiceGuava.getStorage().put("3", cacheEntry3);
+    }
+
     @AfterClass
     public static void showTotalEvictions() {
-        showStatistics(cacheServiceGuava);
+        cacheServiceGuava.showStatistics();
     }
 
     @Test
     public void shouldReturnTrueAfterAddingEntryToCache() {
-        assertTrue(cacheServiceGuava.put(cacheEntry1));
+        assertTrue(cacheServiceGuava.put("1", cacheEntry1));
     }
 
     @Test
     public void shouldReturnFalseAfterAddingNullEntry() {
-        assertFalse(cacheServiceGuava.put(null));
+        assertFalse(cacheServiceGuava.put("1", null));
+    }
+
+    @Test
+    public void shouldReturnFalseAfterAddingNullKeyAndEntry() {
+        assertFalse(cacheServiceGuava.put(null, null));
     }
 
     @Test
     public void shouldReturnEntryWhenGettingFromCache() {
-        cacheServiceGuava.put(cacheEntry1);
+        cacheServiceGuava.put("1", cacheEntry1);
 
-        assertEquals(cacheEntry1, cacheServiceGuava.get(cacheEntry1));
+        assertEquals(cacheEntry1, cacheServiceGuava.get("1"));
     }
 
     @Test
     public void shouldNotRemoveFromCacheIfTTLisLessThenExpirationLimit() throws InterruptedException {
-        cacheServiceGuava.put(cacheEntry1);
+        cacheServiceGuava.put("1", cacheEntry1);
 
         TimeUnit.SECONDS.sleep(4);
 
-        assertEquals(cacheEntry1, cacheServiceGuava.get(cacheEntry1));
+        assertEquals(cacheEntry1, cacheServiceGuava.get("1"));
     }
 
     @Test
     public void shouldRemoveFromCacheIfTTLisMoreThenExpirationLimit() throws InterruptedException {
-        cacheServiceGuava.put(cacheEntry1);
+        cacheServiceGuava.put("1", cacheEntry1);
 
         TimeUnit.SECONDS.sleep(5);
 
-        assertNull(cacheServiceGuava.get(cacheEntry1));
+        assertNull(cacheServiceGuava.get("1"));
     }
 
     @Test
     public void shouldRemoveFromCacheLeastRecentAccessedAmongSeveralItems() throws InterruptedException {
-        cacheServiceGuava.put(cacheEntry1);
+        cacheServiceGuava.put("1", cacheEntry1);
 
         TimeUnit.SECONDS.sleep(7);
 
-        cacheServiceGuava.put(cacheEntry2);
-        cacheServiceGuava.put(cacheEntry3);
+        cacheServiceGuava.put("2", cacheEntry2);
+        cacheServiceGuava.put("3", cacheEntry3);
 
         TimeUnit.SECONDS.sleep(1);
 
-        assertEquals(cacheEntry2, cacheServiceGuava.get(cacheEntry2));
-        assertEquals(cacheEntry3, cacheServiceGuava.get(cacheEntry3));
-        assertNull(cacheServiceGuava.get(cacheEntry1));
+        assertEquals(cacheEntry2, cacheServiceGuava.get("2"));
+        assertEquals(cacheEntry3, cacheServiceGuava.get("3"));
+        assertNull(cacheServiceGuava.get("1"));
 
     }
 }
