@@ -10,6 +10,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import static com.epam.cdp.hw2.utils.Constants.EXPIRE_AFTER_ACCESS;
+
 public class CacheServiceJava extends Statistics implements ICacheService {
 
     private static final Logger logger = Logger.getLogger(CacheServiceJava.class);
@@ -54,26 +56,24 @@ public class CacheServiceJava extends Statistics implements ICacheService {
             return false;
         }
 
-        if (values.size() < MAX_CACHE_SIZE) {
-            CacheEntry cacheEntry = values.get(entryKey);
+        CacheEntry cacheEntry = values.get(entryKey);
 
-            if (cacheEntry == null) {
-                CacheEntry newCacheEntry = new CacheEntry(entryValue);
-                newCacheEntry.incrementCounter();
+        if (cacheEntry == null) {
+            CacheEntry newCacheEntry = new CacheEntry(entryValue);
+            newCacheEntry.incrementCounter();
 
-                long startPutTime = System.currentTimeMillis();
-                values.put(entryKey, newCacheEntry);
-                long finishPutTime = System.currentTimeMillis();
+            long startPutTime = System.currentTimeMillis();
+            values.put(entryKey, newCacheEntry);
+            long finishPutTime = System.currentTimeMillis();
 
-                long timeToPut = finishPutTime - startPutTime;
-                statistics.getAllPutTimes().add(timeToPut);
-                logger.info("Added: " + newCacheEntry + " in " + timeToPut + " ms.");
-                return true;
-            }
-
-            logger.info("Already in cache: " + cacheEntry);
-            cacheEntry.incrementCounter();
+            long timeToPut = finishPutTime - startPutTime;
+            statistics.getAllPutTimes().add(timeToPut);
+            logger.info("Added: " + newCacheEntry + " in " + timeToPut + " ms.");
+            return true;
         }
+
+        logger.info("Already in cache: " + cacheEntry);
+        cacheEntry.incrementCounter();
 
         return false;
     }

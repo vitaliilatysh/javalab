@@ -10,6 +10,9 @@ import org.apache.log4j.Logger;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
+import static com.epam.cdp.hw2.utils.Constants.EXPIRE_AFTER_ACCESS;
+import static com.epam.cdp.hw2.utils.Constants.MAX_CACHE_SIZE;
+
 public class CacheServiceGuava extends Statistics implements ICacheService {
 
     private static final Logger logger = Logger.getLogger(CacheServiceGuava.class);

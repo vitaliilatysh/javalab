@@ -1,10 +1,8 @@
 package com.epam.cdp.hw2.cacheservice;
 
+//Section 4. Item 22: Use interfaces only to define types
+
 public interface ICacheService {
-
-    int MAX_CACHE_SIZE = 100_000;
-    int EXPIRE_AFTER_ACCESS = 5;
-
     /**
      * Get cache entry
      * @param key represent the object key to get from cache
