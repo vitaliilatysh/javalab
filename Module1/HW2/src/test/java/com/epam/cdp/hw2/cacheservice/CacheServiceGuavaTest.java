@@ -9,17 +9,7 @@ import static org.junit.Assert.*;
 
 public class CacheServiceGuavaTest {
 
-    private static CacheEntry cacheEntry1 = new CacheEntry("guava1");
-    private static CacheEntry cacheEntry2 = new CacheEntry("guava2");
-    private static CacheEntry cacheEntry3 = new CacheEntry("guava3");
-
     private static CacheServiceGuava cacheServiceGuava = new CacheServiceGuava();
-
-    static {
-        cacheServiceGuava.getStorage().put("1", cacheEntry1);
-        cacheServiceGuava.getStorage().put("2", cacheEntry2);
-        cacheServiceGuava.getStorage().put("3", cacheEntry3);
-    }
 
     @AfterClass
     public static void showTotalEvictions() {
@@ -28,7 +18,7 @@ public class CacheServiceGuavaTest {
 
     @Test
     public void shouldReturnTrueAfterAddingEntryToCache() {
-        assertTrue(cacheServiceGuava.put("1", cacheEntry1));
+        assertTrue(cacheServiceGuava.put("3", "guava3"));
     }
 
     @Test
@@ -43,23 +33,23 @@ public class CacheServiceGuavaTest {
 
     @Test
     public void shouldReturnEntryWhenGettingFromCache() {
-        cacheServiceGuava.put("1", cacheEntry1);
+        cacheServiceGuava.put("1", "guava1");
 
-        assertEquals(cacheEntry1, cacheServiceGuava.get("1"));
+        assertEquals("guava1", cacheServiceGuava.get("1"));
     }
 
     @Test
     public void shouldNotRemoveFromCacheIfTTLisLessThenExpirationLimit() throws InterruptedException {
-        cacheServiceGuava.put("1", cacheEntry1);
+        cacheServiceGuava.put("1", "guava1");
 
         TimeUnit.SECONDS.sleep(4);
 
-        assertEquals(cacheEntry1, cacheServiceGuava.get("1"));
+        assertEquals("guava1", cacheServiceGuava.get("1"));
     }
 
     @Test
     public void shouldRemoveFromCacheIfTTLisMoreThenExpirationLimit() throws InterruptedException {
-        cacheServiceGuava.put("1", cacheEntry1);
+        cacheServiceGuava.put("1", "guava1");
 
         TimeUnit.SECONDS.sleep(5);
 
@@ -68,17 +58,17 @@ public class CacheServiceGuavaTest {
 
     @Test
     public void shouldRemoveFromCacheLeastRecentAccessedAmongSeveralItems() throws InterruptedException {
-        cacheServiceGuava.put("1", cacheEntry1);
+        cacheServiceGuava.put("1", "guava1");
 
         TimeUnit.SECONDS.sleep(7);
 
-        cacheServiceGuava.put("2", cacheEntry2);
-        cacheServiceGuava.put("3", cacheEntry3);
+        cacheServiceGuava.put("2", "guava2");
+        cacheServiceGuava.put("3", "guava3");
 
         TimeUnit.SECONDS.sleep(1);
 
-        assertEquals(cacheEntry2, cacheServiceGuava.get("2"));
-        assertEquals(cacheEntry3, cacheServiceGuava.get("3"));
+        assertEquals("guava2", cacheServiceGuava.get("2"));
+        assertEquals("guava3", cacheServiceGuava.get("3"));
         assertNull(cacheServiceGuava.get("1"));
 
     }

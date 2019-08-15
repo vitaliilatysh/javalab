@@ -7,16 +7,14 @@ import com.google.common.cache.LoadingCache;
 import com.google.common.cache.RemovalListener;
 import org.apache.log4j.Logger;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-public class CacheServiceGuava extends Statistics implements ICacheService<CacheEntry> {
+public class CacheServiceGuava extends Statistics implements ICacheService {
 
     private static final Logger logger = Logger.getLogger(CacheServiceGuava.class);
 
     private CacheLoader<String, CacheEntry> loader;
-    private Map<String, CacheEntry> storage = new HashMap<>();
     private LoadingCache<String, CacheEntry> cache;
     private Statistics statistics;
     private RemovalListener<String, CacheEntry> listener = entry -> {
@@ -29,8 +27,8 @@ public class CacheServiceGuava extends Statistics implements ICacheService<Cache
     CacheServiceGuava() {
         loader = new CacheLoader<String, CacheEntry>() {
             @Override
-            public CacheEntry load(String entryKey) {
-                return storage.get(entryKey);
+            public CacheEntry load(String entryKey) throws ExecutionException {
+                return cache.get(entryKey);
             }
         };
 
@@ -43,29 +41,34 @@ public class CacheServiceGuava extends Statistics implements ICacheService<Cache
         statistics = new Statistics();
     }
 
-    Map<String, CacheEntry> getStorage() {
-        return storage;
+    @Override
+    public String get(String entryKey) {
+        CacheEntry cacheEntry = cache.getIfPresent(entryKey);
+        return cacheEntry == null ? null : cacheEntry.getValue();
     }
 
     @Override
-    public CacheEntry get(String entryKey) {
-        return cache.getIfPresent(entryKey);
-    }
+    public boolean put(String entryKey, String entryValue) {
 
-    @Override
-    public boolean put(String entryKey, CacheEntry cacheEntry) {
-
-        if (cacheEntry == null || entryKey == null) {
+        if (entryValue == null || entryKey == null) {
             return false;
         }
 
-        long startPutTime = System.currentTimeMillis();
-        cache.getUnchecked(entryKey);
-        long finishPutTime = System.currentTimeMillis();
+        CacheEntry cacheEntry = cache.getIfPresent(entryKey);
 
-        long putTime = finishPutTime - startPutTime;
-        statistics.getAllPutTimes().add(putTime);
-        logger.info("Added: " + cacheEntry + " in " + putTime + " ms.");
-        return true;
+        if(cacheEntry == null) {
+            cacheEntry = new CacheEntry(entryValue);
+            long startPutTime = System.currentTimeMillis();
+            cache.put(entryKey, cacheEntry);
+            long finishPutTime = System.currentTimeMillis();
+
+            long putTime = finishPutTime - startPutTime;
+            statistics.getAllPutTimes().add(putTime);
+            logger.info("Added: " + cacheEntry + " in " + putTime + " ms.");
+            return true;
+        }
+        logger.info("Already in cache: " + cacheEntry);
+
+        return false;
     }
 }

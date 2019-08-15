@@ -19,6 +19,10 @@ public class CacheEntry {
         return counter;
     }
 
+    public String getValue() {
+        return value;
+    }
+
     @Override
     public boolean equals(Object object) {
 

@@ -22,14 +22,14 @@ public class EmployeeTest {
     private Employee employee = Employee.newBuilder()
             .setFirstName("Dan")
             .setLastName("Brown")
-            .setBirtDay(new Date(2000-10-10))
+            .setBirthDay(new Date(2000-10-10))
             .setHomeTown("London")
             .build();
 
     private Employee employee2 = Employee.newBuilder()
             .setFirstName("Carol")
             .setLastName("Sally")
-            .setBirtDay(new Date(2002-9-11))
+            .setBirthDay(new Date(2002-9-11))
             .setHomeTown("New York")
             .build();
 
@@ -48,14 +48,14 @@ public class EmployeeTest {
     public ExpectedException expectedEx = ExpectedException.none();
 
     @Test
-    public void shouldThrowNExceptionIfFirstNameIsNull() {
+    public void shouldThrowExceptionIfFirstNameIsNull() {
         expectedEx.expect(IllegalArgumentException.class);
         expectedEx.expectMessage("Name cannot be null");
 
         Employee.newBuilder()
                 .setFirstName(null)
                 .setLastName("Brown")
-                .setBirtDay(new Date(2000-10-10))
+                .setBirthDay(new Date(2000-10-10))
                 .setHomeTown("London")
                 .build();
 

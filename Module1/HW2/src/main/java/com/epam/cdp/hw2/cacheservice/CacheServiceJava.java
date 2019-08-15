@@ -10,7 +10,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class CacheServiceJava extends Statistics implements ICacheService<CacheEntry> {
+public class CacheServiceJava extends Statistics implements ICacheService {
 
     private static final Logger logger = Logger.getLogger(CacheServiceJava.class);
 
@@ -36,7 +36,7 @@ public class CacheServiceJava extends Statistics implements ICacheService<CacheE
     }
 
     @Override
-    public CacheEntry get(String entryKey) {
+    public String get(String entryKey) {
         CacheEntry cacheEntry = values.get(entryKey);
 
         if (cacheEntry == null) {
@@ -44,31 +44,35 @@ public class CacheServiceJava extends Statistics implements ICacheService<CacheE
         }
 
         cacheEntry.incrementCounter();
-        return cacheEntry;
+        return cacheEntry.getValue();
     }
 
     @Override
-    public boolean put(String entryKey, CacheEntry cacheEntry) {
+    public boolean put(String entryKey, String entryValue) {
 
-        if (cacheEntry == null || entryKey == null) {
+        if (entryKey == null || entryValue == null) {
             return false;
         }
 
         if (values.size() < MAX_CACHE_SIZE) {
-            cacheEntry.incrementCounter();
+            CacheEntry cacheEntry = values.get(entryKey);
 
-            if (values.get(entryKey) != null) {
-                logger.info("Already in cache: " + cacheEntry);
-            } else {
+            if (cacheEntry == null) {
+                CacheEntry newCacheEntry = new CacheEntry(entryValue);
+                newCacheEntry.incrementCounter();
+
                 long startPutTime = System.currentTimeMillis();
-                values.put(entryKey, cacheEntry);
+                values.put(entryKey, newCacheEntry);
                 long finishPutTime = System.currentTimeMillis();
 
                 long timeToPut = finishPutTime - startPutTime;
                 statistics.getAllPutTimes().add(timeToPut);
-                logger.info("Added: " + cacheEntry + " in " + timeToPut + " ms.");
+                logger.info("Added: " + newCacheEntry + " in " + timeToPut + " ms.");
                 return true;
             }
+
+            logger.info("Already in cache: " + cacheEntry);
+            cacheEntry.incrementCounter();
         }
 
         return false;

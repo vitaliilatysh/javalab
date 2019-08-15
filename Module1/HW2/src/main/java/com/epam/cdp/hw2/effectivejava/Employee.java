@@ -9,7 +9,12 @@ class Employee {
     private Date birthDay;
     private String homeTown;
 
-    private Employee() {}
+    private Employee(String firstName, String lastName, Date birthDay, String homeTown) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDay = birthDay;
+        this.homeTown = homeTown;
+    }
 
     String getFirstName() {
         return firstName;
@@ -28,10 +33,14 @@ class Employee {
     }
 
     static Builder newBuilder() {
-        return new Employee().new Builder();
+        return new Builder();
     }
 
-    public class Builder {
+    public static class Builder {
+        private String firstName;
+        private String lastName;
+        private Date birthDay;
+        private String homeTown;
 
         private Builder() {}
 
@@ -48,8 +57,7 @@ class Employee {
             if(firstName.length() < 3){
                 throw new IllegalArgumentException("Name cannot be shorter than 3 symbols");
             }
-            Employee.this.firstName = firstName;
-
+            this.firstName = firstName;
             return this;
         }
 
@@ -59,8 +67,7 @@ class Employee {
          * @return employee object
          */
         Builder setLastName(String lastName) {
-            Employee.this.lastName = lastName;
-
+            this.lastName = lastName;
             return this;
         }
 
@@ -69,9 +76,8 @@ class Employee {
          * @param birthDay birthDay
          * @return employee object
          */
-        Builder setBirtDay(Date birthDay) {
-            Employee.this.birthDay = birthDay;
-
+        Builder setBirthDay(Date birthDay) {
+            this.birthDay = birthDay;
             return this;
         }
 
@@ -81,13 +87,12 @@ class Employee {
          * @return employee object
          */
         Builder setHomeTown(String homeTown) {
-            Employee.this.homeTown = homeTown;
-
+            this.homeTown = homeTown;
             return this;
         }
 
         Employee build() {
-            return Employee.this;
+            return new Employee(firstName, lastName, birthDay, homeTown);
         }
 
     }
