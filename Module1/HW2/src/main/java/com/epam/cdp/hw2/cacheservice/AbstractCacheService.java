@@ -1,4 +1,4 @@
-package com.epam.cdp.hw2.utils;
+package com.epam.cdp.hw2.cacheservice;
 
 import org.apache.log4j.Logger;
 
@@ -6,14 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.OptionalDouble;
 
-public class Statistics {
+public abstract class AbstractCacheService implements ICacheService{
 
-     private static final Logger logger = Logger.getLogger(Statistics.class);
+     private static final Logger logger = Logger.getLogger(AbstractCacheService.class);
 
      private static int countEvictions = 0;
      private static final List<Long> allTimesToPut = new ArrayList<>();
 
-     public List<Long> getAllPutTimes() {
+     List<Long> getAllPutTimes() {
           return allTimesToPut;
      }
 
@@ -21,7 +21,7 @@ public class Statistics {
           return countEvictions;
      }
 
-     public void addEvictionToStats() {
+     void addEvictionToStats() {
           countEvictions++;
      }
 

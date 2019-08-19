@@ -1,6 +1,5 @@
 package com.epam.cdp.hw2.cacheservice;
 
-import com.epam.cdp.hw2.utils.Statistics;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -13,17 +12,16 @@ import java.util.concurrent.TimeUnit;
 import static com.epam.cdp.hw2.utils.Constants.EXPIRE_AFTER_ACCESS;
 import static com.epam.cdp.hw2.utils.Constants.MAX_CACHE_SIZE;
 
-public class CacheServiceGuava extends Statistics implements ICacheService {
+public class CacheServiceGuava extends AbstractCacheService implements ICacheService {
 
     private static final Logger logger = Logger.getLogger(CacheServiceGuava.class);
 
     private CacheLoader<String, CacheEntry> loader;
     private LoadingCache<String, CacheEntry> cache;
-    private Statistics statistics;
     private RemovalListener<String, CacheEntry> listener = entry -> {
         if (entry.wasEvicted()) {
             logger.info("Removed: " + entry.getValue());
-            statistics.addEvictionToStats();
+            this.addEvictionToStats();
         }
     };
 
@@ -41,7 +39,6 @@ public class CacheServiceGuava extends Statistics implements ICacheService {
                 .expireAfterAccess(EXPIRE_AFTER_ACCESS, TimeUnit.SECONDS)
                 .build(loader);
 
-        statistics = new Statistics();
     }
 
     @Override
@@ -66,7 +63,7 @@ public class CacheServiceGuava extends Statistics implements ICacheService {
             long finishPutTime = System.currentTimeMillis();
 
             long putTime = finishPutTime - startPutTime;
-            statistics.getAllPutTimes().add(putTime);
+            this.getAllPutTimes().add(putTime);
             logger.info("Added: " + cacheEntry + " in " + putTime + " ms.");
             return true;
         }

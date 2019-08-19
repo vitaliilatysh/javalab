@@ -1,6 +1,5 @@
 package com.epam.cdp.hw2.cacheservice;
 
-import com.epam.cdp.hw2.utils.Statistics;
 import org.apache.log4j.Logger;
 
 import java.util.Comparator;
@@ -12,17 +11,15 @@ import java.util.concurrent.TimeUnit;
 
 import static com.epam.cdp.hw2.utils.Constants.EXPIRE_AFTER_ACCESS;
 
-public class CacheServiceJava extends Statistics implements ICacheService {
+public class CacheServiceJava extends AbstractCacheService implements ICacheService {
 
     private static final Logger logger = Logger.getLogger(CacheServiceJava.class);
 
     private ScheduledExecutorService scheduledExecutorService;
     private Map<String, CacheEntry> values;
-    private Statistics statistics;
 
     CacheServiceJava() {
         values = new ConcurrentHashMap<>();
-        statistics = new Statistics();
         scheduledExecutorService = Executors.newScheduledThreadPool(1);
 
         Runnable removeTask = () -> {
@@ -30,7 +27,7 @@ public class CacheServiceJava extends Statistics implements ICacheService {
                     .min(Comparator.comparing(entry -> entry.getValue().getCounter()))
                     .get();
             values.remove(entryToRemove.getKey());
-            statistics.addEvictionToStats();
+            this.addEvictionToStats();
             logger.info("Removed: " + entryToRemove.getValue());
         };
 
@@ -67,7 +64,7 @@ public class CacheServiceJava extends Statistics implements ICacheService {
             long finishPutTime = System.currentTimeMillis();
 
             long timeToPut = finishPutTime - startPutTime;
-            statistics.getAllPutTimes().add(timeToPut);
+            this.getAllPutTimes().add(timeToPut);
             logger.info("Added: " + newCacheEntry + " in " + timeToPut + " ms.");
             return true;
         }
@@ -77,4 +74,5 @@ public class CacheServiceJava extends Statistics implements ICacheService {
 
         return false;
     }
+
 }

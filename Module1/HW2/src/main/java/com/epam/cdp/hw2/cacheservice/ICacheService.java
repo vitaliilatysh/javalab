@@ -18,4 +18,9 @@ public interface ICacheService {
      */
     boolean put(String entryKey, String entryValue);
 
+    /**
+     * Showing average put time for new objects + total evictions from cache
+     *
+     */
+    void showStatistics();
 }
