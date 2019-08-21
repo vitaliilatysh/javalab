@@ -10,6 +10,10 @@ public class PostFixConverter {
     private Deque<Character> stack = new ArrayDeque<>();
     private List<String> postfix = new ArrayList<>();
 
+    PostFixConverter(){
+
+    }
+
     PostFixConverter(String expression) {
         infix = expression;
         convertExpression();

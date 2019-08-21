@@ -5,7 +5,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
 
-public class PostFixCalculator {
+public class PostFixCalculator implements IPostFixCalculator {
     private List<String> expression;
     private Deque<Double> stack = new ArrayDeque<>();
 
@@ -13,8 +13,8 @@ public class PostFixCalculator {
         expression = postfix;
     }
 
-
-    BigDecimal result() {
+    @Override
+    public BigDecimal result() {
         for (int index = 0; index != expression.size(); ++index) {
             if (Character.isDigit(expression.get(index).charAt(0))) {
                 stack.addLast(Double.parseDouble(expression.get(index)));
@@ -48,6 +48,6 @@ public class PostFixCalculator {
                 stack.addLast(tempResult);
             }
         }
-        return new BigDecimal(stack.removeLast()).setScale(3, BigDecimal.ROUND_HALF_UP).stripTrailingZeros();
+        return new BigDecimal(stack.removeLast()).setScale(10, BigDecimal.ROUND_HALF_UP).stripTrailingZeros();
     }
 }
