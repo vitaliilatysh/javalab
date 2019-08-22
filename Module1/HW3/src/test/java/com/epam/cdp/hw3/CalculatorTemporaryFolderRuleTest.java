@@ -18,6 +18,8 @@ import static org.junit.Assert.assertEquals;
 @RunWith(JUnit4.class)
 public class CalculatorTemporaryFolderRuleTest {
 
+    private PostFixConverter postFixConverter = new PostFixConverter();
+    private PostFixCalculator postFixCalculator = new PostFixCalculator();
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
@@ -26,10 +28,7 @@ public class CalculatorTemporaryFolderRuleTest {
     public void testInTempFolder() throws IOException {
         File tempFile = temporaryFolder.newFile("file.txt");
 
-        PostFixConverter pc = new PostFixConverter("1+1");
-        PostFixCalculator calc = new PostFixCalculator(pc.getPostfixAsList());
-
-        BigDecimal calculationResult = calc.result();
+        BigDecimal calculationResult = postFixCalculator.result(postFixConverter.convertExpression("1+1"));
         Files.write(Paths.get(tempFile.getAbsolutePath()), calculationResult.toString().getBytes());
 
         String result = Files.readAllLines(Paths.get(tempFile.getAbsolutePath())).get(0);

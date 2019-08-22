@@ -4,12 +4,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 @RunWith(Parameterized.class)
 public class CalculatorParameterizedTest {
@@ -41,17 +41,18 @@ public class CalculatorParameterizedTest {
                 {"2*2/2+1.5", "3.5"},
                 {"2+2-2-2*10-8.5/2", "-22.25"},
                 {"(4+4)", "8"},
-                {"(4+4)*2-10.05/(45+5)+3", "18.799"}
-
+                {"(4+4)*2-10.05/(45+5)+3", "18.799"},
+                {"((3*3.5)/100)*0.124-45", "-44.98698"}
         });
     }
 
     @Test
-    public void test(){
-        PostFixConverter pc = new PostFixConverter(expression);
-        PostFixCalculator calc = new PostFixCalculator(pc.getPostfixAsList());
+    public void test() {
+        PostFixConverter pc = new PostFixConverter();
+        PostFixCalculator calc = new PostFixCalculator();
+        List<String> postFixExpression = pc.convertExpression(expression);
 
-        assertThat(calc.result().toString(), is(expectedResult));
+        assertThat(calc.result(postFixExpression).toString(), is(expectedResult));
     }
 
 }

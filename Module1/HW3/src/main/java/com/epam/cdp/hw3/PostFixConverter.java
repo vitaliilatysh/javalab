@@ -5,21 +5,12 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
-public class PostFixConverter {
-    private String infix;
+public class PostFixConverter implements IPostFixConverter {
     private Deque<Character> stack = new ArrayDeque<>();
     private List<String> postfix = new ArrayList<>();
 
-    PostFixConverter(){
-
-    }
-
-    PostFixConverter(String expression) {
-        infix = expression;
-        convertExpression();
-    }
-
-    private void convertExpression() {
+    @Override
+    public List<String> convertExpression(String infix) {
         StringBuilder temp = new StringBuilder();
 
         for (int index = 0; index != infix.length(); ++index) {
@@ -38,6 +29,7 @@ public class PostFixConverter {
             }
         }
         clearStack();
+        return postfix;
     }
 
     private void inputToStack(char input) {
@@ -64,7 +56,6 @@ public class PostFixConverter {
     }
 
     private int getPrecedence(char operator) {
-
         if (operator == '+' || operator == '-') {
             return 1;
         }
@@ -83,8 +74,4 @@ public class PostFixConverter {
         }
     }
 
-
-    List<String> getPostfixAsList() {
-        return postfix;
-    }
 }

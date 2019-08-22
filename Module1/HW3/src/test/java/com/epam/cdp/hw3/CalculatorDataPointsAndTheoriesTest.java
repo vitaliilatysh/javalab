@@ -10,6 +10,9 @@ import static org.junit.Assert.assertEquals;
 @RunWith(Theories.class)
 public class CalculatorDataPointsAndTheoriesTest {
 
+    private PostFixConverter postFixConverter = new PostFixConverter();
+    private PostFixCalculator postFixCalculator = new PostFixCalculator();
+
     @DataPoints("floats")
     public static String[] floats() {
         return new String[]{"0.00012", "999.4302", "0.234", "0.01"};
@@ -31,20 +34,18 @@ public class CalculatorDataPointsAndTheoriesTest {
     public void add(@FromDataPoints("floats") String number1,
                     @FromDataPoints("integers") String number2) {
         String expression = number1 + add + number2;
-        PostFixConverter pc = new PostFixConverter(expression);
-        PostFixCalculator calc = new PostFixCalculator(pc.getPostfixAsList());
 
-        assertEquals(calc.result(), new BigDecimal(number1).add(new BigDecimal(number2)).setScale(10, BigDecimal.ROUND_HALF_UP).stripTrailingZeros());
+        assertEquals(postFixCalculator.result(postFixConverter.convertExpression(expression)),
+                new BigDecimal(number1).add(new BigDecimal(number2)).setScale(10, BigDecimal.ROUND_HALF_UP).stripTrailingZeros());
     }
 
     @Theory
     public void extract(@FromDataPoints("floats") String number1,
                     @FromDataPoints("integers") String number2) {
         String expression = number1 + extract + number2;
-        PostFixConverter pc = new PostFixConverter(expression);
-        PostFixCalculator calc = new PostFixCalculator(pc.getPostfixAsList());
 
-        assertEquals(calc.result(), (new BigDecimal(number1).subtract(new BigDecimal(number2))).setScale(10, BigDecimal.ROUND_HALF_UP).stripTrailingZeros());
+        assertEquals(postFixCalculator.result(postFixConverter.convertExpression(expression)),
+                (new BigDecimal(number1).subtract(new BigDecimal(number2))).setScale(10, BigDecimal.ROUND_HALF_UP).stripTrailingZeros());
     }
 
 }
