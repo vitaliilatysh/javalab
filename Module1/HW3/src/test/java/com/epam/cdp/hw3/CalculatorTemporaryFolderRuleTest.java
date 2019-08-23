@@ -20,6 +20,7 @@ public class CalculatorTemporaryFolderRuleTest {
 
     private PostFixConverter postFixConverter = new PostFixConverter();
     private PostFixCalculator postFixCalculator = new PostFixCalculator();
+
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
