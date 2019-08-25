@@ -28,6 +28,12 @@ public class RunCalculator {
         }
     }
 
+    /**
+     * @param pc   postfix converter
+     * @param calc calculator
+     * @param args file names: input file and output
+     * @throws IOException if some file write/read issues to file
+     */
     public static void fileMode(PostFixConverter pc, PostFixCalculator calc, String[] args) throws IOException {
         File inputFile = new File(args[0]);
         File outputFile = new File(args[1]);
@@ -43,6 +49,12 @@ public class RunCalculator {
         Files.write(Paths.get(outputFile.getAbsolutePath()), resultLines);
     }
 
+    /**
+     * Console calculator mode
+     * @param pc postfix converter
+     * @param calc calculator itself
+     * @param scanner input
+     */
     public static void consoleMode(PostFixConverter pc, PostFixCalculator calc, Scanner scanner) {
         String expression;
 

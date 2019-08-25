@@ -5,17 +5,25 @@ import org.junit.Test;
 
 import java.util.List;
 
-//TODO: need to find out how to implement TestRule properly
+import static org.junit.Assert.assertEquals;
+
+
 public class CustomRuleResultsTest {
 
     @Rule
-    public TestResults testResults = new TestResults();
+    public ExecutionTestInfo executionTestInfo = new ExecutionTestInfo();
     private PostFixConverter postFixConverter = new PostFixConverter();
-    List<String> postFixExpression = postFixConverter.convertExpression("1+1");
     private PostFixCalculator postFixCalculator = new PostFixCalculator();
 
     @Test
-    public void writeTestResultToFile() {
-        postFixCalculator.result(postFixExpression).toString();
+    public void shouldReturn2If1plus1() {
+        List<String> postFixExpression = postFixConverter.convertExpression("1+1");
+        assertEquals(postFixCalculator.result(postFixExpression).toString(), "2");
+    }
+
+    @Test
+    public void shouldReturn1If1Divide1() {
+        List<String> postFixExpression = postFixConverter.convertExpression("1/1");
+        assertEquals(postFixCalculator.result(postFixExpression).toString(), "1");
     }
 }
