@@ -18,12 +18,11 @@ import static org.junit.Assert.assertEquals;
 @RunWith(JUnit4.class)
 public class CalculatorTemporaryFolderRuleTest {
 
-    private PostFixConverter postFixConverter = new PostFixConverter();
-    private PostFixCalculator postFixCalculator = new PostFixCalculator();
-
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
+    private PostFixConverter postFixConverter = new PostFixConverter();
+    private PostFixCalculator postFixCalculator = new PostFixCalculator();
 
     @Test
     public void testInTempFolder() throws IOException {

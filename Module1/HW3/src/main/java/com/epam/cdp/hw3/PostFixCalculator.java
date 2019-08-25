@@ -36,6 +36,9 @@ public class PostFixCalculator implements IPostFixCalculator {
                     case "/":
                         temp = stack.removeLast();
                         tempResult = stack.removeLast() / temp;
+                        if (Double.isInfinite(tempResult)) {
+                            throw new ArithmeticException("Cannot calculate the expression. Cause: division to 0.");
+                        }
                         break;
                     default:
                         break;

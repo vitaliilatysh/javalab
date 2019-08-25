@@ -10,6 +10,11 @@ import static org.junit.Assert.assertEquals;
 @RunWith(Theories.class)
 public class CalculatorDataPointsAndTheoriesTest {
 
+    @DataPoint
+    public static final String add = "+";
+    @DataPoint
+    public static final String extract = "-";
+
     private PostFixConverter postFixConverter = new PostFixConverter();
     private PostFixCalculator postFixCalculator = new PostFixCalculator();
 
@@ -23,13 +28,6 @@ public class CalculatorDataPointsAndTheoriesTest {
         return new String[]{"1000", "2", "55"};
     }
 
-    @DataPoint
-    public static final String add = "+";
-
-    @DataPoint
-    public static final String extract = "-";
-
-
     @Theory
     public void add(@FromDataPoints("floats") String number1,
                     @FromDataPoints("integers") String number2) {
@@ -41,7 +39,7 @@ public class CalculatorDataPointsAndTheoriesTest {
 
     @Theory
     public void extract(@FromDataPoints("floats") String number1,
-                    @FromDataPoints("integers") String number2) {
+                        @FromDataPoints("integers") String number2) {
         String expression = number1 + extract + number2;
 
         assertEquals(postFixCalculator.result(postFixConverter.convertExpression(expression)),

@@ -11,6 +11,10 @@ public class PostFixConverter implements IPostFixConverter {
 
     @Override
     public List<String> convertExpression(String infix) {
+
+        if (infix == null || infix.isEmpty()) {
+            throw new IllegalArgumentException("Expression cannot be null or empty. Please, enter the expression.");
+        }
         StringBuilder temp = new StringBuilder();
 
         for (int index = 0; index != infix.length(); ++index) {

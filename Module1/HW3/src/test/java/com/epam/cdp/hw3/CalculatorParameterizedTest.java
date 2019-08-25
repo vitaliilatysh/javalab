@@ -16,7 +16,7 @@ public class CalculatorParameterizedTest {
 
     private String expression, expectedResult;
 
-    public CalculatorParameterizedTest(String expression, String expectedResult){
+    public CalculatorParameterizedTest(String expression, String expectedResult) {
         this.expression = expression;
         this.expectedResult = expectedResult;
     }

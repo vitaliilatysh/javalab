@@ -1,4 +1,4 @@
-package com.epam.cdp.hw3;
+package com.epam.cdp.hw3.rules;
 
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;

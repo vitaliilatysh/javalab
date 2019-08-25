@@ -1,5 +1,6 @@
 package com.epam.cdp.hw3;
 
+import com.epam.cdp.hw3.rules.ExecutionTestInfo;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -8,10 +9,11 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 
-public class CustomRuleResultsTest {
+public class CustomRuleExecutionInfoTest {
 
     @Rule
     public ExecutionTestInfo executionTestInfo = new ExecutionTestInfo();
+
     private PostFixConverter postFixConverter = new PostFixConverter();
     private PostFixCalculator postFixCalculator = new PostFixCalculator();
 
