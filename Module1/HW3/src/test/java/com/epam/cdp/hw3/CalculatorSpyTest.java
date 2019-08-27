@@ -1,31 +1,41 @@
 package com.epam.cdp.hw3;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-
-import java.math.BigDecimal;
+import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 
 @RunWith(JUnit4.class)
 public class CalculatorSpyTest {
 
-    private PostFixCalculator calculator = spy(PostFixCalculator.class);
+    @InjectMocks
+    private PostFixCalculator calculator;
 
-    @Test
-    public void testSpyCallRealMethod() {
-        when(calculator.calculate("1+1")).thenCallRealMethod();
-        assertEquals(calculator.calculate("1+1").toString(), "2");
+    @Spy
+    private PostFixConverter converter;
+
+    @Before
+    public void init() {
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
+    public void testSpyCallRealMethod() {
+        when(converter.convertExpression("1+1")).thenCallRealMethod();
+        assertEquals(calculator.calculate("1+1").toString(), "2");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
     public void testSpyCallMock() {
-        when(calculator.calculate("1+3")).thenReturn(new BigDecimal(4));
-        assertEquals(calculator.calculate("1+3").toString(), "4");
+        when(converter.convertExpression("1+1")).thenThrow(IllegalArgumentException.class);
+        calculator.calculate("1+1");
     }
 
 }
