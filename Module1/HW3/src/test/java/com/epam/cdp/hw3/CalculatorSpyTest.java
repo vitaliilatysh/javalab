@@ -4,8 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.math.BigDecimal;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.spy;
@@ -15,26 +14,18 @@ import static org.mockito.Mockito.when;
 @RunWith(JUnit4.class)
 public class CalculatorSpyTest {
 
-    private PostFixCalculator calculator = new PostFixCalculator();
-    private PostFixConverter postFixConverter = spy(PostFixConverter.class);
+    private PostFixCalculator calculator = spy(PostFixCalculator.class);
 
     @Test
-    public void testSpy() {
+    public void testSpyCallRealMethod() {
+        when(calculator.calculate("1+1")).thenCallRealMethod();
+        assertEquals(calculator.calculate("1+1").toString(), "2");
+    }
 
-        List<String> postfix = new ArrayList<>();
-        postfix.add("1");
-        postfix.add("1");
-        postfix.add("+");
-
-        when(postFixConverter.convertExpression("1+1")).thenCallRealMethod();
-        when(postFixConverter.convertExpression("10+10")).thenReturn(postfix);
-
-        List<String> postFixExpression1 = postFixConverter.convertExpression("1+1");
-        List<String> postFixExpression2 = postFixConverter.convertExpression("10+10");
-
-        assertEquals(calculator.result(postFixExpression1).toString(), "2");
-        assertEquals(calculator.result(postFixExpression2).toString(), "2");
-
+    @Test
+    public void testSpyCallMock() {
+        when(calculator.calculate("1+3")).thenReturn(new BigDecimal(4));
+        assertEquals(calculator.calculate("1+3").toString(), "4");
     }
 
 }

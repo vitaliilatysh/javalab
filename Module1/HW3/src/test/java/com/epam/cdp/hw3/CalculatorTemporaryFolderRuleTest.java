@@ -21,14 +21,14 @@ public class CalculatorTemporaryFolderRuleTest {
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
-    private PostFixConverter postFixConverter = new PostFixConverter();
     private PostFixCalculator postFixCalculator = new PostFixCalculator();
 
     @Test
     public void testInTempFolder() throws IOException {
         File tempFile = temporaryFolder.newFile("file.txt");
 
-        BigDecimal calculationResult = postFixCalculator.result(postFixConverter.convertExpression("1+1"));
+        BigDecimal calculationResult = postFixCalculator.calculate("1+1");
+
         Files.write(Paths.get(tempFile.getAbsolutePath()), calculationResult.toString().getBytes());
 
         String result = Files.readAllLines(Paths.get(tempFile.getAbsolutePath())).get(0);

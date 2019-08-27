@@ -15,7 +15,6 @@ public class CalculatorDataPointsAndTheoriesTest {
     @DataPoint
     public static final String extract = "-";
 
-    private PostFixConverter postFixConverter = new PostFixConverter();
     private PostFixCalculator postFixCalculator = new PostFixCalculator();
 
     @DataPoints("floats")
@@ -33,7 +32,7 @@ public class CalculatorDataPointsAndTheoriesTest {
                     @FromDataPoints("integers") String number2) {
         String expression = number1 + add + number2;
 
-        assertEquals(postFixCalculator.result(postFixConverter.convertExpression(expression)),
+        assertEquals(postFixCalculator.calculate(expression),
                 new BigDecimal(number1).add(new BigDecimal(number2)).setScale(10, BigDecimal.ROUND_HALF_UP).stripTrailingZeros());
     }
 
@@ -42,7 +41,7 @@ public class CalculatorDataPointsAndTheoriesTest {
                         @FromDataPoints("integers") String number2) {
         String expression = number1 + extract + number2;
 
-        assertEquals(postFixCalculator.result(postFixConverter.convertExpression(expression)),
+        assertEquals(postFixCalculator.calculate(expression),
                 (new BigDecimal(number1).subtract(new BigDecimal(number2))).setScale(10, BigDecimal.ROUND_HALF_UP).stripTrailingZeros());
     }
 

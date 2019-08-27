@@ -6,10 +6,20 @@ import java.util.Deque;
 import java.util.List;
 
 public class PostFixCalculator implements IPostFixCalculator {
+    private PostFixConverter postFixConverter;
     private Deque<Double> stack = new ArrayDeque<>();
 
+    PostFixCalculator() {
+        postFixConverter = new PostFixConverter();
+    }
+
     @Override
-    public BigDecimal result(List<String> expression) {
+    public BigDecimal calculate(String infix) {
+        List<String> expression = postFixConverter.convertExpression(infix);
+        return result(expression);
+    }
+
+    private BigDecimal result(List<String> expression) {
         for (int index = 0; index != expression.size(); ++index) {
             if (Character.isDigit(expression.get(index).charAt(0))) {
                 stack.addLast(Double.parseDouble(expression.get(index)));

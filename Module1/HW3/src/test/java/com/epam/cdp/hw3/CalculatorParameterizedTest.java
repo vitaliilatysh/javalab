@@ -6,7 +6,6 @@ import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -48,11 +47,9 @@ public class CalculatorParameterizedTest {
 
     @Test
     public void test() {
-        PostFixConverter pc = new PostFixConverter();
         PostFixCalculator calc = new PostFixCalculator();
-        List<String> postFixExpression = pc.convertExpression(expression);
 
-        assertThat(calc.result(postFixExpression).toString(), is(expectedResult));
+        assertThat(calc.calculate(expression).toString(), is(expectedResult));
     }
 
 }
