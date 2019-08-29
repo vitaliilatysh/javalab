@@ -31,7 +31,18 @@ public class CalculatorTest {
     }
 
     @Test
-    public void testAddNumbersShouldReturnSumAny2NumbersDiffDelims(){
+    public void testAddNumbersShouldReturnSumAny2NumbersDiffDelimiters(){
         assertEquals(calculator.addInt("1\n2,3"), 6);
     }
+
+    @Test
+    public void testAddNumbersShouldReturnSumAny2NumbersSemicolonDelimiter(){
+        assertEquals(calculator.addInt("//;\n1;2"), 3);
+    }
+
+    @Test
+    public void testAddNumbersShouldReturnSumAny2NumbersDotDelimiter(){
+        assertEquals(calculator.addInt("//.\n1.2.4"), 7);
+    }
+
 }
