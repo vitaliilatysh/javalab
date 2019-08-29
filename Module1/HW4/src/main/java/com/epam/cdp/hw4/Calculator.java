@@ -32,6 +32,9 @@ public class Calculator {
         numberLiterals = numbers.split("[" + delimiters + "]");
 
         for (String number : numberLiterals) {
+            if(Integer.parseInt(number) > 1000){
+                continue;
+            }
             sum += Integer.parseInt(number);
         }
 

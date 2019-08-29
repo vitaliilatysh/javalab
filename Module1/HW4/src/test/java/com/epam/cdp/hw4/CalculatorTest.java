@@ -65,4 +65,9 @@ public class CalculatorTest {
         calculator.addInt("//.\n1.-7.-5");
     }
 
+    @Test
+    public void testAddNumbersShouldIgnoreNumbersMore1000(){
+        assertEquals(calculator.addInt("//.\n1001.1.2"), 3);
+    }
+
 }
