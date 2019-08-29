@@ -9,7 +9,7 @@ public class Calculator {
             return sum;
         }
 
-        String[] numberLiterals = numbers.split(",");
+        String[] numberLiterals = numbers.split("[,\n]");
 
         for(String number: numberLiterals){
             sum+=Integer.parseInt(number);

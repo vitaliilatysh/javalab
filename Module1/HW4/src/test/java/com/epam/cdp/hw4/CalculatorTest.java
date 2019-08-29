@@ -29,4 +29,9 @@ public class CalculatorTest {
     public void testAddNumbersShouldReturnSumAnyAmountOfNumbers(){
         assertEquals(calculator.addInt("1,2,3,4,5,6"), 21);
     }
+
+    @Test
+    public void testAddNumbersShouldReturnSumAny2NumbersDiffDelims(){
+        assertEquals(calculator.addInt("1\n2,3"), 6);
+    }
 }
