@@ -85,4 +85,9 @@ public class CalculatorTest {
         assertEquals(calculator.addInt("//.*(\n1.2*3(4"), 10);
     }
 
+    @Test
+    public void testAddNumbersShouldSumNumbersWithDifferentDelimitersAndDiffLength() {
+        assertEquals(calculator.addInt("//...*((\n1...2*3((4"), 10);
+    }
+
 }
