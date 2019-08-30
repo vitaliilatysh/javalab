@@ -70,4 +70,14 @@ public class CalculatorTest {
         assertEquals(calculator.addInt("//.\n1001.1.2"), 3);
     }
 
+    @Test
+    public void testAddNumbersShouldSumNumbersWithDelimitersAnyLengthAsterisk() {
+        assertEquals(calculator.addInt("//***\n1***2***3"), 6);
+    }
+
+    @Test
+    public void testAddNumbersShouldSumNumbersWithDelimitersAnyLengthDot() {
+        assertEquals(calculator.addInt("//...\n1...2...3"), 6);
+    }
+
 }

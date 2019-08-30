@@ -14,7 +14,7 @@ public class Calculator {
             return sum;
         }
 
-        String[] numberLiterals;
+        String[] numberLiterals = null;
         String delimiters = ",\n";
         String negativeRegex = "-\\d+";
 
@@ -22,23 +22,39 @@ public class Calculator {
 
         if (numbers.startsWith("//")) {
             int endIndexOptionalLine = numbers.indexOf("\n");
+            int startIndexOptionalLine = numbers.indexOf("/");
             if (endIndexOptionalLine != -1) {
-                String defaultDelimiter = numbers.substring(endIndexOptionalLine - 1, endIndexOptionalLine);
-                delimiters = delimiters.concat(defaultDelimiter);
+                String defaultDelimiter = numbers.substring(startIndexOptionalLine + 2, endIndexOptionalLine);
                 numbers = numbers.substring(endIndexOptionalLine + 1);
+                numberLiterals = numbers.split(buildDefaultDelimiter(defaultDelimiter));
             }
+        } else {
+            numberLiterals = numbers.split("[" + delimiters + "]");
         }
 
-        numberLiterals = numbers.split("[" + delimiters + "]");
+        return getSum(numberLiterals);
+    }
 
+    private int getSum(String[] numberLiterals) {
+        int sum = 0;
         for (String number : numberLiterals) {
-            if(Integer.parseInt(number) > 1000){
+            if (Integer.parseInt(number) > 1000) {
                 continue;
             }
             sum += Integer.parseInt(number);
         }
-
         return sum;
+    }
+
+    private String buildDefaultDelimiter(String currentDelimiter) {
+        StringBuilder newString = new StringBuilder();
+        String[] array = new String[currentDelimiter.length()];
+        for (int i = 0; i < currentDelimiter.length(); i++) {
+            array[i] = String.valueOf(currentDelimiter.charAt(i));
+            newString.append("\\").append(array[i]);
+        }
+        currentDelimiter = newString.toString();
+        return currentDelimiter;
     }
 
     private void checkNegativesInput(String numbers, String negativeRegex) {
@@ -46,15 +62,15 @@ public class Calculator {
         Matcher matcher = pattern.matcher(numbers);
         List<String> negatives = new ArrayList<>();
 
-        while (matcher.find()){
+        while (matcher.find()) {
             negatives.add(matcher.group());
         }
 
-        if(negatives.size() == 0){
+        if (negatives.size() == 0) {
             return;
         }
 
-        if(negatives.size() == 1){
+        if (negatives.size() == 1) {
             throw new IllegalArgumentException("negatives not allowed");
         }
 
