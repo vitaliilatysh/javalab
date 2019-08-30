@@ -80,4 +80,9 @@ public class CalculatorTest {
         assertEquals(calculator.addInt("//...\n1...2...3"), 6);
     }
 
+    @Test
+    public void testAddNumbersShouldSumNumbersWithDifferentDelimiters() {
+        assertEquals(calculator.addInt("//.*(\n1.2*3(4"), 10);
+    }
+
 }

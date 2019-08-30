@@ -51,7 +51,15 @@ public class Calculator {
         String[] array = new String[currentDelimiter.length()];
         for (int i = 0; i < currentDelimiter.length(); i++) {
             array[i] = String.valueOf(currentDelimiter.charAt(i));
-            newString.append("\\").append(array[i]);
+            if (newString.length() == 0) {
+                newString.append("\\").append(array[i]);
+            } else {
+                if (String.valueOf(newString.charAt(newString.length() - 1)).equals(array[i])) {
+                    newString.append("\\").append(array[i]);
+                } else {
+                    newString.append("|").append("\\").append(array[i]);
+                }
+            }
         }
         currentDelimiter = newString.toString();
         return currentDelimiter;
