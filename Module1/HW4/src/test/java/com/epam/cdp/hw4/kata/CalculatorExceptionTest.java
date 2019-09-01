@@ -1,4 +1,4 @@
-package com.epam.cdp.hw4;
+package com.epam.cdp.hw4.kata;
 
 import org.junit.Rule;
 import org.junit.Test;

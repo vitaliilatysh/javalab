@@ -1,4 +1,4 @@
-package com.epam.cdp.hw4;
+package com.epam.cdp.hw4.kata;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,22 +47,21 @@ public class Calculator {
     }
 
     private String buildDefaultDelimiter(String currentDelimiter) {
-        StringBuilder newString = new StringBuilder();
+        StringBuilder result = new StringBuilder();
         String[] array = new String[currentDelimiter.length()];
         for (int i = 0; i < currentDelimiter.length(); i++) {
             array[i] = String.valueOf(currentDelimiter.charAt(i));
-            if (newString.length() == 0) {
-                newString.append("\\").append(array[i]);
+            if (result.length() == 0) {
+                result.append("\\").append(array[i]);
             } else {
-                if (String.valueOf(newString.charAt(newString.length() - 1)).equals(array[i])) {
-                    newString.append("\\").append(array[i]);
+                if (String.valueOf(result.charAt(result.length() - 1)).equals(array[i])) {
+                    result.append("\\").append(array[i]);
                 } else {
-                    newString.append("|").append("\\").append(array[i]);
+                    result.append("|").append("\\").append(array[i]);
                 }
             }
         }
-        currentDelimiter = newString.toString();
-        return currentDelimiter;
+        return result.toString();
     }
 
     private void checkNegativesInput(String numbers, String negativeRegex) {

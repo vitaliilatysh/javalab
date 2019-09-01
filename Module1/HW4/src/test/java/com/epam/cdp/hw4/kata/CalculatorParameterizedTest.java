@@ -1,4 +1,4 @@
-package com.epam.cdp.hw4;
+package com.epam.cdp.hw4.kata;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
