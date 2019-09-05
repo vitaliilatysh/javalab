@@ -1,3 +1,4 @@
+```
 MacBook-Pro:HW1 vitaliilatysh$ git reflog show
 79ee158 (HEAD -> develop, origin/develop, part2_modul2_hw1, advancedOperation) HEAD@{0}: merge part2_modul2_hw1: Fast-forward
 dc930c1 HEAD@{1}: checkout: moving from develop to develop
@@ -69,3 +70,4 @@ d226ccd HEAD@{66}: checkout: moving from module2_hw1 to temp
 d226ccd HEAD@{67}: commit: step#5. Create index.html empty file.
 69d4376 HEAD@{68}: checkout: moving from develop to module2_hw1
 69d4376 HEAD@{69}: commit: init hw1
+```
