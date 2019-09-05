@@ -27,3 +27,9 @@ echo "$(git config --system --list)"
 git config --global alias.st status
 git config --global alias.ci commit
 echo "$(git config --global --list)"
+
+#1.16
+git log --graph --oneline --decorate
+git log -3
+git log --after="2019-09-04"
+git log --merges
