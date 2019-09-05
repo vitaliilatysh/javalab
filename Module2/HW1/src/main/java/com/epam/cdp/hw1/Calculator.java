@@ -1,34 +1,34 @@
 package com.epam.cdp.hw1;
 
 public class Calculator {
-    public int add(int a, int b) {
+    public int add(int number1, int number2) {
         System.out.println("This is add method");
-        return a + b;
+        return number1 + number2;
     }
 
-    public int add(int a, int b, int c) {
+    public int add(int number1, int number2, int number3) {
         System.out.println("This is add method for 3 params");
-        return a + b + c;
+        return number1 + number2 + number3;
     }
 
-    public int add(int a, int b, int c, int d) {
+    public int add(int number1, int number2, int number3, int number4) {
         System.out.println("This is add method for 4 params");
-        return a + b + c + d;
+        return number1 + number2 + number3 + number4;
     }
 
-    public int sub(int a, int b) {
-        return a - b;
+    public int sub(int number1, int number2) {
+        return number1 - number2;
     }
 
-    public double div(int a, int b) {
-        return (double) a / b;
+    public double div(int number1, int number2) {
+        return (double) number1 / number2;
     }
 
-    public int mult(int a, int b) {
-        return a * b;
+    public int mult(int number1, int number2) {
+        return number1 * number2;
     }
 
-    public double sqrt(int a) {
-        return Math.sqrt(a);
+    public double sqrt(int number) {
+        return Math.sqrt(number);
     }
 }
