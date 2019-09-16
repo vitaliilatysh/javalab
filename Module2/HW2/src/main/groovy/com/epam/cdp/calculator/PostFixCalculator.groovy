@@ -16,12 +16,17 @@ class PostFixCalculator implements IPostFixCalculator {
         return result(expression)
     }
 
+
+    def plus(double value) {
+        this.stack.addLast(value)
+    }
+
     private BigDecimal result(List<String> expression) {
         def size = expression.&size
 
         for (int index = 0; index != size(); ++index) {
             if (Character.isDigit(expression.get(index).charAt(0))) {
-                stack.addLast(Double.parseDouble(expression.get(index)))
+                this + Double.parseDouble(expression.get(index))
             } else {
                 double tempResult = 0
                 double temp
