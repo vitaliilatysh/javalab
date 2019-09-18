@@ -25,7 +25,7 @@ class GroovyCalculator{
         String expression
 
         while (!(expression = scanner.next()).isEmpty()) {
-            if (expression == "exit") {
+            if ("exit" == expression) {
                 System.exit(1)
                 break
             }

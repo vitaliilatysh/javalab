@@ -2,7 +2,6 @@ package com.epam.cdp.calculator
 
 class PostFixCalculator implements IPostFixCalculator {
 
-    def valueForException = "0"
     private PostFixConverter postFixConverter
     private Deque<Double> stack = new ArrayDeque<>()
 
@@ -11,7 +10,7 @@ class PostFixCalculator implements IPostFixCalculator {
     }
 
     @Override
-    BigDecimal calculate(String infix) {
+    String calculate(String infix) {
         List<String> expression = postFixConverter.convertExpression(infix)
         return result(expression)
     }
@@ -21,7 +20,7 @@ class PostFixCalculator implements IPostFixCalculator {
         this.stack.addLast(value)
     }
 
-    private BigDecimal result(List<String> expression) {
+    private String result(List<String> expression) {
         def size = expression.&size
 
         for (int index = 0; index != size(); ++index) {
@@ -51,7 +50,7 @@ class PostFixCalculator implements IPostFixCalculator {
                         temp = stack.removeLast()
                         tempResult = stack.removeLast() / temp
                         if (Double.isInfinite(tempResult)) {
-                            throw new ArithmeticException("Cannot calculate the expression. Cause: division to ${valueForException}.")
+                            throw new ArithmeticException("Cannot calculate the expression. Cause: division to 0.")
                         }
                         break
                     default:
@@ -60,6 +59,7 @@ class PostFixCalculator implements IPostFixCalculator {
                 stack.addLast(tempResult)
             }
         }
-        return new BigDecimal(stack.removeLast()).setScale(10, BigDecimal.ROUND_HALF_UP).stripTrailingZeros()
+        def result = new BigDecimal(stack.removeLast()).setScale(10, BigDecimal.ROUND_HALF_UP).stripTrailingZeros()
+        return "${result}"
     }
 }

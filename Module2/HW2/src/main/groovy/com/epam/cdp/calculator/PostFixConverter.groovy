@@ -34,10 +34,10 @@ class PostFixConverter implements IPostFixConverter {
     }
 
     private void inputToStack(char input) {
-        if (stack.isEmpty() || input.toString() == '(') {
+        if (stack.isEmpty() || '(' == input.toString()) {
             stack.addLast(input)
         } else {
-            if (input.toString() == ')') {
+            if (')' == input.toString()) {
                 while (stack.getLast() != '(') {
                     postfix.add(stack.removeLast().toString())
                 }
@@ -59,11 +59,11 @@ class PostFixConverter implements IPostFixConverter {
     private int getPrecedence(char operator) {
         String giveOperator = operator.toString()
 
-        if (giveOperator == '+' || giveOperator == '-') {
+        if ('+' == giveOperator|| '-' == giveOperator) {
             return 1
         }
 
-        if (giveOperator == '*' || giveOperator == '/') {
+        if ('*' == giveOperator || '/' == giveOperator) {
             return 2
         }
 
