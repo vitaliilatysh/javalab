@@ -1,0 +1,109 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-clover-plugin:2.2.1'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'checkstyle'
+apply plugin: 'pmd'
+apply plugin: 'findbugs'
+apply plugin: 'com.bmuschko.clover'
+apply plugin: 'groovy'
+
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+
+//-----------------------------BASE CONFIGURATION--------------------------------------------
+clover {
+
+    testIncludes = ['**/*Test.java', '**/*Spec.groovy']
+    testExcludes = ['**/Mock*.java']
+
+    targetPercentage = '75%'
+
+    report {
+        html = true
+        pdf = true
+
+        columns {
+            coveredMethods format: 'longbar', min: '75'
+            coveredStatements format: '%'
+            coveredBranches format: 'raw'
+            totalPercentageCovered format: '%', scope: 'package'
+        }
+
+    }
+}
+
+checkstyle {
+    checkstyleTest.enabled = false
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.1'
+}
+
+check.dependsOn cloverGenerateReport
+
+
+findbugs {
+    ignoreFailures=true
+    findbugsTest.enabled=false
+}
+
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
+
+pmd {
+    ignoreFailures = true
+    pmdTest.enabled=false
+    ruleSets = [
+            'java-basic',
+            'java-braces',
+            'java-clone',
+            'java-codesize',
+            'java-comments',
+            'java-controversial',
+            'java-coupling',
+            'java-design',
+            'java-empty',
+            'java-finalizers',
+            'java-imports',
+            'java-optimizations',
+            'java-strictexception',
+            'java-strings',
+            'java-typeresolution',
+            'java-unnecessary',
+            'java-unusedcode'
+    ]
+}
+
+tasks.withType(Pmd) {
+    reports{
+        xml.enabled=true
+        html.enabled=true
+    }
+}
+//----------------------------------------------------------------------------------------------
+
+dependencies {
+    clover 'org.openclover:clover:4.2.0'
+	testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation 'org.codehaus.groovy:groovy-all:2.5.8'
+    testCompile group: 'org.spockframework', name: 'spock-core', version: '1.3-groovy-2.5'
+    testCompile group: 'net.bytebuddy', name: 'byte-buddy', version: '1.10.1'
+    testCompile group: 'org.objenesis', name: 'objenesis', version: '3.0.1'
+}
