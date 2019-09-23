@@ -1,0 +1,6 @@
+rootProject.name = 'HW4'
+
+include ':admin'
+include ':services'
+include ':utils'
+include ':web'
