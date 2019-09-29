@@ -17,3 +17,11 @@ gradlew build
 ```bash
 gradlew build test
 ```
+### Maven build
+```bash
+mvn clean install
+```
+### Maven run test
+```bash
+mvn clean install test
+```
