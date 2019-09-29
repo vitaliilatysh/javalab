@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="utils" default="default">
+    <import file="../dependencies.xml"/>
+
+    <property name="projectName" value="DateUtils" />
+
+
+    <property name="src.dir" location="src" />
+    <property name="build.dir" location="bin" />
+    <property name="dist.dir" location="dist" />
+
+    <target name="default" depends="clean, compile, dist"/>
+
+    <target name="init">
+        <tstamp />
+        <echo message="${ant.project.name} - init"/>
+        <mkdir dir="${build.dir}" />
+    </target>
+
+    <target name="clean">
+        <echo message="${ant.project.name} - clean"/>
+        <delete dir="${build.dir}" />
+        <delete dir="${dist.dir}" />
+    </target>
+
+    <target name="compile" depends="init">
+        <echo message="${ant.project.name} - compile"/>
+        <javac includeantruntime="false" srcdir="${src.dir}" destdir="${build.dir}" />
+    </target>
+
+    <target name="dist" depends="compile">
+        <echo message="${ant.project.name} - dist"/>
+        <mkdir dir="${dist.dir}" />
+        <jar jarfile="${dist.dir}/${projectName}-${DSTAMP}.jar" basedir="${build.dir}"/>
+    </target>
+
+    <target name="dist.dependencies">
+        <antcall target="depend.${ant.project.name}"/>
+    </target>
+</project>

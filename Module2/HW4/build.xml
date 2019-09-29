@@ -1,0 +1,14 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant"
+         name="hw4" default="default" basedir=".">
+
+    <target name="resolve" description="retrieve dependencies with ivy">
+        <ivy:retrieve />
+    </target>
+
+    <target name="ivy" description="Install ivy">
+        <mkdir dir="${basedir}/.ant/lib" />
+        <get dest="${basedir}/.ant/lib/ivy.jar"
+             src="http://search.maven.org/remotecontent?filepath=org/apache/ivy/ivy/2.4.0-rc1/ivy-2.4.0-rc1.jar" />
+    </target>
+
+</project>

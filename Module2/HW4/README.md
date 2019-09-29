@@ -11,11 +11,11 @@ Here is project tempate for all your homeworks.
 
 ### Gradle build
 ```bash
-gradlew build
+./gradlew build
 ```
 ### Gradle run test
 ```bash
-gradlew build test
+./gradlew build test
 ```
 ### Maven build
 ```bash
@@ -24,4 +24,8 @@ mvn clean install
 ### Maven run test
 ```bash
 mvn clean install test
+```
+### Ant+Ivy
+```bash
+ant ivy resolve
 ```
