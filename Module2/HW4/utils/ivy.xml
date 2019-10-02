@@ -1,0 +1,13 @@
+<ivy-module version="1.0">
+    <info organisation="org.apache.ivy.example" module="utils" status="integration"/>
+    <configurations>
+        <conf name="core"/>
+        <conf name="standalone" extends="core"/>
+    </configurations>
+    <publications>
+        <artifact name="utils" type="jar" conf="core"/>
+    </publications>
+    <dependencies>
+        <dependency org="junit" name="junit" rev="4.12" conf="standalone->default"/>
+    </dependencies>
+</ivy-module>

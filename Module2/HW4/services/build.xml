@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<project name="services" default="default">
-    <import file="../utils/build.xml"/>
+<project name="services" default="compile">
+    <property file="build.properties"/>
+    <import file="${common.dir}/common.xml"/>
 </project>

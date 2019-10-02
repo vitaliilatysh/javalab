@@ -1,0 +1,15 @@
+<ivy-module version="1.0">
+    <info organisation="org.apache.ivy.example" module="web" status="integration"/>
+    <configurations>
+        <conf name="core"/>
+        <conf name="standalone" extends="core"/>
+    </configurations>
+    <publications>
+        <artifact name="web" type="jar" conf="core"/>
+    </publications>
+    <dependencies>
+        <dependency name="services" rev="latest.integration" conf="core"/>
+        <dependency org="javax.servlet" name="javax.servlet-api" rev="4.0.1"/>
+        <dependency org="junit" name="junit" rev="4.12" conf="standalone->default"/>
+    </dependencies>
+</ivy-module>
