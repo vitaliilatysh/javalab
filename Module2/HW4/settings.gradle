@@ -1,6 +1,6 @@
 rootProject.name = 'HW4'
 
-include ':admin'
-include ':services'
-include ':utils'
-include ':web'
+include ':modules:admin'
+include ':modules:services'
+include ':modules:utils'
+include ':modules:web'

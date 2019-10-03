@@ -10,8 +10,6 @@
         <isset property="env.IVY_HOME"/>
     </condition>
     <property name="ivy.home" value="${user.home}/.ant"/>
-    <property name="ivy.jar.dir" value="${ivy.home}/lib"/>
-    <property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar"/>
 
     <target name="download-ivy" unless="offline">
 
@@ -55,7 +53,7 @@
     </target>
     <target name="buildlist" depends="load-ivy">
         <ivy:buildlist reference="build-path">
-            <fileset dir="." includes="**/build.xml"/>
+            <fileset dir="modules" includes="**/build.xml"/>
         </ivy:buildlist>
     </target>
     <target name="publish-all" depends="buildlist" description="compile, jar and publish all projects in the right order">

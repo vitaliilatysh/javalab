@@ -13,10 +13,10 @@
     </properties>
 
     <modules>
-        <module>admin</module>
-        <module>services</module>
-        <module>utils</module>
-        <module>web</module>
+        <module>modules/admin</module>
+        <module>modules/services</module>
+        <module>modules/utils</module>
+        <module>modules/web</module>
     </modules>
 
     <dependencies>
