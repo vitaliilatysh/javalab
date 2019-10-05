@@ -56,6 +56,9 @@
             <fileset dir="modules" includes="**/build.xml"/>
         </ivy:buildlist>
     </target>
+    <target name="test-all" depends="buildlist" description="run tests for all projects">
+        <subant target="test" buildpathref="build-path"/>
+    </target>
     <target name="publish-all" depends="buildlist" description="compile, jar and publish all projects in the right order">
         <subant target="publish" buildpathref="build-path"/>
     </target>
