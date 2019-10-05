@@ -30,7 +30,7 @@ Install ivy
 ```bash
 ant init-ivy
 ```
-Build project
+Build project with tests
 ```bash
-ant clean publish-all
+ant clean publish-all test-all
 ```
