@@ -1,4 +1,24 @@
-<project name="web" default="compile">
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="web" default="compile">
     <property file="build.properties"/>
     <import file="${common.dir}/common.xml"/>
+
+    <target name="war" description="build a war file">
+        <war destfile="${build.dir}/${war.file}"
+             duplicate="fail"
+             webxml="${web.dir}/WEB-INF/web.xml">
+            <fileset dir="${web.dir}"/>
+            <classes dir="${build.dir}/classes" excludes="**/*Test.class" />
+            <classes dir="${basedir}/src/main/resources"/>
+            <lib dir="${basedir}/lib/core">
+                <include name="*.jar"/>
+            </lib>
+        </war>
+    </target>
+
+    <target name="publish" depends="clean-build, jar, war" description="--> publish this project in the ivy repository">
+        <ivy:publish artifactspattern="${build.dir}/[artifact].[ext]" resolver="shared" pubrevision="${version}"
+                     status="release"/>
+        <echo message="project ${ant.project.name} released with version ${version}"/>
+    </target>
+
 </project>
