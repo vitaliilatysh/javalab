@@ -1,0 +1,8 @@
+plugins {
+    id 'java'
+}
+
+dependencies{
+    compile project(':modules:services')
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}

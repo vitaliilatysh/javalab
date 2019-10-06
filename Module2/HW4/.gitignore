@@ -1,0 +1,7 @@
+build/
+.idea/
+.clover/
+.gradle/
+.ant/
+
+
