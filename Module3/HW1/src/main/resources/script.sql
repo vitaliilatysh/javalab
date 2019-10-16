@@ -1,6 +1,6 @@
 create table students(
    id                   integer primary  key    not null,
-   student_name         text                    not null,
+   student_name         text                    not null check (student_name ~ '^[a-zA-Z0-9 ]*$'),
    surname              text                    not null,
    date_of_birth        date                    not null,
    primary_skill        text,
