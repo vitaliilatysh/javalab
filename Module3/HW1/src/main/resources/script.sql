@@ -31,7 +31,7 @@ insert into students values (123, 'David', 'Craig', '1988-12-01', 'Java', curren
 
 insert into students values (124, 'Bartosh', 'Kurek', '1988-10-05', 'Volleyball', current_timestamp);
 
-update students set student_name = 'Pavel' where  students.id = 123;
+update students set student_name = 'Pavel' where  id = 123;
 
 update students set student_name = 'Daniel' where  id = 124;
 
@@ -39,28 +39,22 @@ delete  from students;
 
 select * from students;
 
-CREATE OR REPLACE FUNCTION log_last_name_changes()
+CREATE OR REPLACE FUNCTION log_last_update()
   RETURNS trigger AS
 $BODY$
 BEGIN
-	IF old.student_name <> new.student_name OR
-	old.surname <> new.surname OR
-	old.date_of_birth <> new.date_of_birth OR
-	old.primary_skill <> new.primary_skill THEN
-   UPDATE students SET updated_datetime = now() where id=new.id or
-   student_name=new.student_name or
-   surname=new.surname or
-   date_of_birth=new.date_of_birth or
-   primary_skill=new.primary_skill;
-   end if;
+   New.updated_datetime = now();
    RETURN NEW;
 END;
 $BODY$
 LANGUAGE PLPGSQL;
 
-CREATE TRIGGER last_name_changes
-    AFTER UPDATE
+drop trigger if exists last_row_update on students;
+
+CREATE TRIGGER last_row_update
+    BEFORE UPDATE
     ON students
 	for each row
-    EXECUTE PROCEDURE log_last_name_changes();
+	when (OLD IS DISTINCT FROM NEW)
+    EXECUTE PROCEDURE public.log_last_update();
 
