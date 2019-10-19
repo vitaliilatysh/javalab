@@ -1,4 +1,6 @@
-CREATE OR REPLACE FUNCTION log_last_update()
+drop trigger if exists row_update_trigger on students;
+
+CREATE OR REPLACE FUNCTION set_updated_datetime()
   RETURNS trigger AS
 $BODY$
 BEGIN
@@ -8,11 +10,9 @@ END;
 $BODY$
 LANGUAGE PLPGSQL;
 
-drop trigger if exists last_row_update on students;
-
-CREATE TRIGGER last_row_update
+CREATE TRIGGER row_update_trigger
     BEFORE UPDATE
     ON students
 	for each row
 	when (OLD IS DISTINCT FROM NEW)
-    EXECUTE PROCEDURE public.log_last_update();
+    EXECUTE PROCEDURE public.set_updated_datetime();

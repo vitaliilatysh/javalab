@@ -1,4 +1,4 @@
-drop table if exists exam_results, subjects, phones,students;
+drop table if exists exam_results, subjects, phones,students,students_snapshots;
 
 create table students(
    id                   integer primary  key    not null,
@@ -27,6 +27,14 @@ create table exam_results(
    subject_id           integer                 references subjects(id) on delete cascade on update cascade,
    mark                 integer,
    PRIMARY KEY (student_id, subject_id)
+);
+
+create table students_snapshots(
+    id                  serial  primary key     not null,
+    student_name        text,
+    student_surname     text,
+    subject_name        text,
+    mark                integer
 );
 
 insert into students values (123, 'David', 'Craig', '1988-12-01', 'Java', current_timestamp),
