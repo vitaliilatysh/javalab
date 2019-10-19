@@ -42,10 +42,15 @@ insert into students values (123, 'David', 'Craig', '1988-12-01', 'Java', curren
                             (125, 'Camel', 'Chimp', '1999-01-05', 'C++', current_timestamp);
 
 insert into subjects values (234, 'Algorithms', 'Barber'),
-                            (235, 'Programming basics', 'Drain');
+                            (235, 'Programming basics', 'Drain'),
+                            (236, 'Data structures', 'Martin');
 
-insert into exam_results values (123, 234, 80),
-                                (123, 235, 75),
-                                (124, 235, 93),
-                                (125, 234, 65),
-                                (124, 234, 100);
+insert into exam_results values (123, 234, 2),
+                                (123, 235, 2),
+                                (123, 236, 8),
+                                (124, 234, 8),
+                                (124, 235, 10),
+                                (124, 236, 2),
+                                (125, 234, 2),
+                                (125, 235, 2),
+                                (125, 236, 2);
