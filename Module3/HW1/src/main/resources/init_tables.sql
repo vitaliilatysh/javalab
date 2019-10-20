@@ -1,7 +1,7 @@
-drop table if exists exam_results, subjects, phones,students,students_snapshots;
+drop table if exists exam_results, subjects, phones,students,students_snapshots cascade;
 
 create table students(
-   id                   integer primary  key    not null,
+   id                   serial  primary  key    not null,
    student_name         text                    not null check (student_name ~ '^[a-zA-Z0-9 ]*$'),
    surname              text                    not null,
    date_of_birth        date                    not null,
@@ -12,12 +12,12 @@ create table students(
 );
 
 create table phones(
-    phone_number        text primary key        not null,
+    phone_number        integer   primary key    not null,
     student_id          integer                 references students(id) on delete cascade on update cascade
 );
 
 create table subjects(
-   id                   integer primary  key    not null,
+   id                   serial  primary  key    not null,
    subject_name         text                    not null,
    tutor                text                    not null
 );
@@ -36,21 +36,3 @@ create table students_snapshots(
     subject_name        text,
     mark                integer
 );
-
-insert into students values (123, 'David', 'Craig', '1988-12-01', 'Java', current_timestamp),
-                            (124, 'Daniel', 'Camp', '1996-11-05', 'PHP', current_timestamp),
-                            (125, 'Camel', 'Chimp', '1999-01-05', 'C++', current_timestamp);
-
-insert into subjects values (234, 'Algorithms', 'Barber'),
-                            (235, 'Programming basics', 'Drain'),
-                            (236, 'Data structures', 'Martin');
-
-insert into exam_results values (123, 234, 2),
-                                (123, 235, 2),
-                                (123, 236, 8),
-                                (124, 234, 8),
-                                (124, 235, 10),
-                                (124, 236, 2),
-                                (125, 234, 2),
-                                (125, 235, 2),
-                                (125, 236, 2);
