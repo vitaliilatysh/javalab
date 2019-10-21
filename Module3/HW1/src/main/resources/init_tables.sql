@@ -12,7 +12,8 @@ create table students(
 );
 
 create table phones(
-    phone_number        integer   primary key    not null,
+    id                  serial  primary key     not null ,
+    phone_number        text,
     student_id          integer                 references students(id) on delete cascade on update cascade
 );
 
@@ -23,10 +24,10 @@ create table subjects(
 );
 
 create table exam_results(
+   id                   serial  primary key     not null,
    student_id           integer                 references students(id) on delete cascade on update cascade,
    subject_id           integer                 references subjects(id) on delete cascade on update cascade,
-   mark                 integer,
-   PRIMARY KEY (student_id, subject_id)
+   mark                 integer
 );
 
 create table students_snapshots(

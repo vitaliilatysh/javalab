@@ -34,7 +34,7 @@ LANGUAGE plpgsql;
 
 -- Phone numbers generation for created students
 
-CREATE OR REPLACE FUNCTION pseudo_encrypt(VALUE int) returns int AS $$
+CREATE OR REPLACE FUNCTION pseudo_encrypt(VALUE int) returns text AS $$
 DECLARE
 l1 int;
 l2 int;
@@ -59,19 +59,35 @@ $$ LANGUAGE plpgsql strict immutable;
 CREATE OR REPLACE FUNCTION phone_number_generator() RETURNS SETOF students AS
 $BODY$
 DECLARE
-    r students%rowtype;
+    student students%rowtype;
 BEGIN
-    FOR r IN
-        SELECT * FROM students
+    FOR student IN SELECT * FROM students
     LOOP
-        insert into phones (phone_number, student_id) values (pseudo_encrypt(r.id), r.id);
-        RETURN NEXT r;
+        insert into phones (phone_number, student_id) values (pseudo_encrypt(student.id), student.id);
+        RETURN NEXT student;
     END LOOP;
     RETURN;
 END
 $BODY$
 LANGUAGE plpgsql;
 
+-- Marks generator
+CREATE OR REPLACE FUNCTION mark_generator() RETURNS SETOF students AS
+$BODY$
+DECLARE
+    student students%rowtype;
+	subject subjects%rowtype;
+BEGIN
+    FOR student IN SELECT * FROM students LOOP
+		FOR subject IN select floor(random()*1000)+1 from generate_series(1,10) LOOP
+        	insert into exam_results(student_id, subject_id,mark) values (student.id, subject.id, floor(random()*10)+1);
+    	END LOOP;
+		RETURN NEXT student;
+	END LOOP;
+    RETURN;
+END
+$BODY$
+LANGUAGE plpgsql;
 ------------------------------------------------------------------------------------------------------------------------
 -- 5. Trigger that will update column updated_datetime to current date in case of updating any of student
 drop trigger if exists row_update_trigger on students;

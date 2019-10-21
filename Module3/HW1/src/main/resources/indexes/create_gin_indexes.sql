@@ -7,5 +7,5 @@ SELECT pg_size_pretty (pg_indexes_size('students'));
 CREATE INDEX idx_gin_subject_name ON subjects USING gin (subject_name gin_trgm_ops) WITH (fastupdate = off);
 SELECT pg_size_pretty (pg_indexes_size('subjects'));
 
--- CREATE INDEX idx_gin_phone_number ON phones USING gin (phone_number gin_trgm_ops) WITH (fastupdate = off);
--- SELECT pg_size_pretty (pg_indexes_size('phones'));
+ CREATE INDEX idx_gin_phone_number ON phones USING gin (phone_number gin_trgm_ops) WITH (fastupdate = off);
+ SELECT pg_size_pretty (pg_indexes_size('phones'));

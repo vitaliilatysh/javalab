@@ -1,6 +1,7 @@
 insert into students (student_name, surname,date_of_birth, primary_skill, created_datetime) values
                             ('David', 'Craig', '1988-12-01', 'Java', current_timestamp),
                             ('Daniel', 'Camp', '1996-11-05', 'PHP', current_timestamp),
+                            ('Mark', 'Jader', '1994-07-28', 'SQL', current_timestamp),
                             ('Camel', 'Chimp', '1999-01-05', 'C++', current_timestamp);
 
 insert into subjects (subject_name, tutor) values   ('Algorithms', 'Barber'),

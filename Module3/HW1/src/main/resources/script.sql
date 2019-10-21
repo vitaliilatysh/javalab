@@ -1,23 +1,37 @@
--- 4. Triggers
-SELECT * FROM students_generator();
-SELECT * FROM phone_number_generator();
-SELECT * FROM subjects_generator();
+-- 4. Indexes
 
--- B-tree index
+-- B-tree index extension
 CREATE EXTENSION pg_trgm;
+
+-- Auto fill
+
+-- 100K students
+SELECT * FROM students_generator();
+-- 100K phone numbers
+SELECT * FROM phone_number_generator();
+-- 1K subjects
+SELECT * FROM subjects_generator();
+-- 1M marks
+select * from mark_generator();
 
 -- Find user by name (exact match)
 explain analyze
-select student_name from students where student_name='377f9452ca2d629521c9e24aad903519'
+select * from students where student_name='377f9452ca2d629521c9e24aad903519'
 
 -- Find user by surname (partial match)
 explain analyze
-select student_name from students where student_name like '%a74a%';
+select * from students where surname like '%a74a%';
 
 -- Find user by phone number (partial match)
 explain analyze
-select student_name, phone_number from students inner join phones on students.id = phones.student_id
-where CAST(phones.phone_number AS TEXT) LIKE '%9999%';
+select students.student_name, phones.phone_number from students inner join phones on students.id = phones.student_id
+where phones.phone_number LIKE '%9999%';
+
+-- Find user with marks by user surname (partial match)
+explain analyze
+select * from students inner join exam_results on students.id = exam_results.student_id
+where students.surname LIKE '%2343%';
+
 ------------------------------------------------------------------------------------------------------------------------
 -- 5. check the trigger for updated_datetime set when student row is updated
 update students set student_name = 'Donn' where  id = 1;
