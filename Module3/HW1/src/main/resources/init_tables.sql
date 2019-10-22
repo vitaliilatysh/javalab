@@ -49,5 +49,5 @@ create table log_student_address(
     id                  serial  primary key     not null,
     town                text,
     street              text,
-    student_id          integer references students(id) on delete cascade on update cascade
+    student_id          integer
 );
