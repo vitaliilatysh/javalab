@@ -1,4 +1,4 @@
-drop table if exists exam_results, subjects, phones,students,students_snapshots cascade;
+drop table if exists exam_results, subjects, phones,students,students_snapshots,student_address,log_student_address cascade;
 
 create table students(
    id                   serial  primary  key    not null,
@@ -36,4 +36,18 @@ create table students_snapshots(
     student_surname     text,
     subject_name        text,
     mark                integer
+);
+
+create table student_address(
+    id                  serial  primary key     not null,
+    town                text,
+    street              text,
+    student_id          integer references students(id) on delete cascade on update cascade
+);
+
+create table log_student_address(
+    id                  serial  primary key     not null,
+    town                text,
+    street              text,
+    student_id          integer references students(id) on delete cascade on update cascade
 );

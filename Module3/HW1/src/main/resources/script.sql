@@ -40,9 +40,13 @@ select * from students;
 -- 6. check student name validation (#,$,@)
 update students set student_name = 'Donn#' where  id = 1;
 
--- 7. making snapshot when update
+-- 7. check the snapshot wasn't changed when update
 update students set student_name = 'Donnio' where  id = 1;
-select * from students_snapshots;
+select * from snapshot;
+-- check the query snapshot was made of
+select students.student_name, students.surname, subjects.subject_name, exam_results.mark from students
+	        inner join exam_results on exam_results.student_id=students.id
+	        inner join subjects on exam_results.subject_id=subjects.id
 
 -- 8. get average mark for student with specified id
 select * from avg_student_mark(1);
@@ -53,3 +57,10 @@ select * from avg_subject_mark('Algorithms');
 -- 10. get all students with average points less then 75
 Select * from students_at_redline();
 
+
+-- Extra miles
+
+-- 12. Implement immutable data trigger.
+
+update student_address set town = 'Kremenchyk' where id = 1;
+select * from log_student_address;

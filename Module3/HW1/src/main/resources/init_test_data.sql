@@ -9,12 +9,16 @@ insert into subjects (subject_name, tutor) values   ('Algorithms', 'Barber'),
                                                     ('Data structures', 'Martin');
 
 
-insert into exam_results values (1, 1, 2),
-                                (1, 2, 2),
-                                (1, 3, 8),
-                                (2, 1, 8),
-                                (2, 2, 10),
-                                (2, 3, 2),
-                                (3, 1, 2),
-                                (3, 2, 2),
-                                (3, 3, 2);
+insert into exam_results (student_id,subject_id,mark) values    (1, 1, 2),
+                                                                (1, 2, 2),
+                                                                (1, 3, 8),
+                                                                (2, 1, 8),
+                                                                (2, 2, 10),
+                                                                (2, 3, 2),
+                                                                (3, 1, 2),
+                                                                (3, 2, 2),
+                                                                (3, 3, 2);
+
+insert into student_address (town, street, student_id) values   ('Kharkiv', 'Sumska, 25', 1),
+                                                                ('Kyiv', 'Khreschatyk, 34', 2),
+                                                                ('Vinnytsia', 'Petryka, 2', 3);
