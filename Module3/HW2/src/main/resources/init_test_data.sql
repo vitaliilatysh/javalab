@@ -24,4 +24,5 @@ insert into exam_results (student_id,subject_id,mark) values    (1, 1, 2),
                                                                 (3, 2, 2),
                                                                 (3, 3, 2),
                                                                 (4, 1, 8),
-                                                                (4, 4, 8);
+                                                                (4, 4, 8),
+                                                                (5, 4, 6);
