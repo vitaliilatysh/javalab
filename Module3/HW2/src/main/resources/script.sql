@@ -50,3 +50,8 @@ select subjects.subject_name, count(distinct students.primary_skill) as "passed 
 
 -- 8. Select all subjects which exams passed only students with the different primary skills.
 -- It means that all students passed the exam for the one subject must have different primary skill.
+
+select subjects.subject_name, count(distinct students.primary_skill) as "passed with same prime skill"  from subjects
+	inner join exam_results on subjects.id=exam_results.subject_id
+	inner join students on students.id=exam_results.student_id
+	group by subjects.subject_name having count(distinct students.primary_skill) > 1
