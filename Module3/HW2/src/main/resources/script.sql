@@ -32,3 +32,13 @@ select students.student_name, count(distinct subjects.subject_name) from subject
 	inner join exam_results on subjects.id=exam_results.subject_id
 	inner join students on students.id=exam_results.student_id
 	group by students.student_name having count(distinct subjects.subject_name) > 1
+
+------------------------------------------------------------------------------------------------------------------------
+-- 6. Select students who passed at least two exams for the same subject
+
+select students.student_name, subjects.subject_name, count(exam_results.mark) as "exams passed per subject" from subjects
+	inner join exam_results on subjects.id=exam_results.subject_id
+	inner join students on students.id=exam_results.student_id
+	group by students.student_name,subjects.subject_name having count(exam_results.mark) > 1
+
+-- 7. Select all subjects which exams passed only students with the same primary skills
