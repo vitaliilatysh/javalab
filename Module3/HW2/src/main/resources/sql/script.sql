@@ -60,18 +60,38 @@ select subjects.subject_name, count(distinct students.primary_skill) as "passed 
 
 ------------------------------------------------------------------------------------------------------------------------
 -- 9. Select students who does not pass any exam using each the following operator
+
+-- Auto fill
+
+-- 1000 exams - 10 students
+SELECT * FROM students_generator(10);
+SELECT * FROM subjects_generator(100);
+select * from mark_generator(9);
+-- 10K exams - 1K students
+SELECT * FROM students_generator(1000);
+SELECT * FROM subjects_generator(10);
+select * from mark_generator(999);
+
+-- 100K exams - 100K students
+SELECT * FROM students_generator(100000);
+SELECT * FROM subjects_generator(1);
+select * from mark_generator(99999);
+
 -- a. Outer join
+explain analyze
 select students.student_name, exam_results.mark
 from students
 	left outer join exam_results on students.id=exam_results.student_id
 	where exam_results.mark is null
 
 -- b. Subquery with ‘not in’ clause
+explain analyze
 select students.student_name
 from students
 	where students.id not in (select exam_results.student_id from exam_results)
 
 -- c. Subquery with ‘any‘ clause
+explain analyze
 select students.student_name
 from students
 	where NOT (students.id = any(select exam_results.student_id from exam_results))
