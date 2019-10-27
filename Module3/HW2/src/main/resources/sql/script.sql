@@ -110,14 +110,22 @@ select students.student_name, TO_CHAR(AVG (exam_results.mark),'FM999999999.00') 
 ------------------------------------------------------------------------------------------------------------------------
 -- 11. Select top 5 students who passed their last exam better than average students
 
-select distinct on(students.student_name) students.student_name, exam_results.passed_date as "last exam date", exam_results.mark  from subjects
+with average_per_last_exam as (select subjects.subject_name, avg(exam_results.mark) as "average per last exam" from subjects
+	inner join exam_results on exam_results.subject_id = subjects.id
+	where exam_results.passed_date in (select max(exam_results.passed_date) as "last exam date"  from subjects
+		inner join exam_results on subjects.id=exam_results.subject_id
+		inner join students on students.id=exam_results.student_id
+		group by subjects.subject_name)
+group by subjects.subject_name having subjects.subject_name = 'Programming basics')
+
+select students.student_name, subjects.subject_name, exam_results.passed_date, exam_results.mark from subjects
 	inner join exam_results on subjects.id=exam_results.subject_id
 	inner join students on students.id=exam_results.student_id
-		where exam_results.mark > (	select AVG (exam_results.mark) from subjects
-									inner join exam_results on subjects.id=exam_results.subject_id
-									inner join students on students.id=exam_results.student_id)
-		order by students.student_name, exam_results.passed_date desc limit 5
-
+where exam_results.passed_date in (select max(exam_results.passed_date) as "last exam date"  from subjects
+	inner join exam_results on subjects.id=exam_results.subject_id
+	inner join students on students.id=exam_results.student_id
+	group by subjects.subject_name) and subjects.subject_name = (select subject_name from average_per_last_exam)
+	and exam_results.mark > (select "average per last exam" from average_per_last_exam) limit 5
 ------------------------------------------------------------------------------------------------------------------------
 -- 12. Select biggest mark for each student and add text description for the mark (use COALESCE and WHEN operators).
 -- a. In case if student has not passed any exam ‘not passed' should be returned.
