@@ -1,0 +1,7 @@
+name, type, amount, price (per 1 item/liter)
+Uzvar,liquids,100,15.50
+Compot,liquids,50,10.75
+Syrnyk,items,50,6.45
+Borsch,items,70,25
+
+
