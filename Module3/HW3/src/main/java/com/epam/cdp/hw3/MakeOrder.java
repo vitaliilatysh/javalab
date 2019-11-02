@@ -17,7 +17,11 @@ import java.util.Scanner;
 import static com.epam.cdp.hw3.Constants.ORDER_QUEUE;
 
 public class MakeOrder {
-
+    /**
+     * Make order
+     * @param argv param
+     * @throws Exception exception
+     */
     public static void main(String[] argv) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
@@ -29,8 +33,8 @@ public class MakeOrder {
             Order order = new Order();
             String stopWord = "send";
             while (in.hasNext()) {
-                String s = in.nextLine();
-                order.setCustomerName(s);
+                String userName = in.nextLine();
+                order.setCustomerName(userName);
 
                 System.out.println("Add goods to order. Type 'send' when finished.");
                 List<Good> goods = new ArrayList<>();
@@ -67,6 +71,12 @@ public class MakeOrder {
         }
     }
 
+    /**
+     * Serialize order
+     * @param order order
+     * @return serialized order
+     * @throws IOException exception
+     */
     public static byte[] serialize(Order order) throws IOException {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ObjectOutput out;

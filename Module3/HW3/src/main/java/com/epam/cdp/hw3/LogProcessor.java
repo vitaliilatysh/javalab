@@ -16,6 +16,11 @@ import static com.epam.cdp.hw3.Constants.ORDER_LOGGER_QUEUE;
 public class LogProcessor {
     private static int count_rejected, count_passed;
 
+    /**
+     * Log orders
+     * @param argv param
+     * @throws Exception exception
+     */
     public static void main(String[] argv) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");

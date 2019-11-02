@@ -13,7 +13,11 @@ import java.util.List;
 import static com.epam.cdp.hw3.Constants.*;
 
 public class OrderProcessor {
-
+    /**
+     * Order processing
+     * @param argv param
+     * @throws Exception exception
+     */
     public static void main(String[] argv) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
