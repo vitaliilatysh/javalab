@@ -9,35 +9,45 @@ public class Good implements Serializable {
     private int amount;
     private BigDecimal price;
 
-    public String getName() {
+    Good(){
+
+    }
+
+    Good(String name, GoodType type, int amount, BigDecimal price){
+        this.name = name;
+        this.type = type;
+        this.amount = amount;
+        this.price = price;
+    }
+    String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
-    public GoodType getType() {
+    GoodType getType() {
         return type;
     }
 
-    public void setType(GoodType type) {
+    void setType(GoodType type) {
         this.type = type;
     }
 
-    public int getAmount() {
+    int getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    void setAmount(int amount) {
         this.amount = amount;
     }
 
-    public BigDecimal getPrice() {
+    BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    void setPrice(BigDecimal price) {
         this.price = price;
     }
 

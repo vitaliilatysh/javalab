@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static com.epam.cdp.hw3.Constants.ORDER_QUEUE;
+import static com.epam.cdp.hw3.Constants.EXCHANGE_NAME;
 
 public class MakeOrder {
     /**
@@ -27,7 +27,7 @@ public class MakeOrder {
         factory.setHost("localhost");
         try (Connection connection = factory.newConnection();
              Channel channel = connection.createChannel()) {
-            channel.queueDeclare(ORDER_QUEUE, true, false, false, null);
+            channel.exchangeDeclare(EXCHANGE_NAME, "topic");
 
             Scanner in = new Scanner(System.in);
             Order order = new Order();
@@ -63,7 +63,7 @@ public class MakeOrder {
                 order.setListGoods(goods);
                 byte[] orderBytes = serialize(order);
 
-                channel.basicPublish("", ORDER_QUEUE,
+                channel.basicPublish(EXCHANGE_NAME, order.getListGoods().get(0).getType().name(),
                         MessageProperties.PERSISTENT_TEXT_PLAIN,
                         orderBytes);
                 System.out.println(" [x] Sent '" + order.toString() + "'");
