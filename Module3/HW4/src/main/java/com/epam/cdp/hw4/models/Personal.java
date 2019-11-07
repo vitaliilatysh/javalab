@@ -10,6 +10,8 @@ public class Personal {
     @Column(name="id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
+
+    @Column(name = "")
     private String name;
     private String surname;
     private Date birthDate;

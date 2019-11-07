@@ -1,9 +1,15 @@
-drop table if exists employee, address, employee_status,project,employee_project,personal,unit cascade;
+drop table if exists employee, unit,address, employee_status,project,employee_project,personal cascade;
+
+create table unit(
+    id                  serial  primary key     not null,
+    unit_name           text
+);
 
 create table employee(
    id                   serial  primary  key    not null,
    employee_name        text                    not null,
-   surname              text                    not null
+   surname              text                    not null,
+   unit_id         		integer 				references unit(id) on delete cascade on update cascade
 );
 
 create table address(
@@ -35,11 +41,4 @@ create table personal(
 	hiredate     		date,
     firedate        	date,
     employee_id         integer unique          references employee(id) on delete cascade on update cascade
-);
-
-create table unit(
-    id                  serial  primary key     not null,
-    town                text,
-    street              text,
-    employee_id         integer references employee(id) on delete cascade on update cascade
 );
