@@ -1,7 +1,7 @@
 package com.epam.cdp.hw4.services;
 
 import com.epam.cdp.hw4.models.Employee;
-import com.epam.cdp.hw4.repositories.EmployeeDao;
+import com.epam.cdp.hw4.repositories.impl.EmployeeDao;
 
 public class EmployeeService {
     private static EmployeeDao employeeDao;
@@ -11,15 +11,23 @@ public class EmployeeService {
     }
 
     public Employee findById(long id) {
-        employeeDao.openCurrentSession();
-        Employee employee = employeeDao.findById(id);
-        employeeDao.closeCurrentSession();
-        return employee;
+        return employeeDao.findById(id);
     }
 
     public void save(Employee entity) {
-        employeeDao.openCurrentSessionwithTransaction();
         employeeDao.save(entity);
-        employeeDao.closeCurrentSessionwithTransaction();
     }
+
+    public void update(long id){
+        employeeDao.update(id);
+    }
+
+    public void delete(long id){
+        employeeDao.delete(id);
+    }
+
+    public void addEmployeeToUnit(Employee employee, long unitId){
+        employeeDao.addToUnitById(employee, unitId);
+    }
+
 }

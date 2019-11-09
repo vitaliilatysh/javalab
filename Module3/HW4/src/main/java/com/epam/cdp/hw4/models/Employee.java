@@ -1,15 +1,14 @@
 package com.epam.cdp.hw4.models;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 import static javax.persistence.EnumType.STRING;
 
 @Entity
 @Table(name = "Employee")
 public class Employee {
-
-    @Enumerated(STRING)
-    public EmployeeStatus status;
 
     @Id
     @Column(name = "id")
@@ -22,12 +21,26 @@ public class Employee {
     @Column(name = "surname")
     private String surname;
 
-    @OneToOne
+    @Embedded
     private Address address;
 
+    @Column(name = "status")
+    @Enumerated(STRING)
+    private EmployeeStatus status;
+
     @ManyToOne
-    @JoinColumn(name = "unit_id", nullable = false)
+    @JoinColumn(name = "unit_id")
     private Unit unit;
+
+    @OneToOne(mappedBy = "employee")
+    private EmployeePersonalInfo personalInfo;
+
+    @ManyToMany(mappedBy = "employees")
+    private Set<Project> projects = new HashSet<>();
+
+    public Employee(){
+
+    }
 
     public EmployeeStatus getStatus() {
         return status;
@@ -75,5 +88,42 @@ public class Employee {
 
     public void setUnit(Unit unit) {
         this.unit = unit;
+    }
+
+    public static class EmployeeBuilder {
+        private Employee employee;
+
+        public EmployeeBuilder() {
+            employee = new Employee();
+        }
+
+        public EmployeeBuilder setId(long id) {
+            employee.id = id;
+            return this;
+        }
+
+        public EmployeeBuilder setName(String name) {
+            employee.name = name;
+            return this;
+        }
+
+        public EmployeeBuilder setSurname(String surname) {
+            employee.surname = surname;
+            return this;
+        }
+
+        public EmployeeBuilder setAddress(Address address) {
+            employee.address = address;
+            return this;
+        }
+
+        public EmployeeBuilder setStatus(EmployeeStatus status) {
+            employee.status = status;
+            return this;
+        }
+
+        public Employee build() {
+            return employee;
+        }
     }
 }
