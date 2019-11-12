@@ -55,6 +55,11 @@ public class ProjectDao implements IBaseDao<Project> {
         session.getTransaction().commit();
     }
 
+    /**
+     * Assign employee to specific project
+     * @param employee employee
+     * @param projectId project id
+     */
     public void assignToProjectById(Employee employee, long projectId) {
         session.beginTransaction();
 

@@ -4,6 +4,10 @@ import com.epam.cdp.hw4.models.*;
 import com.epam.cdp.hw4.services.base.EmployeeService;
 
 public class Application {
+    /**
+     * Main
+     * @param args args
+     */
     public static void main(String[] args) {
 //        UnitService unitService = new UnitService();
         EmployeeService employeeService = new EmployeeService();
@@ -22,7 +26,7 @@ public class Application {
 //        employeeQA.setStatus(EmployeeStatus.HIRED);
 //        employeeQA.setSurname("Roger");
 
-        employeeService.findAllQa(EmployeeDev.class);
+        employeeService.findAllQa();
 //        UnitCriteriaService unitCriteriaService = new UnitCriteriaService();
 //        unitCriteriaService.findById(1L);
 //

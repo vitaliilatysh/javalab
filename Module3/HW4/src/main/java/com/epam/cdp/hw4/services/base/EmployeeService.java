@@ -1,6 +1,7 @@
 package com.epam.cdp.hw4.services.base;
 
 import com.epam.cdp.hw4.models.Employee;
+import com.epam.cdp.hw4.models.EmployeeDev;
 import com.epam.cdp.hw4.models.EmployeeQA;
 import com.epam.cdp.hw4.repositories.impl.base.EmployeeDao;
 import com.epam.cdp.hw4.services.IBaseService;
@@ -39,8 +40,11 @@ public class EmployeeService implements IBaseService<Employee> {
         employeeDao.addToUnitById(employee, unitId);
     }
 
-    public List<EmployeeQA> findAllQa(Class clazz){
-        return employeeDao.findAllQAs(clazz);
+    public List<EmployeeQA> findAllQa(){
+        return employeeDao.findAllQAs();
     }
 
+    public List<EmployeeDev> findAllDev(){
+        return employeeDao.findAllDevs();
+    }
 }

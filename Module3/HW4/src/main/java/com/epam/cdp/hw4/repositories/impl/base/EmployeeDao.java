@@ -58,6 +58,11 @@ public class EmployeeDao implements IBaseDao<Employee> {
         session.getTransaction().commit();
     }
 
+    /**
+     * Add employee to specific unit
+     * @param employee employee
+     * @param unitId unit id
+     */
     public void addToUnitById(Employee employee, long unitId) {
         session.beginTransaction();
 
@@ -71,6 +76,10 @@ public class EmployeeDao implements IBaseDao<Employee> {
         session.getTransaction().commit();
     }
 
+    /**
+     * Return all employees on qa positions
+     * @return qa employees
+     */
     public List<EmployeeQA> findAllQAs() {
         session.beginTransaction();
         List<EmployeeQA> employeeQAS = (List<EmployeeQA>)session.createCriteria(EmployeeQA.class).list();
@@ -78,6 +87,10 @@ public class EmployeeDao implements IBaseDao<Employee> {
         return employeeQAS;
     }
 
+    /**
+     * Return all employees on dev positions
+     * @return dev employees
+     */
     public List<EmployeeDev> findAllDevs() {
         session.beginTransaction();
         List<EmployeeDev> employeeDevs = (List<EmployeeDev>)session.createCriteria(EmployeeDev.class).list();
