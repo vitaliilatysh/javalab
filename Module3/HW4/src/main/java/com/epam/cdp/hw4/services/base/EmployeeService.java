@@ -1,8 +1,11 @@
 package com.epam.cdp.hw4.services.base;
 
 import com.epam.cdp.hw4.models.Employee;
+import com.epam.cdp.hw4.models.EmployeeQA;
 import com.epam.cdp.hw4.repositories.impl.base.EmployeeDao;
 import com.epam.cdp.hw4.services.IBaseService;
+
+import java.util.List;
 
 public class EmployeeService implements IBaseService<Employee> {
 
@@ -34,6 +37,10 @@ public class EmployeeService implements IBaseService<Employee> {
 
     public void addEmployeeToUnit(Employee employee, long unitId) {
         employeeDao.addToUnitById(employee, unitId);
+    }
+
+    public List<EmployeeQA> findAllQa(Class clazz){
+        return employeeDao.findAllQAs(clazz);
     }
 
 }

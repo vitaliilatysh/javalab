@@ -9,7 +9,7 @@ create table employee(
    id                   serial  primary  key    not null,
    employee_name        text                    not null,
    surname              text                    not null,
-   role                 text                    not null,
+   role                 text,
    status               text                    not null,
    city                 text                    not null,
    state                text                    not null,

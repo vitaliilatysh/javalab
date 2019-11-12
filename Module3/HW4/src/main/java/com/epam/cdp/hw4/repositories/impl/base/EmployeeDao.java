@@ -2,9 +2,13 @@ package com.epam.cdp.hw4.repositories.impl.base;
 
 import com.epam.cdp.hw4.connector.Connector;
 import com.epam.cdp.hw4.models.Employee;
+import com.epam.cdp.hw4.models.EmployeeDev;
+import com.epam.cdp.hw4.models.EmployeeQA;
 import com.epam.cdp.hw4.models.Unit;
 import com.epam.cdp.hw4.repositories.IBaseDao;
 import org.hibernate.Session;
+
+import java.util.List;
 
 public class EmployeeDao implements IBaseDao<Employee> {
 
@@ -65,5 +69,19 @@ public class EmployeeDao implements IBaseDao<Employee> {
         session.update(employee);
 
         session.getTransaction().commit();
+    }
+
+    public List<EmployeeQA> findAllQAs() {
+        session.beginTransaction();
+        List<EmployeeQA> employeeQAS = (List<EmployeeQA>)session.createCriteria(EmployeeQA.class).list();
+        session.getTransaction().commit();
+        return employeeQAS;
+    }
+
+    public List<EmployeeDev> findAllDevs() {
+        session.beginTransaction();
+        List<EmployeeDev> employeeDevs = (List<EmployeeDev>)session.createCriteria(EmployeeDev.class).list();
+        session.getTransaction().commit();
+        return employeeDevs;
     }
 }

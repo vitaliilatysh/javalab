@@ -1,22 +1,13 @@
 package com.epam.cdp.hw4.models;
 
-import javax.persistence.*;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("dev")
-public class    EmployeeDev {
-
-    private String role;
+public class EmployeeDev extends Employee {
 
     public EmployeeDev() {
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 
 }
