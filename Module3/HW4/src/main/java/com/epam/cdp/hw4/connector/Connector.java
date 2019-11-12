@@ -16,6 +16,8 @@ public class Connector {
         configuration.addAnnotatedClass(Address.class);
         configuration.addAnnotatedClass(EmployeePersonalInfo.class);
         configuration.addAnnotatedClass(Project.class);
+        configuration.addAnnotatedClass(EmployeeQA.class);
+        configuration.addAnnotatedClass(EmployeeDev.class);
 
         StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties());

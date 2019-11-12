@@ -8,6 +8,8 @@ import static javax.persistence.EnumType.STRING;
 
 @Entity
 @Table(name = "Employee")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "role", discriminatorType = DiscriminatorType.STRING)
 public class Employee {
 
     @Id

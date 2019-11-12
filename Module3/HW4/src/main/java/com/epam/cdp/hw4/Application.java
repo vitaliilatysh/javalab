@@ -1,16 +1,38 @@
 package com.epam.cdp.hw4;
 
 import com.epam.cdp.hw4.models.*;
-import com.epam.cdp.hw4.services.EmployeeService;
-import com.epam.cdp.hw4.services.ProjectService;
-import com.epam.cdp.hw4.services.UnitService;
+import com.epam.cdp.hw4.services.base.EmployeeService;
+import com.epam.cdp.hw4.services.base.ProjectService;
+import com.epam.cdp.hw4.services.base.UnitService;
+import com.epam.cdp.hw4.services.criteria.UnitCriteriaService;
+import com.epam.cdp.hw4.services.hql.UnitHqlService;
 
 public class Application {
     public static void main(String[] args) {
-        UnitService unitService = new UnitService();
+//        UnitService unitService = new UnitService();
         EmployeeService employeeService = new EmployeeService();
-        ProjectService projectService = new ProjectService();
+//        ProjectService projectService = new ProjectService();
 
+                Address address = new Address.AddressBuilder()
+                .setCountry("Ukraine")
+                .setState("Kharkiv state")
+                .setCity("Kharkiv")
+                .setAddressLine("Nauky ave, 14")
+                .build();
+
+        EmployeeQA employeeQA = new EmployeeQA();
+        employeeQA.setName("Paulionio");
+        employeeQA.setRole("qa");
+        employeeQA.setAddress(address);
+        employeeQA.setStatus(EmployeeStatus.HIRED);
+        employeeQA.setSurname("Roger");
+
+        employeeService.save(employeeQA);
+//        UnitCriteriaService unitCriteriaService = new UnitCriteriaService();
+//        unitCriteriaService.findById(1L);
+//
+//        UnitHqlService unitHqlService = new UnitHqlService();
+//        unitHqlService.findById(1L);
 //        Unit unit = new Unit(1L, "Java Solutions");
 //        unitService.save(unit);
 //
@@ -27,8 +49,8 @@ public class Application {
 //                .build();
 
 //        projectService.save(project);
-        Employee foundEmployee =  employeeService.findById(1L);
-        projectService.assignEmployeeToProject(foundEmployee, 1L);
+//        Employee foundEmployee =  employeeService.findById(1L);
+//        projectService.assignEmployeeToProject(foundEmployee, 1L);
 
 //        EmployeeService employeeService = new EmployeeService();
 //        Address address = new Address.AddressBuilder()

@@ -1,4 +1,4 @@
-package com.epam.cdp.hw4.repositories.impl;
+package com.epam.cdp.hw4.repositories.impl.base;
 
 import com.epam.cdp.hw4.connector.Connector;
 import com.epam.cdp.hw4.models.Unit;

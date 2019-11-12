@@ -1,32 +1,38 @@
-package com.epam.cdp.hw4.services;
+package com.epam.cdp.hw4.services.base;
 
 import com.epam.cdp.hw4.models.Employee;
-import com.epam.cdp.hw4.repositories.impl.EmployeeDao;
+import com.epam.cdp.hw4.repositories.impl.base.EmployeeDao;
+import com.epam.cdp.hw4.services.IBaseService;
 
-public class EmployeeService {
+public class EmployeeService implements IBaseService<Employee> {
+
     private static EmployeeDao employeeDao;
 
     public EmployeeService() {
         employeeDao = new EmployeeDao();
     }
 
+    @Override
     public Employee findById(long id) {
         return employeeDao.findById(id);
     }
 
+    @Override
     public void save(Employee entity) {
         employeeDao.save(entity);
     }
 
-    public void update(long id){
+    @Override
+    public void update(long id) {
         employeeDao.update(id);
     }
 
-    public void delete(long id){
+    @Override
+    public void delete(long id) {
         employeeDao.delete(id);
     }
 
-    public void addEmployeeToUnit(Employee employee, long unitId){
+    public void addEmployeeToUnit(Employee employee, long unitId) {
         employeeDao.addToUnitById(employee, unitId);
     }
 

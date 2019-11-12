@@ -1,21 +1,22 @@
-package com.epam.cdp.hw4.repositories.impl;
+package com.epam.cdp.hw4.repositories.impl.base;
 
 import com.epam.cdp.hw4.connector.Connector;
 import com.epam.cdp.hw4.models.Employee;
-import com.epam.cdp.hw4.models.Unit;
+import com.epam.cdp.hw4.models.Project;
 import com.epam.cdp.hw4.repositories.IBaseDao;
 import org.hibernate.Session;
 
-public class EmployeeDao implements IBaseDao<Employee> {
+
+public class ProjectDao implements IBaseDao<Project> {
 
     private Session session;
 
-    public EmployeeDao() {
+    public ProjectDao() {
         session = Connector.getSessionFactory().openSession();
     }
 
     @Override
-    public void save(Employee entity) {
+    public void save(Project entity) {
         session.beginTransaction();
 
         session.save(entity);
@@ -27,43 +28,44 @@ public class EmployeeDao implements IBaseDao<Employee> {
     public void update(long id) {
         session.beginTransaction();
 
-        Employee employee = session.get(Employee.class, id);
-        session.update(employee);
+        Project project = session.get(Project.class, id);
+        session.update(project);
 
         session.getTransaction().commit();
     }
 
     @Override
-    public Employee findById(long id) {
+    public Project findById(long id) {
         session.beginTransaction();
 
-        Employee employee = session.get(Employee.class, id);
+        Project project = session.get(Project.class, id);
 
         session.getTransaction().commit();
 
-        return employee;
+        return project;
     }
 
     @Override
     public void delete(long id) {
         session.beginTransaction();
 
-        Employee employee = session.get(Employee.class, id);
-        session.delete(employee);
+        Project project = session.get(Project.class, id);
+        session.delete(project);
 
         session.getTransaction().commit();
     }
 
-    public void addToUnitById(Employee employee, long unitId) {
+    public void assignToProjectById(Employee employee, long projectId) {
         session.beginTransaction();
 
         long employeeId = employee.getId();
         Employee foundEmployee = session.get(Employee.class, employeeId);
 
-        Unit foundUnit = session.get(Unit.class, unitId);
-        foundEmployee.setUnit(foundUnit);
-        session.update(employee);
+        Project foundProject = session.get(Project.class, projectId);
+        foundProject.getEmployees().add(foundEmployee);
+        session.save(foundProject);
 
         session.getTransaction().commit();
     }
+
 }
