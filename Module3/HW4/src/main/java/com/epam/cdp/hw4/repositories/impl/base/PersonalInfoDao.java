@@ -1,24 +1,19 @@
 package com.epam.cdp.hw4.repositories.impl.base;
 
-import com.epam.cdp.hw4.connector.impl.Connector;
-import com.epam.cdp.hw4.models.Unit;
+import com.epam.cdp.hw4.models.PersonalInfo;
 import com.epam.cdp.hw4.repositories.IBaseDao;
 import org.hibernate.Session;
 
-public class UnitDao extends Connector implements IBaseDao<Unit> {
+public class PersonalInfoDao implements IBaseDao<PersonalInfo> {
 
     private Session session;
 
-    public UnitDao(){
-
-    }
-
-    public UnitDao(Session session) {
+    public PersonalInfoDao(Session session) {
         this.session = session;
     }
 
     @Override
-    public void save(Unit entity) {
+    public void save(PersonalInfo entity) {
         session.beginTransaction();
 
         session.save(entity);
@@ -30,29 +25,29 @@ public class UnitDao extends Connector implements IBaseDao<Unit> {
     public void update(long id) {
         session.beginTransaction();
 
-        Unit unit = session.get(Unit.class, id);
-        session.update(unit);
+        PersonalInfo personalInfo = session.get(PersonalInfo.class, id);
+        session.update(personalInfo);
 
         session.getTransaction().commit();
     }
 
     @Override
-    public Unit findById(long id) {
+    public PersonalInfo findById(long id) {
         session.beginTransaction();
 
-        Unit unit = session.get(Unit.class, id);
+        PersonalInfo personalInfo = session.get(PersonalInfo.class, id);
 
         session.getTransaction().commit();
 
-        return unit;
+        return personalInfo;
     }
 
     @Override
     public void delete(long id) {
         session.beginTransaction();
 
-        Unit unit = session.get(Unit.class, id);
-        session.delete(unit);
+        PersonalInfo personalInfo = session.get(PersonalInfo.class, id);
+        session.delete(personalInfo);
 
         session.getTransaction().commit();
     }

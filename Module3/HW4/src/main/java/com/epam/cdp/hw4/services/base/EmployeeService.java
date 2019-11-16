@@ -12,8 +12,8 @@ public class EmployeeService implements IBaseService<Employee> {
 
     private static EmployeeDao employeeDao;
 
-    public EmployeeService() {
-        employeeDao = new EmployeeDao();
+    public EmployeeService(EmployeeDao employeeDao) {
+        this.employeeDao = employeeDao;
     }
 
     @Override

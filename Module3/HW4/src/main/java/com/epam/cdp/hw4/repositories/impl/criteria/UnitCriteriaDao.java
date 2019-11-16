@@ -1,6 +1,5 @@
 package com.epam.cdp.hw4.repositories.impl.criteria;
 
-import com.epam.cdp.hw4.connector.Connector;
 import com.epam.cdp.hw4.models.Unit;
 import com.epam.cdp.hw4.repositories.impl.base.UnitDao;
 import org.hibernate.Criteria;
@@ -11,8 +10,8 @@ public class UnitCriteriaDao extends UnitDao {
 
     private Session session;
 
-    public UnitCriteriaDao() {
-        session = Connector.getSessionFactory().openSession();
+    public UnitCriteriaDao(Session session) {
+        this.session = session;
     }
 
     @Override

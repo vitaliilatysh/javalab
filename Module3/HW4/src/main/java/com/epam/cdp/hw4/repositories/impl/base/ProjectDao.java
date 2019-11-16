@@ -1,6 +1,5 @@
 package com.epam.cdp.hw4.repositories.impl.base;
 
-import com.epam.cdp.hw4.connector.Connector;
 import com.epam.cdp.hw4.models.Employee;
 import com.epam.cdp.hw4.models.Project;
 import com.epam.cdp.hw4.repositories.IBaseDao;
@@ -11,8 +10,8 @@ public class ProjectDao implements IBaseDao<Project> {
 
     private Session session;
 
-    public ProjectDao() {
-        session = Connector.getSessionFactory().openSession();
+    public ProjectDao(Session session) {
+        this.session = session;
     }
 
     @Override

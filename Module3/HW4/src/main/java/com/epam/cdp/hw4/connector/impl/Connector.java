@@ -1,4 +1,4 @@
-package com.epam.cdp.hw4.connector;
+package com.epam.cdp.hw4.connector.impl;
 
 import com.epam.cdp.hw4.models.*;
 import org.hibernate.SessionFactory;
@@ -14,7 +14,7 @@ public class Connector {
         configuration.addAnnotatedClass(Unit.class);
         configuration.addAnnotatedClass(Employee.class);
         configuration.addAnnotatedClass(Address.class);
-        configuration.addAnnotatedClass(EmployeePersonalInfo.class);
+        configuration.addAnnotatedClass(PersonalInfo.class);
         configuration.addAnnotatedClass(Project.class);
         configuration.addAnnotatedClass(EmployeeQA.class);
         configuration.addAnnotatedClass(EmployeeDev.class);

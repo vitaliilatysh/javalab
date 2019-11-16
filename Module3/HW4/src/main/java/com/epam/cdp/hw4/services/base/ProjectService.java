@@ -8,8 +8,8 @@ import com.epam.cdp.hw4.services.IBaseService;
 public class ProjectService implements IBaseService<Project> {
     private static ProjectDao projectDao;
 
-    public ProjectService() {
-        projectDao = new ProjectDao();
+    public ProjectService(ProjectDao projectDao) {
+        this.projectDao = projectDao;
     }
 
     @Override

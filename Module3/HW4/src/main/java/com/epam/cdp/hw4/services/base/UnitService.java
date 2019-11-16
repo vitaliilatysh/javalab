@@ -8,8 +8,8 @@ public class UnitService implements IBaseService<Unit> {
 
     private UnitDao unitDao;
 
-    public UnitService() {
-        unitDao = new UnitDao();
+    public UnitService(UnitDao unitDao) {
+        this.unitDao = unitDao;
     }
 
     @Override

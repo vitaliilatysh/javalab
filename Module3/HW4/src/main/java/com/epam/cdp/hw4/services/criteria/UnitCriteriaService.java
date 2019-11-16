@@ -9,8 +9,8 @@ public class UnitCriteriaService {
 
     private UnitCriteriaDao unitCriteriaDao;
 
-    public UnitCriteriaService() {
-        unitCriteriaDao = new UnitCriteriaDao();
+    public UnitCriteriaService(UnitCriteriaDao unitCriteriaDao) {
+        this.unitCriteriaDao = unitCriteriaDao;
     }
 
     public Unit findById(long id) {

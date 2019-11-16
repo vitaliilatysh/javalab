@@ -7,8 +7,8 @@ public class UnitHqlService {
 
     private UnitHqlDao unitHqlDao;
 
-    public UnitHqlService() {
-        unitHqlDao = new UnitHqlDao();
+    public UnitHqlService(UnitHqlDao unitHqlDao) {
+        this.unitHqlDao = unitHqlDao;
     }
 
     public Unit findById(long id) {

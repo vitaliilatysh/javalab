@@ -5,27 +5,27 @@ import java.util.Date;
 
 @Entity
 @Table(name = "personal_info")
-public class EmployeePersonalInfo {
+public class PersonalInfo {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "birthDate")
+    @Column(name = "birthDate", columnDefinition = "DATE")
     private Date birthDate;
 
-    @Column(name = "hireDate")
+    @Column(name = "hireDate", columnDefinition = "DATE")
     private Date hireDate;
 
-    @Column(name = "fireDate")
+    @Column(name = "fireDate", columnDefinition = "DATE")
     private Date fireDate;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    public EmployeePersonalInfo() {
+    public PersonalInfo() {
     }
 
     public long getId() {
@@ -69,34 +69,39 @@ public class EmployeePersonalInfo {
     }
 
     public static class PersonalBuilder{
-        private EmployeePersonalInfo employeePersonalInfo;
+        private PersonalInfo personalInfo;
 
         public PersonalBuilder(){
-            employeePersonalInfo = new EmployeePersonalInfo();
+            personalInfo = new PersonalInfo();
         }
 
         public PersonalBuilder setId(long id) {
-            employeePersonalInfo.id = id;
+            personalInfo.id = id;
             return this;
         }
 
         public PersonalBuilder setBirthDate(Date birthDate) {
-            employeePersonalInfo.birthDate = birthDate;
+            personalInfo.birthDate = birthDate;
             return this;
         }
 
         public PersonalBuilder setHireDate(Date hireDate) {
-            employeePersonalInfo.hireDate = hireDate;
+            personalInfo.hireDate = hireDate;
             return this;
         }
 
         public PersonalBuilder setFireDate(Date fireDate) {
-            employeePersonalInfo.fireDate = fireDate;
+            personalInfo.fireDate = fireDate;
             return this;
         }
 
-        public EmployeePersonalInfo build(){
-            return employeePersonalInfo;
+        public PersonalBuilder setEmployee(Employee employee){
+            personalInfo.employee = employee;
+            return this;
+        }
+
+        public PersonalInfo build(){
+            return personalInfo;
         }
     }
 }

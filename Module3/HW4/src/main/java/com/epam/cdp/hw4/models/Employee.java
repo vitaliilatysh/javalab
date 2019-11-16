@@ -35,7 +35,7 @@ public class Employee {
     private Unit unit;
 
     @OneToOne(mappedBy = "employee")
-    private EmployeePersonalInfo personalInfo;
+    private PersonalInfo personalInfo;
 
     @ManyToMany(mappedBy = "employees")
     private Set<Project> projects = new HashSet<>();
