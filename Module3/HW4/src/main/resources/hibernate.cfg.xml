@@ -16,7 +16,7 @@
         <mapping class="com.epam.cdp.hw4.models.Unit"/>
         <mapping class="com.epam.cdp.hw4.models.Employee"/>
         <mapping class="com.epam.cdp.hw4.models.Address"/>
-        <mapping class="com.epam.cdp.hw4.models.EmployeePersonalInfo"/>
+        <mapping class="com.epam.cdp.hw4.models.PersonalInfo"/>
         <mapping class="com.epam.cdp.hw4.models.Project"/>
 
     </session-factory>
