@@ -1,46 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/context
             http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:property-placeholder location="classpath:init.properties"/>
-    <context:component-scan base-package="com.epam.cdp.hw1" />
+    <context:component-scan base-package="com.epam.cdp.hw1"/>
 
-    <bean id="dataStorage" class="com.epam.cdp.hw1.storage.Storage">
-        <property name="ticketFilePath" value="${file.tickets}"/>
-        <property name="eventFilePath" value="${file.events}"/>
-        <property name="userFilePath" value="${file.users}"/>
-    </bean>
+    <bean id="dataStorage" class="com.epam.cdp.hw1.storage.Storage"
+          p:ticketFilePath="${file.tickets}"
+          p:eventFilePath="${file.events}"
+          p:userFilePath="${file.users}"/>
 
     <!-- Repository beans -->
-    <bean id="eventRepository" class="com.epam.cdp.hw1.repositories.impl.EventRepositoryImpl">
-
-    </bean>
-
-    <bean id="ticketRepository" class="com.epam.cdp.hw1.repositories.impl.TicketRepositoryImpl">
-
-    </bean>
-
-    <bean id="userRepository" class="com.epam.cdp.hw1.repositories.impl.UserRepositoryImpl">
-
-    </bean>
+    <bean id="eventRepository" class="com.epam.cdp.hw1.repositories.impl.EventRepositoryImpl"
+          p:storage-ref="dataStorage"/>
+    <bean id="ticketRepository" class="com.epam.cdp.hw1.repositories.impl.TicketRepositoryImpl"
+          p:storage-ref="dataStorage"/>
+    <bean id="userRepository" class="com.epam.cdp.hw1.repositories.impl.UserRepositoryImpl"
+          p:storage-ref="dataStorage"/>
 
     <!-- Service beans -->
-    <bean id="eventService" class="com.epam.cdp.hw1.services.EventService">
-
-    </bean>
-
-    <bean id="ticketService" class="com.epam.cdp.hw1.services.TicketService">
-
-    </bean>
-
-    <bean id="userService" class="com.epam.cdp.hw1.services.UserService">
-
-    </bean>
+    <bean id="eventService" class="com.epam.cdp.hw1.services.EventService"/>
+    <bean id="ticketService" class="com.epam.cdp.hw1.services.TicketService"/>
+    <bean id="userService" class="com.epam.cdp.hw1.services.UserService"/>
 
     <!-- Facade bean -->
     <bean id="facade" class="com.epam.cdp.hw1.facade.impl.BookingFacadeImpl">

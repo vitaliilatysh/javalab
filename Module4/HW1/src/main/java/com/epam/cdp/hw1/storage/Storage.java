@@ -63,6 +63,9 @@ public class Storage {
         return user;
     };
 
+    /**
+     * init storage
+     */
     @PostConstruct
     public void init() {
         logger.info("Storage initializing...");
@@ -101,27 +104,27 @@ public class Storage {
         return userStorage;
     }
 
-    public void setTicketFilePath(String ticketFilePath) {
-        this.ticketFilePath = ticketFilePath;
-    }
-
-    public void setEventFilePath(String eventFilePath) {
-        this.eventFilePath = eventFilePath;
-    }
-
-    public void setUserFilePath(String userFilePath) {
-        this.userFilePath = userFilePath;
-    }
-
     public String getTicketFilePath() {
         return ticketFilePath;
+    }
+
+    public void setTicketFilePath(String ticketFilePath) {
+        this.ticketFilePath = ticketFilePath;
     }
 
     public String getEventFilePath() {
         return eventFilePath;
     }
 
+    public void setEventFilePath(String eventFilePath) {
+        this.eventFilePath = eventFilePath;
+    }
+
     public String getUserFilePath() {
         return userFilePath;
+    }
+
+    public void setUserFilePath(String userFilePath) {
+        this.userFilePath = userFilePath;
     }
 }

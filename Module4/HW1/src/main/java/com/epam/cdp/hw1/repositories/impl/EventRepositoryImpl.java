@@ -5,15 +5,24 @@ import com.epam.cdp.hw1.repositories.EventRepository;
 import com.epam.cdp.hw1.storage.Storage;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class EventRepositoryImpl implements EventRepository {
 
-    @Autowired
     private Storage storage;
+
+    public void setStorage(Storage storage) {
+        this.storage = storage;
+    }
 
     @Override
     public Event save(Event entity) {
-        storage.getEventStorage().put("3", entity);
-        return storage.getEventStorage().get("3");
+        String newEntryId = String.valueOf(entity.getId());
+        storage.getEventStorage().put(newEntryId, entity);
+        return storage.getEventStorage().get(newEntryId);
     }
 
     @Override
@@ -22,12 +31,28 @@ public class EventRepositoryImpl implements EventRepository {
     }
 
     @Override
-    public void update(Event entity) {
-
+    public Event update(Event entity) {
+        String updatedEntityId = String.valueOf(entity.getId());
+        return storage.getEventStorage().put(updatedEntityId, entity);
     }
 
     @Override
-    public void delete(Long aLong) {
+    public boolean delete(Long id) {
+        Event event = storage.getEventStorage().remove(String.valueOf(id));
+        return event != null;
+    }
 
+    @Override
+    public List<Event> findByTitle(String title, int pageSize, int pageNum) {
+        return storage.getEventStorage().values().stream()
+                .filter(event -> event.getTitle().contains(title))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Event> findByDay(Date day, int pageSize, int pageNum) {
+        return storage.getEventStorage().values().stream()
+                .filter(event -> java.sql.Date.valueOf(event.getDate()).equals(day))
+                .collect(Collectors.toList());
     }
 }

@@ -5,7 +5,7 @@ import java.time.LocalDate;
 /**
  * Created by maksym_govorischev.
  */
-public interface Event extends IBaseModel{
+public interface Event extends IBaseModel {
 
     String getTitle();
 

@@ -66,10 +66,10 @@ public class TicketImpl implements Ticket {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TicketImpl ticket = (TicketImpl) o;
+    public boolean equals(Object object) {
+        if (this == object) {return true;}
+        if (object == null || getClass() != object.getClass()) {return false;}
+        TicketImpl ticket = (TicketImpl) object;
         return id == ticket.id &&
                 eventId == ticket.eventId &&
                 userId == ticket.userId &&

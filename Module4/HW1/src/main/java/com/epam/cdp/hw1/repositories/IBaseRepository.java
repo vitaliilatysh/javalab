@@ -6,8 +6,8 @@ public interface IBaseRepository<T, ID> {
 
     T findById(ID id);
 
-    void update(T entity);
+    T update(T entity);
 
-    void delete(ID id);
+    boolean delete(ID id);
 
 }

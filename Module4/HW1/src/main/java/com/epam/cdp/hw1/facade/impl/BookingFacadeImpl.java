@@ -4,6 +4,7 @@ import com.epam.cdp.hw1.facade.BookingFacade;
 import com.epam.cdp.hw1.model.Event;
 import com.epam.cdp.hw1.model.Ticket;
 import com.epam.cdp.hw1.model.User;
+import com.epam.cdp.hw1.model.impl.TicketImpl;
 import com.epam.cdp.hw1.services.EventService;
 import com.epam.cdp.hw1.services.TicketService;
 import com.epam.cdp.hw1.services.UserService;
@@ -17,6 +18,12 @@ public class BookingFacadeImpl implements BookingFacade {
     private TicketService ticketService;
     private UserService userService;
 
+    /**
+     * Constructor BookingFacade
+     * @param userService userService bean
+     * @param ticketService ticketService bean
+     * @param eventService eventService bean
+     */
     public BookingFacadeImpl(UserService userService, TicketService ticketService, EventService eventService) {
         this.userService = userService;
         this.ticketService = ticketService;
@@ -30,76 +37,82 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Override
     public List<Event> getEventsByTitle(String title, int pageSize, int pageNum) {
-        return null;
+        return eventService.getByTitle(title, pageSize, pageNum);
     }
 
     @Override
     public List<Event> getEventsForDay(Date day, int pageSize, int pageNum) {
-        return null;
+        return eventService.getByDay(day, pageSize, pageNum);
     }
 
     @Override
     public Event createEvent(Event event) {
-        return eventService.createEvent(event);
+        return eventService.create(event);
     }
 
     @Override
     public Event updateEvent(Event event) {
-        return null;
+        return eventService.update(event);
     }
 
     @Override
     public boolean deleteEvent(long eventId) {
-        return false;
+        return eventService.delete(eventId);
     }
 
     @Override
     public User getUserById(long userId) {
-        return null;
+        return userService.findById(userId);
     }
 
     @Override
     public User getUserByEmail(String email) {
-        return null;
+        return userService.findByEmail(email);
     }
 
     @Override
     public List<User> getUsersByName(String name, int pageSize, int pageNum) {
-        return null;
+        return userService.getByName(name, pageSize, pageNum);
     }
 
     @Override
     public User createUser(User user) {
-        return null;
+        return userService.create(user);
     }
 
     @Override
     public User updateUser(User user) {
-        return null;
+        return userService.update(user);
     }
 
     @Override
     public boolean deleteUser(long userId) {
-        return false;
+        return userService.delete(userId);
     }
 
     @Override
     public Ticket bookTicket(long userId, long eventId, int place, Ticket.Category category) {
-        return null;
+        Ticket ticket = new TicketImpl();
+        ticket.setId(1);
+        ticket.setUserId(userId);
+        ticket.setEventId(eventId);
+        ticket.setCategory(category);
+        ticket.setPlace(place);
+        return ticketService.book(ticket);
     }
 
     @Override
     public List<Ticket> getBookedTickets(User user, int pageSize, int pageNum) {
-        return null;
+        return ticketService.getByUser(user,pageSize, pageNum);
     }
 
     @Override
     public List<Ticket> getBookedTickets(Event event, int pageSize, int pageNum) {
-        return null;
+        return ticketService.getByEvent(event,pageSize, pageNum);
     }
 
     @Override
     public boolean cancelTicket(long ticketId) {
-        return false;
+        return ticketService.cancel(ticketId);
     }
 }
