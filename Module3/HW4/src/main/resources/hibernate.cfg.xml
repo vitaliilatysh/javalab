@@ -1,0 +1,23 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/vitaliilatysh</property>
+        <property name="hibernate.default_schema">public</property>
+        <property name="hibernate.connection.username">vitaliilatysh</property>
+        <property name="hibernate.connection.password">guest</property>
+        <property name="show_sql">true</property>
+
+        <!-- List of XML mapping files -->
+        <mapping class="com.epam.cdp.hw4.models.Unit"/>
+        <mapping class="com.epam.cdp.hw4.models.Employee"/>
+        <mapping class="com.epam.cdp.hw4.models.Address"/>
+        <mapping class="com.epam.cdp.hw4.models.PersonalInfo"/>
+        <mapping class="com.epam.cdp.hw4.models.Project"/>
+
+    </session-factory>
+</hibernate-configuration>
