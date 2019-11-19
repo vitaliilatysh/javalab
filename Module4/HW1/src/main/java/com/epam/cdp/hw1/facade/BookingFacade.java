@@ -69,6 +69,7 @@ public interface BookingFacade {
 
     /**
      * Gets user by its id.
+     *
      * @param userId user id
      * @return User.
      */
@@ -76,6 +77,7 @@ public interface BookingFacade {
 
     /**
      * Gets user by its email. Email is strictly matched.
+     *
      * @param email email
      * @return User.
      */

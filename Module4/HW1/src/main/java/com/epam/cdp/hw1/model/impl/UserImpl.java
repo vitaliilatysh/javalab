@@ -45,8 +45,12 @@ public class UserImpl implements User {
 
     @Override
     public boolean equals(Object object) {
-        if (this == object) {return true;}
-        if (object == null || getClass() != object.getClass()) {return false;}
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
         UserImpl user = (UserImpl) object;
         return id == user.id &&
                 Objects.equals(name, user.name) &&

@@ -3,9 +3,7 @@ package com.epam.cdp.hw1.repositories.impl;
 import com.epam.cdp.hw1.model.Event;
 import com.epam.cdp.hw1.repositories.EventRepository;
 import com.epam.cdp.hw1.storage.Storage;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,15 +42,19 @@ public class EventRepositoryImpl implements EventRepository {
 
     @Override
     public List<Event> findByTitle(String title, int pageSize, int pageNum) {
-        return storage.getEventStorage().values().stream()
+        List<Event> storageEvents = storage.getEventStorage().values().stream()
                 .filter(event -> event.getTitle().contains(title))
                 .collect(Collectors.toList());
+
+        return getItems(pageSize, pageNum, storageEvents);
     }
 
     @Override
     public List<Event> findByDay(Date day, int pageSize, int pageNum) {
-        return storage.getEventStorage().values().stream()
+        List<Event> storageEvents = storage.getEventStorage().values().stream()
                 .filter(event -> java.sql.Date.valueOf(event.getDate()).equals(day))
                 .collect(Collectors.toList());
+
+        return getItems(pageSize, pageNum, storageEvents);
     }
 }

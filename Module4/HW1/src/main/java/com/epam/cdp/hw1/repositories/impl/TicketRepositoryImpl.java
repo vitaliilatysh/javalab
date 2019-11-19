@@ -7,7 +7,6 @@ import com.epam.cdp.hw1.repositories.TicketRepository;
 import com.epam.cdp.hw1.storage.Storage;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class TicketRepositoryImpl implements TicketRepository {
@@ -48,15 +47,19 @@ public class TicketRepositoryImpl implements TicketRepository {
 
     @Override
     public List<Ticket> findByUser(User user, int pageSize, int pageNum) {
-         return storage.getTicketStorage().values().stream()
+        List<Ticket> ticketList = storage.getTicketStorage().values().stream()
                 .filter(userValue -> userValue.getUserId() == user.getId())
-                 .collect(Collectors.toList());
+                .collect(Collectors.toList());
+
+        return getItems(pageSize, pageNum, ticketList);
     }
 
     @Override
     public List<Ticket> findByEvent(Event event, int pageSize, int pageNum) {
-        return storage.getTicketStorage().values().stream()
+        List<Ticket> ticketList = storage.getTicketStorage().values().stream()
                 .filter(eventValue -> eventValue.getEventId() == event.getId())
                 .collect(Collectors.toList());
+
+        return getItems(pageSize, pageNum, ticketList);
     }
 }

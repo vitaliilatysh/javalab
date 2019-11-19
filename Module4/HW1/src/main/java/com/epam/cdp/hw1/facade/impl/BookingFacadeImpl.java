@@ -20,9 +20,10 @@ public class BookingFacadeImpl implements BookingFacade {
 
     /**
      * Constructor BookingFacade
-     * @param userService userService bean
+     *
+     * @param userService   userService bean
      * @param ticketService ticketService bean
-     * @param eventService eventService bean
+     * @param eventService  eventService bean
      */
     public BookingFacadeImpl(UserService userService, TicketService ticketService, EventService eventService) {
         this.userService = userService;
@@ -103,12 +104,12 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Override
     public List<Ticket> getBookedTickets(User user, int pageSize, int pageNum) {
-        return ticketService.getByUser(user,pageSize, pageNum);
+        return ticketService.getByUser(user, pageSize, pageNum);
     }
 
     @Override
     public List<Ticket> getBookedTickets(Event event, int pageSize, int pageNum) {
-        return ticketService.getByEvent(event,pageSize, pageNum);
+        return ticketService.getByEvent(event, pageSize, pageNum);
     }
 
     @Override

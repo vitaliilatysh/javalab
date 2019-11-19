@@ -5,7 +5,6 @@ import com.epam.cdp.hw1.model.Event;
 import com.epam.cdp.hw1.model.Ticket;
 import com.epam.cdp.hw1.model.User;
 import com.epam.cdp.hw1.model.impl.EventImpl;
-import com.epam.cdp.hw1.model.impl.TicketImpl;
 import com.epam.cdp.hw1.model.impl.UserImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,12 +34,12 @@ public class BookingFacadeImplTest {
 
     @Test
     public void getEventsByTitle() {
-        assertEquals(facade.getEventsByTitle("Tour", 0, 0).size(), 3);
+        assertEquals(3, facade.getEventsByTitle("Tour", 3, 0).size());
     }
 
     @Test
     public void getEventsForDay() {
-        assertEquals((facade.getEventsForDay(new GregorianCalendar(2019, Calendar.NOVEMBER, 9).getTime(), 0, 0)).size(), 2);
+        assertEquals(2, (facade.getEventsForDay(new GregorianCalendar(2019, Calendar.NOVEMBER, 9).getTime(), 2, 0)).size());
     }
 
     @Test
@@ -82,7 +81,17 @@ public class BookingFacadeImplTest {
 
     @Test
     public void getUsersByName() {
-        assertEquals(facade.getUsersByName("Andrii", 0, 0).size(), 1);
+        assertEquals(1, facade.getUsersByName("Andrii", 2, 1).size());
+    }
+
+    @Test
+    public void shouldReturnEmptyListIfPageNumberOutOfTheListSize() {
+        assertEquals(0, facade.getUsersByName("Andrii", 2, 2).size());
+    }
+
+    @Test
+    public void shouldReturnEmptyListIfNoMatchFound() {
+        assertEquals(0, facade.getUsersByName("Danylo", 2, 2).size());
     }
 
     @Test
@@ -120,13 +129,13 @@ public class BookingFacadeImplTest {
     @Test
     public void getBookedTicketsByUser() {
         User user = facade.getUserById(1);
-        assertEquals(facade.getBookedTickets(user, 0, 0).size(), 2);
+        assertEquals(2, facade.getBookedTickets(user, 2, 0).size());
     }
 
     @Test
     public void getBookedTicketsByEvent() {
         Event event = facade.getEventById(12);
-        assertEquals(facade.getBookedTickets(event, 0, 0).size(), 1);
+        assertEquals(1, facade.getBookedTickets(event, 2, 0).size());
     }
 
     @Test
