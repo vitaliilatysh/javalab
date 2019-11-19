@@ -4,6 +4,8 @@ import com.epam.cdp.hw1.model.User;
 import com.epam.cdp.hw1.repositories.UserRepository;
 import com.epam.cdp.hw1.storage.Storage;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -53,10 +55,26 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findByName(String name, int pageSize, int pageNum) {
-        Map<Integer, List<User>> result = new TreeMap<>();
+        Map<Integer /*pageNum*/, List<User> /*pageSiz*/> result = new TreeMap<>();
 
-        for (int i = 1; i < pageSize; i++) {
-
+        List<User> storageUsers = storage.getUserStorage().values().stream()
+                .filter(user -> user.getName().contains(name))
+                .collect(Collectors.toList());
+//        int elementsOnTheLastPage = storageUsers.size() % pageSize;
+//        int pageNumber = 1;
+//
+//        if (elementsOnTheLastPage != 0) {
+//            List<User> users = new ArrayList<>();
+//            for (int i = 1; i < pageSize; i++) {
+//                users.add(storageUsers.get(i));
+//            }
+//            result.put(pageNumber, users);
+//            ++pageNumber;
+//        }
+        List<List<User>> partitions = new LinkedList<>();
+        for (int i = 0; i < storageUsers.size(); i += pageSize) {
+            partitions.add(storageUsers.subList(i,
+                    Math.min(i + pageSize, storageUsers.size())));
         }
 
         return storage.getUserStorage().values().stream()
