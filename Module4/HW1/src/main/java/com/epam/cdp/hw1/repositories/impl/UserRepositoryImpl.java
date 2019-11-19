@@ -5,7 +5,9 @@ import com.epam.cdp.hw1.repositories.UserRepository;
 import com.epam.cdp.hw1.storage.Storage;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class UserRepositoryImpl implements UserRepository {
@@ -51,6 +53,12 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findByName(String name, int pageSize, int pageNum) {
+        Map<Integer, List<User>> result = new TreeMap<>();
+
+        for (int i = 1; i < pageSize; i++) {
+
+        }
+
         return storage.getUserStorage().values().stream()
                 .filter(user -> user.getName().contains(name))
                 .collect(Collectors.toList());
