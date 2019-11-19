@@ -4,8 +4,6 @@ import com.epam.cdp.hw1.model.User;
 import com.epam.cdp.hw1.repositories.UserRepository;
 import com.epam.cdp.hw1.storage.Storage;
 
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -57,15 +55,6 @@ public class UserRepositoryImpl implements UserRepository {
                 .filter(user -> user.getName().contains(name))
                 .collect(Collectors.toList());
 
-        List<List<User>> partitions = new LinkedList<>();
-        for (int i = 0; i < storageUsers.size(); i += pageSize) {
-            partitions.add(storageUsers.subList(i,
-                    Math.min(i + pageSize, storageUsers.size())));
-        }
-
-        if (partitions.isEmpty() || pageNum >= partitions.size()) {
-            return Collections.emptyList();
-        }
-        return partitions.get(pageNum);
+        return getItems(pageSize, pageNum, storageUsers);
     }
 }
