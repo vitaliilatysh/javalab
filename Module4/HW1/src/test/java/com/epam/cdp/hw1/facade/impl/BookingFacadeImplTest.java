@@ -14,6 +14,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -129,13 +130,19 @@ public class BookingFacadeImplTest {
     @Test
     public void getBookedTicketsByUser() {
         User user = facade.getUserById(1);
-        assertEquals(2, facade.getBookedTickets(user, 2, 0).size());
+        List<Ticket> bookedTickets = facade.getBookedTickets(user, 2, 0);
+
+        assertEquals(2, bookedTickets.size());
+        assertEquals(12, bookedTickets.get(0).getEventId());
     }
 
     @Test
     public void getBookedTicketsByEvent() {
-        Event event = facade.getEventById(12);
-        assertEquals(1, facade.getBookedTickets(event, 2, 0).size());
+        Event event = facade.getEventById(13);
+        List<Ticket> bookedTickets = facade.getBookedTickets(event, 2, 0);
+
+        assertEquals(2, bookedTickets.size());
+        assertEquals(1, bookedTickets.get(0).getUserId());
     }
 
     @Test

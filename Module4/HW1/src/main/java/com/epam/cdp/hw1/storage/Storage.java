@@ -43,11 +43,6 @@ public class Storage {
 
         return ticket;
     };
-
-    private String[] trimRow(String line) {
-        return Arrays.stream(line.split(",")).map(String::trim).toArray(String[]::new);
-    }
-
     private Function<String, Event> mapToEvent = (line) -> {
         String[] split = trimRow(line);
 
@@ -68,6 +63,10 @@ public class Storage {
 
         return user;
     };
+
+    private String[] trimRow(String line) {
+        return Arrays.stream(line.split(",")).map(String::trim).toArray(String[]::new);
+    }
 
     /**
      * init storage

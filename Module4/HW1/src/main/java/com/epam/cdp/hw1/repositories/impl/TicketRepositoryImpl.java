@@ -6,7 +6,7 @@ import com.epam.cdp.hw1.model.User;
 import com.epam.cdp.hw1.repositories.TicketRepository;
 import com.epam.cdp.hw1.storage.Storage;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class TicketRepositoryImpl implements TicketRepository {
@@ -47,19 +47,53 @@ public class TicketRepositoryImpl implements TicketRepository {
 
     @Override
     public List<Ticket> findByUser(User user, int pageSize, int pageNum) {
-        List<Ticket> ticketList = storage.getTicketStorage().values().stream()
-                .filter(ticket -> ticket.getUserId() == user.getId())
+        Map<Long, List<Ticket>> sortedByEventDateDesc = new LinkedHashMap<>();
+
+        List<Event> events = storage.getEventStorage().values().stream()
+                .sorted(Comparator.comparing(Event::getDate))
                 .collect(Collectors.toList());
 
-        return getItems(pageSize, pageNum, ticketList);
+        for (Event event : events) {
+            sortedByEventDateDesc.put(event.getId(), new ArrayList<>());
+        }
+
+        storage.getTicketStorage().values().stream()
+                .filter(ticket -> ticket.getUserId() == user.getId())
+                .filter(ticket -> sortedByEventDateDesc.containsKey(ticket.getEventId()))
+                .forEach(
+                        ticket -> sortedByEventDateDesc.get(ticket.getEventId()).add(ticket)
+                );
+
+        List<Ticket> result = sortedByEventDateDesc.values().stream()
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+
+        return getItems(pageSize, pageNum, result);
     }
 
     @Override
     public List<Ticket> findByEvent(Event event, int pageSize, int pageNum) {
-        List<Ticket> ticketList = storage.getTicketStorage().values().stream()
-                .filter(eventValue -> eventValue.getEventId() == event.getId())
+        Map<Long, List<Ticket>> sortedByUserEmailAsc = new LinkedHashMap<>();
+
+        List<User> users = storage.getUserStorage().values().stream()
+                .sorted(Comparator.comparing(User::getEmail))
                 .collect(Collectors.toList());
 
-        return getItems(pageSize, pageNum, ticketList);
+        for (User user : users) {
+            sortedByUserEmailAsc.put(user.getId(), new ArrayList<>());
+        }
+
+        storage.getTicketStorage().values().stream()
+                .filter(ticket -> ticket.getEventId() == event.getId())
+                .filter(ticket -> sortedByUserEmailAsc.containsKey(ticket.getUserId()))
+                .forEach(
+                        ticket -> sortedByUserEmailAsc.get(ticket.getUserId()).add(ticket)
+                );
+
+        List<Ticket> result = sortedByUserEmailAsc.values().stream()
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+
+        return getItems(pageSize, pageNum, result);
     }
 }
