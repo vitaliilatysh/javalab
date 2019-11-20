@@ -48,7 +48,7 @@ public class TicketRepositoryImpl implements TicketRepository {
     @Override
     public List<Ticket> findByUser(User user, int pageSize, int pageNum) {
         List<Ticket> ticketList = storage.getTicketStorage().values().stream()
-                .filter(userValue -> userValue.getUserId() == user.getId())
+                .filter(ticket -> ticket.getUserId() == user.getId())
                 .collect(Collectors.toList());
 
         return getItems(pageSize, pageNum, ticketList);

@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
 import java.io.*;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -31,7 +32,7 @@ public class Storage {
     private Map<String, User> userStorage = new HashMap<>();
 
     private Function<String, Ticket> matToTicket = (line) -> {
-        String[] split = line.split(",");
+        String[] split = trimRow(line);
 
         Ticket ticket = new TicketImpl();
         ticket.setId(Long.parseLong(split[0]));
@@ -42,8 +43,13 @@ public class Storage {
 
         return ticket;
     };
+
+    private String[] trimRow(String line) {
+        return Arrays.stream(line.split(",")).map(String::trim).toArray(String[]::new);
+    }
+
     private Function<String, Event> mapToEvent = (line) -> {
-        String[] split = line.split(",");
+        String[] split = trimRow(line);
 
         Event event = new EventImpl();
         event.setId(Long.parseLong(split[0]));
@@ -53,7 +59,7 @@ public class Storage {
         return event;
     };
     private Function<String, User> mapToUser = (line) -> {
-        String[] split = line.split(",");
+        String[] split = trimRow(line);
 
         User user = new UserImpl();
         user.setId(Long.parseLong(split[0]));
