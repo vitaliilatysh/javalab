@@ -7,6 +7,7 @@ import com.epam.cdp.hw1.repositories.TicketRepository;
 import com.epam.cdp.hw1.storage.Storage;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class TicketRepositoryImpl implements TicketRepository {
@@ -47,15 +48,12 @@ public class TicketRepositoryImpl implements TicketRepository {
 
     @Override
     public List<Ticket> findByUser(User user, int pageSize, int pageNum) {
-        Map<Long, List<Ticket>> sortedByEventDateDesc = new LinkedHashMap<>();
-
-        List<Event> events = storage.getEventStorage().values().stream()
+        Map<Long, List<Ticket>> sortedByEventDateDesc = storage.getEventStorage().values().stream()
                 .sorted(Comparator.comparing(Event::getDate))
-                .collect(Collectors.toList());
-
-        for (Event event : events) {
-            sortedByEventDateDesc.put(event.getId(), new ArrayList<>());
-        }
+                .collect(
+                        LinkedHashMap::new,
+                        (map, event) -> map.put(event.getId(), new ArrayList<>()),
+                        Map::putAll);
 
         storage.getTicketStorage().values().stream()
                 .filter(ticket -> ticket.getUserId() == user.getId())
@@ -73,15 +71,12 @@ public class TicketRepositoryImpl implements TicketRepository {
 
     @Override
     public List<Ticket> findByEvent(Event event, int pageSize, int pageNum) {
-        Map<Long, List<Ticket>> sortedByUserEmailAsc = new LinkedHashMap<>();
-
-        List<User> users = storage.getUserStorage().values().stream()
+        Map<Long, List<Ticket>> sortedByUserEmailAsc = storage.getUserStorage().values().stream()
                 .sorted(Comparator.comparing(User::getEmail))
-                .collect(Collectors.toList());
-
-        for (User user : users) {
-            sortedByUserEmailAsc.put(user.getId(), new ArrayList<>());
-        }
+                .collect(
+                        LinkedHashMap::new,
+                        (map, user) -> map.put(user.getId(), new ArrayList<>()),
+                        Map::putAll);
 
         storage.getTicketStorage().values().stream()
                 .filter(ticket -> ticket.getEventId() == event.getId())
