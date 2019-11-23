@@ -1,0 +1,17 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Booking Service</title>
+</head>
+<body>
+<h1 th:text="Users"></h1>
+<table>
+    <th:block th:each="user : ${users}">
+        <tr>
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.email}"></td>
+        </tr>
+    </th:block>
+</table>
+</body>
+</html>
