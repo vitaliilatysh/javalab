@@ -1,9 +1,11 @@
 package com.epam.cdp.module4.hw2.controller;
 
+import com.epam.cdp.module4.hw2.exceptions.EventNotFoundException;
 import com.epam.cdp.module4.hw2.facade.impl.BookingFacadeImpl;
 import com.epam.cdp.module4.hw2.model.Event;
-import com.epam.cdp.module4.hw2.model.User;
 import com.epam.cdp.module4.hw2.model.impl.EventImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,30 +19,12 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/")
-public class MainController {
+public class EventController {
+
+    private static Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private BookingFacadeImpl bookingFacade;
-
-    /**
-     * Get users by name
-     *
-     * @param userName user name
-     * @param pageSize page size
-     * @param page     page number
-     * @param model    model
-     * @return model view
-     */
-    @GetMapping(value = "/users/find", params = {"userName", "pageSize", "page"})
-    public String getUserByName(
-            @RequestParam String userName,
-            @RequestParam int pageSize,
-            @RequestParam int page,
-            Model model) {
-        List<User> byName = bookingFacade.getUsersByName(userName, pageSize, page);
-        model.addAttribute("users", byName);
-        return "users";
-    }
 
     /**
      * Get event by id
@@ -54,6 +38,9 @@ public class MainController {
             @RequestParam int eventId,
             Model model) {
         Event event = bookingFacade.getEventById(eventId);
+        if (event == null) {
+            throw new EventNotFoundException(eventId);
+        }
         model.addAttribute("events", Collections.singleton(event));
         return "events";
     }
