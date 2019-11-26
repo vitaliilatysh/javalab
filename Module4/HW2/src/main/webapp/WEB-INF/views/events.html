@@ -7,11 +7,16 @@
 <h3 th:text="${deleted}"></h3>
 <table>
     <th:block th:each="event : ${events}">
-        <tr>
-            <td th:text="${event.id}"></td>
-            <td th:text="${event.title}"></td>
-            <td th:text="${event.date}"></td>
-        </tr>
+        <form th:action="@{/events/{id}(id=${event.id})}" th:method="post">
+            <tr>
+                <td th:text="${event.id}"></td>
+                <td th:text="${event.title}"></td>
+                <td th:text="${event.date}"></td>
+                <td>
+                    <button id="submitButton" type="submit">Delete</button>
+                </td>
+            </tr>
+        </form>
     </th:block>
 </table>
 </body>

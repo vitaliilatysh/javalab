@@ -9,16 +9,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 import java.util.Collections;
 import java.util.List;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/events")
 public class EventController {
 
     private static Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -29,17 +27,17 @@ public class EventController {
     /**
      * Get event by id
      *
-     * @param eventId event id
-     * @param model   model
+     * @param id    event id
+     * @param model model
      * @return model view
      */
-    @GetMapping(value = "/events/find", params = "eventId")
+    @GetMapping(value = "/{id}")
     public String getEventById(
-            @RequestParam int eventId,
+            @PathVariable int id,
             Model model) {
-        Event event = bookingFacade.getEventById(eventId);
+        Event event = bookingFacade.getEventById(id);
         if (event == null) {
-            throw new EventNotFoundException(eventId);
+            throw new EventNotFoundException(id);
         }
         model.addAttribute("events", Collections.singleton(event));
         return "events";
@@ -54,7 +52,7 @@ public class EventController {
      * @param model      model
      * @return model view
      */
-    @GetMapping(value = "/events/find", params = {"eventTitle", "pageSize", "page"})
+    @GetMapping(value = "/find", params = {"eventTitle", "pageSize", "page"})
     public String getEventsByTitle(
             @RequestParam String eventTitle,
             @RequestParam int pageSize,
@@ -74,7 +72,7 @@ public class EventController {
      * @param model     model
      * @return model view
      */
-    @GetMapping(value = "/events/find", params = {"eventDate", "pageSize", "page"})
+    @GetMapping(value = "/find", params = {"eventDate", "pageSize", "page"})
     public String getEventByDate(
             @RequestParam String eventDate,
             @RequestParam int pageSize,
@@ -93,7 +91,7 @@ public class EventController {
      * @param model model
      * @return model view
      */
-    @GetMapping(value = "/events/create", params = {"title", "date"})
+    @GetMapping(value = "/create", params = {"title", "date"})
     public String createEvent(
             @RequestParam String title,
             @RequestParam String date,
@@ -110,20 +108,20 @@ public class EventController {
     /**
      * Update event
      *
-     * @param eventId event id
-     * @param title   event title
-     * @param date    event date
-     * @param model   model
+     * @param id    event id
+     * @param title event title
+     * @param date  event date
+     * @param model model
      * @return model view
      */
-    @GetMapping(value = "/events/update", params = {"eventId", "title", "date"})
+    @GetMapping(value = "/update", params = {"id", "title", "date"})
     public String updateEvent(
-            @RequestParam int eventId,
+            @RequestParam int id,
             @RequestParam String title,
             @RequestParam String date,
             Model model) {
         Event event = new EventImpl();
-        event.setId(eventId);
+        event.setId(id);
         event.setTitle(title);
         event.setDate(new java.sql.Date(Date.valueOf(date).getTime()).toLocalDate());
 
@@ -135,16 +133,16 @@ public class EventController {
     /**
      * Delete event by id
      *
-     * @param eventId event id
-     * @param model   model
+     * @param id    event id
+     * @param model model
      * @return model view
      */
-    @GetMapping(value = "/events/delete", params = {"eventId"})
-    public String deleteEvent(
-            @RequestParam int eventId,
-            Model model) {
-
-        boolean result = bookingFacade.deleteEvent(eventId);
+    @PostMapping(value = "/{id}")
+    public String deleteEvent(@PathVariable int id, Model model) {
+        boolean result = bookingFacade.deleteEvent(id);
+        if (!result) {
+            throw new EventNotFoundException(id);
+        }
         model.addAttribute("deleted", result);
         return "events";
     }

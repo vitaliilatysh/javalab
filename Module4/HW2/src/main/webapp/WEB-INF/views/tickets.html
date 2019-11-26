@@ -4,15 +4,21 @@
 </head>
 <body>
 <h1 th:text="Tickets"></h1>
+<h3 th:text="${deleted}"></h3>
 <table>
     <th:block th:each="ticket : ${tickets}">
-        <tr>
-            <td th:text="${ticket.id}"></td>
-            <td th:text="${ticket.eventId}"></td>
-            <td th:text="${ticket.userId}"></td>
-            <td th:text="${ticket.category}"></td>
-            <td th:text="${ticket.place}"></td>
-        </tr>
+        <form th:action="@{/tickets/{id}(id=${ticket.id})}" th:method="post">
+            <tr>
+                <td th:text="${ticket.id}"></td>
+                <td th:text="${ticket.eventId}"></td>
+                <td th:text="${ticket.userId}"></td>
+                <td th:text="${ticket.category}"></td>
+                <td th:text="${ticket.place}"></td>
+                <td>
+                    <button id="submitButton" type="submit">Delete</button>
+                </td>
+            </tr>
+        </form>
     </th:block>
 </table>
 </body>

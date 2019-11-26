@@ -1,6 +1,5 @@
 package com.epam.cdp.module4.hw2.repositories.impl;
 
-
 import com.epam.cdp.module4.hw2.model.User;
 import com.epam.cdp.module4.hw2.repositories.UserRepository;
 import com.epam.cdp.module4.hw2.storage.Storage;
