@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static java.util.Objects.hash;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
@@ -22,9 +25,13 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User save(User entity) {
-        String newEntryId = String.valueOf(entity.getId());
-        storage.getUserStorage().put(newEntryId, entity);
-        return storage.getUserStorage().get(newEntryId);
+        Map<String, User> eventStorage = storage.getUserStorage();
+
+        int id = Math.abs(hash(entity.getName(), entity.getEmail()));
+        String newEntryId = String.valueOf(id);
+        entity.setId(id);
+        eventStorage.put(newEntryId, entity);
+        return eventStorage.get(newEntryId);
     }
 
     @Override
@@ -35,7 +42,10 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User update(User entity) {
         String updatedEntityId = String.valueOf(entity.getId());
-        return storage.getUserStorage().put(updatedEntityId, entity);
+
+        storage.getUserStorage().put(updatedEntityId, entity);
+
+        return storage.getUserStorage().get(updatedEntityId);
     }
 
     @Override

@@ -102,7 +102,6 @@ public class BookingFacadeImpl implements BookingFacade {
     @Override
     public Ticket bookTicket(long userId, long eventId, int place, Ticket.Category category) {
         Ticket ticket = new TicketImpl();
-        ticket.setId(1);
         ticket.setUserId(userId);
         ticket.setEventId(eventId);
         ticket.setCategory(category);

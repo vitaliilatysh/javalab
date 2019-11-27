@@ -2,3 +2,5 @@ id ,user_id,event_id,category,place
 111,1      ,12      ,STANDARD,455
 112,2      ,13      ,PREMIUM ,333
 113,1      ,13      ,PREMIUM ,456
+114,3      ,14      ,STANDARD,457
+115,3      ,14      ,STANDARD,458

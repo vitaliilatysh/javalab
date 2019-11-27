@@ -9,7 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
 import java.util.List;
@@ -32,7 +35,7 @@ public class UserController {
      */
     @GetMapping(value = "/{id}")
     public String getUserById(
-            @PathVariable int id,
+            @PathVariable(value = "id") int id,
             Model model) {
         User user = bookingFacade.getUserById(id);
         if (user == null) {
@@ -51,11 +54,11 @@ public class UserController {
      * @param model    model
      * @return model view
      */
-    @GetMapping(value = "/find", params = {"userName", "pageSize", "page"})
+    @GetMapping(params = {"userName", "pageSize", "page"})
     public String getUserByName(
-            @RequestParam String userName,
-            @RequestParam int pageSize,
-            @RequestParam int page,
+            @RequestParam(value = "userName") String userName,
+            @RequestParam(value = "pageSize") int pageSize,
+            @RequestParam(value = "page") int page,
             Model model) {
         List<User> byName = bookingFacade.getUsersByName(userName, pageSize, page);
         model.addAttribute("users", byName);
@@ -69,9 +72,9 @@ public class UserController {
      * @param model model
      * @return model view
      */
-    @GetMapping(value = "/find", params = {"email"})
+    @GetMapping(params = {"email"})
     public String getUserByEmail(
-            @RequestParam String email,
+            @RequestParam(value = "email") String email,
             Model model) {
         User result = bookingFacade.getUserByEmail(email);
         model.addAttribute("users", Collections.singleton(result));
@@ -89,8 +92,8 @@ public class UserController {
      */
     @GetMapping(value = "/create", params = {"name", "email"})
     public String createUser(
-            @RequestParam String name,
-            @RequestParam String email,
+            @RequestParam(value = "name") String name,
+            @RequestParam(value = "email") String email,
             Model model) {
         User user = new UserImpl();
         user.setName(name);
@@ -112,9 +115,9 @@ public class UserController {
      */
     @GetMapping(value = "/update", params = {"id", "name", "email"})
     public String updateUser(
-            @RequestParam int id,
-            @RequestParam String name,
-            @RequestParam String email,
+            @RequestParam(value = "id") int id,
+            @RequestParam(value = "name") String name,
+            @RequestParam(value = "email") String email,
             Model model) {
         User user = new UserImpl();
         user.setId(id);
@@ -133,8 +136,8 @@ public class UserController {
      * @param model model
      * @return model view
      */
-    @PostMapping(value = "/{id}")
-    public String deleteUser(@PathVariable int id, Model model) {
+    @GetMapping(value = "/delete", params = {"id"})
+    public String deleteUser(@RequestParam(value = "id") int id, Model model) {
         boolean result = bookingFacade.deleteUser(id);
         if (!result) {
             throw new UserNotFoundException(id);

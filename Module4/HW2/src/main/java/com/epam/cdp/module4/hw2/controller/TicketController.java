@@ -12,7 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
 import java.util.List;
@@ -35,11 +37,11 @@ public class TicketController {
      * @param model    model
      * @return model view
      */
-    @GetMapping(value = "/find", params = {"eventId", "pageSize", "page"})
+    @GetMapping(params = {"eventId", "pageSize", "page"})
     public String getTicketByEvent(
-            @RequestParam int eventId,
-            @RequestParam int pageSize,
-            @RequestParam int page,
+            @RequestParam(value = "eventId") int eventId,
+            @RequestParam(value = "pageSize") int pageSize,
+            @RequestParam(value = "page") int page,
             Model model) {
         Event event = bookingFacade.getEventById(eventId);
         if (event == null) {
@@ -59,11 +61,11 @@ public class TicketController {
      * @param model    model
      * @return model view
      */
-    @GetMapping(value = "/find", params = {"userId", "pageSize", "page"})
+    @GetMapping(params = {"userId", "pageSize", "page"})
     public String getTicketByUser(
-            @RequestParam int userId,
-            @RequestParam int pageSize,
-            @RequestParam int page,
+            @RequestParam(value = "userId") int userId,
+            @RequestParam(value = "pageSize") int pageSize,
+            @RequestParam(value = "page") int page,
             Model model) {
         User user = bookingFacade.getUserById(userId);
         if (user == null) {
@@ -87,10 +89,10 @@ public class TicketController {
      */
     @GetMapping(value = "/book", params = {"userId", "eventId", "place", "category"})
     public String bookTicket(
-            @RequestParam int userId,
-            @RequestParam int eventId,
-            @RequestParam int place,
-            @RequestParam String category,
+            @RequestParam(value = "userId") int userId,
+            @RequestParam(value = "eventId") int eventId,
+            @RequestParam(value = "place") int place,
+            @RequestParam(value = "category") String category,
             Model model) {
 
         User user = bookingFacade.getUserById(userId);
@@ -114,8 +116,8 @@ public class TicketController {
      * @param model model
      * @return model view
      */
-    @PostMapping(value = "/{id}")
-    public String cancelTicket(@PathVariable int id, Model model) {
+    @GetMapping(value = "/cancel", params = {"id"})
+    public String cancelTicket(@RequestParam(value = "id") int id, Model model) {
         boolean result = bookingFacade.cancelTicket(id);
         if (!result) {
             throw new TicketNotFoundException(id);

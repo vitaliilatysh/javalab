@@ -23,13 +23,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(classes = {WebMvcConfig.class, AppConfig.class})
 public class EventControllerTest {
 
-    @Autowired
-    private WebApplicationContext wac;
-
-    private MockMvc mockMvc;
     private static final String BAND_1 = "Rammstein European Tour. Paris";
     private static final String BAND_2 = "Metallica Stadion Grand Tour. Poznan";
     private static final String BAND_3 = "Scorpions Germany Tour. Berlin";
+    @Autowired
+    private WebApplicationContext wac;
+    private MockMvc mockMvc;
 
     @Before
     public void setup() {
@@ -42,6 +41,14 @@ public class EventControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("events"))
                 .andExpect(content().string(containsString(BAND_1)));
+    }
+
+    @Test
+    public void getEventByIdNotFound() throws Exception {
+        this.mockMvc.perform(get("/events/22"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("error"))
+                .andExpect(content().string(containsString("Event not found with id=22")));
     }
 
     @Test

@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.hash;
+
 @Repository
 public class TicketRepositoryImpl implements TicketRepository {
 
@@ -23,14 +25,13 @@ public class TicketRepositoryImpl implements TicketRepository {
 
     @Override
     public Ticket save(Ticket entity) {
-        String newEntryId = String.valueOf(entity.getId());
-        Ticket ticket = storage.getTicketStorage().get(newEntryId);
-        if (ticket != null) {
-            return ticket;
-        }
-        storage.getTicketStorage().put(newEntryId, entity);
+        Map<String, Ticket> ticketStorage = storage.getTicketStorage();
 
-        return storage.getTicketStorage().get(newEntryId);
+        int id = Math.abs(hash(entity.getUserId(), entity.getEventId(), entity.getPlace(), entity.getCategory()));
+        String newEntryId = String.valueOf(id);
+        entity.setId(id);
+        ticketStorage.put(newEntryId, entity);
+        return ticketStorage.get(newEntryId);
     }
 
     @Override
