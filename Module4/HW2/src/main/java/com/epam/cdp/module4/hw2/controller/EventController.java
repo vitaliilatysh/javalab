@@ -50,11 +50,11 @@ public class EventController {
      * @param model      model
      * @return model view
      */
-    @GetMapping(value = "/find", params = {"eventTitle", "pageSize", "page"})
+    @GetMapping(params = {"eventTitle", "pageSize", "page"})
     public String getEventsByTitle(
-            @RequestParam String eventTitle,
-            @RequestParam int pageSize,
-            @RequestParam int page,
+            @RequestParam(value = "eventTitle") String eventTitle,
+            @RequestParam(value = "pageSize") int pageSize,
+            @RequestParam(value = "page") int page,
             Model model) {
         List<Event> events = bookingFacade.getEventsByTitle(eventTitle, pageSize, page);
         model.addAttribute("events", events);
@@ -70,11 +70,11 @@ public class EventController {
      * @param model     model
      * @return model view
      */
-    @GetMapping(value = "/find", params = {"eventDate", "pageSize", "page"})
+    @GetMapping(params = {"eventDate", "pageSize", "page"})
     public String getEventByDate(
-            @RequestParam String eventDate,
-            @RequestParam int pageSize,
-            @RequestParam int page,
+            @RequestParam(value = "eventDate") String eventDate,
+            @RequestParam(value = "pageSize") int pageSize,
+            @RequestParam(value = "page") int page,
             Model model) {
         List<Event> events = bookingFacade.getEventsForDay(Date.valueOf(eventDate), pageSize, page);
         model.addAttribute("events", events);
@@ -91,8 +91,8 @@ public class EventController {
      */
     @GetMapping(value = "/create", params = {"title", "date"})
     public String createEvent(
-            @RequestParam String title,
-            @RequestParam String date,
+            @RequestParam(value = "title") String title,
+            @RequestParam(value = "date") String date,
             Model model) {
         Event event = new EventImpl();
         event.setTitle(title);
@@ -114,9 +114,9 @@ public class EventController {
      */
     @GetMapping(value = "/update", params = {"id", "title", "date"})
     public String updateEvent(
-            @RequestParam int id,
-            @RequestParam String title,
-            @RequestParam String date,
+            @RequestParam(value = "id") int id,
+            @RequestParam(value = "title") String title,
+            @RequestParam(value = "date") String date,
             Model model) {
         Event event = new EventImpl();
         event.setId(id);
@@ -135,8 +135,8 @@ public class EventController {
      * @param model model
      * @return model view
      */
-    @PostMapping(value = "/{id}")
-    public String deleteEvent(@PathVariable int id, Model model) {
+    @GetMapping(value = "/delete", params = {"id"})
+    public String deleteEvent(@RequestParam(value = "id") int id, Model model) {
         boolean result = bookingFacade.deleteEvent(id);
         if (!result) {
             throw new EventNotFoundException(id);
