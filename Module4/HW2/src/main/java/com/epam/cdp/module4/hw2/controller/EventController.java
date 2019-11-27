@@ -32,9 +32,7 @@ public class EventController {
      * @return model view
      */
     @GetMapping(value = "/{id}")
-    public String getEventById(
-            @PathVariable int id,
-            Model model) {
+    public String getEventById(@PathVariable(value = "id") int id, Model model) {
         Event event = bookingFacade.getEventById(id);
         if (event == null) {
             throw new EventNotFoundException(id);

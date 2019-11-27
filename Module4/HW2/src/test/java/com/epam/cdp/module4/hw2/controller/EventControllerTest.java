@@ -34,7 +34,7 @@ public class EventControllerTest {
 
     @Test
     public void getEventById() throws Exception {
-        this.mockMvc.perform(get("/events/find?eventId=12"))
+        this.mockMvc.perform(get("/events/12"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("events"))
                 .andExpect(content().string(containsString("Rammstein European Tour. Paris")));
